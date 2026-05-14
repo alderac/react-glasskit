@@ -39,6 +39,27 @@ User sets: Settings → Accessibility → Reduce Motion
 | PanelSeparator | `opacity: 1`, solid border color |
 | Focus ring on GlassPanel | `0 0 0 3px var(--glass-high-contrast-focus)` |
 
+## Resizable Workspace Separators
+
+Interactive resize behavior follows the WAI-ARIA APG Window Splitter pattern when `PanelSeparator` is paired with `useResizablePanels`.
+
+GlassKit owns:
+
+- `role="separator"`
+- keyboard focus through `tabIndex={0}`
+- `aria-orientation`
+- `aria-controls`
+- `aria-valuemin`, `aria-valuemax`, and `aria-valuenow`
+- arrow-key, Home, End, PageUp, and PageDown resizing
+- visible focus styling for the resizable separator
+
+Consumers own:
+
+- the separator's accessible name
+- panel content semantics
+- app-level focus management after a resize
+- final page-level WCAG or Section 508 claims
+
 ## Overriding Fallback Colors
 
 All fallback colors are CSS custom properties. Override them per-theme in your global stylesheet:

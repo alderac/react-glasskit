@@ -34,4 +34,27 @@ describe('PanelSeparator', () => {
     expect(separator).toHaveAttribute('aria-valuenow', '50');
     expect(separator).toHaveAttribute('tabindex', '0');
   });
+
+  it('lets hook-supplied APG props override defaults', () => {
+    render(
+      <PanelSeparator
+        orientation="horizontal"
+        aria-label="Resize preview and logs"
+        aria-controls="preview-panel"
+        aria-orientation="horizontal"
+        aria-valuemin={20}
+        aria-valuemax={80}
+        aria-valuenow={40}
+        tabIndex={0}
+      />
+    );
+
+    const separator = screen.getByRole('separator', {
+      name: 'Resize preview and logs',
+    });
+
+    expect(separator).toHaveAttribute('aria-orientation', 'horizontal');
+    expect(separator).toHaveAttribute('aria-controls', 'preview-panel');
+    expect(separator).toHaveAttribute('aria-valuenow', '40');
+  });
 });

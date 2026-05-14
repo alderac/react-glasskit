@@ -181,6 +181,13 @@
   background-color: var(--glass-focus-ring);
 }
 
+.separatorResizable:focus-visible {
+  opacity: 1;
+  outline: 3px solid var(--glass-focus-ring);
+  outline-offset: 3px;
+  background-color: var(--glass-focus-ring);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /* ── Mandatory Accessibility Fallbacks ─────────────────────────────────────── */
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -255,5 +262,10 @@
   .separator {
     opacity: 1;
     background-color: var(--glass-high-contrast-border);
+  }
+
+  .separatorResizable:focus-visible {
+    outline-color: var(--glass-high-contrast-focus);
+    background-color: var(--glass-high-contrast-focus);
   }
 }
