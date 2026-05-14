@@ -5,7 +5,7 @@ This guide walks through integrating React GlassKit into an existing React proje
 ## Prerequisites
 
 - React ≥ 18
-- A bundler that handles CSS Modules (Vite, webpack + css-loader, Next.js, etc.)
+- A React bundler that supports CSS imports
 - TypeScript ≥ 5.4 (recommended, not required for JS-only usage)
 
 ## 1. Install
@@ -37,7 +37,7 @@ Then run `npm install`.
 Add this **once** in your app entry point (`main.tsx`, `_app.tsx`, `layout.tsx`):
 
 ```ts
-import 'react-glasskit/src/css/tokens.css';
+import 'react-glasskit/css/tokens.css';
 ```
 
 This registers all `--glass-*` CSS custom properties at `:root`. React GlassKit components read from these tokens — no other global CSS is needed.
@@ -60,19 +60,20 @@ import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glas
 ### Split workspace with focus management
 
 ```tsx
-import { useState } from 'react';
-import { GlassPanel, PanelSeparator } from 'react-glasskit';
+import { GlassPanel, PanelSeparator, useActivePanel } from 'react-glasskit';
 
 function Workspace() {
-  const [active, setActive] = useState<'left' | 'right'>('left');
+  const activePanels = useActivePanel<'left' | 'right'>({
+    initialPanelId: 'left',
+  });
 
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <GlassPanel
-        focused={active === 'left'}
-        inactive={active !== 'left'}
+        focused={activePanels.isFocused('left')}
+        inactive={activePanels.isInactive('left')}
         animate
-        onClick={() => setActive('left')}
+        onClick={() => activePanels.activatePanel('left')}
         style={{ flex: 1, padding: 16 }}
       >
         Left panel
@@ -81,14 +82,43 @@ function Workspace() {
       <PanelSeparator orientation="vertical" />
 
       <GlassPanel
-        focused={active === 'right'}
-        inactive={active !== 'right'}
+        focused={activePanels.isFocused('right')}
+        inactive={activePanels.isInactive('right')}
         animate
-        onClick={() => setActive('right')}
+        onClick={() => activePanels.activatePanel('right')}
         style={{ flex: 1, padding: 16 }}
       >
         Right panel
       </GlassPanel>
+    </div>
+  );
+}
+```
+
+### Resizable workspace split
+
+```tsx
+import { GlassPanel, PanelSeparator, useResizablePanels } from 'react-glasskit';
+
+function ResizableWorkspace() {
+  const panels = useResizablePanels({
+    primaryPanelId: 'editor-panel',
+    initialSize: 58,
+    minSize: 32,
+    maxSize: 72,
+  });
+
+  return (
+    <div ref={panels.containerRef} style={{ display: 'flex', height: '100vh' }}>
+      <GlassPanel id="editor-panel" style={panels.primaryPanelStyle}>
+        Editor
+      </GlassPanel>
+      <PanelSeparator
+        resizable
+        aria-label="Resize editor and inspector panels"
+        {...panels.separatorProps}
+      />
+      <GlassPanel style={panels.secondaryPanelStyle}>Inspector</GlassPanel>
     </div>
   );
 }
