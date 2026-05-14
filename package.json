@@ -1,6 +1,6 @@
 {
   "name": "react-glasskit",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
   "keywords": [
     "react",
@@ -32,6 +32,9 @@
   "files": [
     "dist",
     "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!src/test",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"

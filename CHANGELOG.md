@@ -5,6 +5,14 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.9] - 2026-05-14
+
+### Added
+- Added a packed Vite consumer smoke test that verifies public package imports, type declarations, and CSS token imports from the npm tarball.
+
+### Changed
+- Kept source-path escape hatches in the package while excluding source test files from packed artifacts.
+
 ## [0.1.8] - 2026-05-14
 
 ### Changed
