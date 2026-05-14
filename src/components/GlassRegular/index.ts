@@ -1,0 +1,1 @@
+export { GlassRegular } from './GlassRegular';

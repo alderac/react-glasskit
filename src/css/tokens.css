@@ -1,0 +1,86 @@
+/**
+ * GlassKit Design Tokens
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Import this file ONCE at the root of your application to enable the full
+ * GlassKit material system. All glass components read from these custom
+ * properties, so overriding any token here cascades globally.
+ *
+ * Usage:
+ *   import 'glasskit/src/css/tokens.css'  // in your app entry point
+ */
+
+:root {
+  /* ── Material Geometry ────────────────────────────────── */
+  --glass-radius: 12px;
+  --glass-shadow-radius: 16px;
+  --glass-shadow-y: 10px;
+
+  /* ── Blur & Saturation ────────────────────────────────── */
+  --glass-blur-regular: 20px;
+  --glass-blur-clear: 12px;
+  --glass-saturation-regular: 180%;
+  --glass-saturation-clear: 120%;
+
+  /* ── Opacity Coefficients ─────────────────────────────── */
+  --glass-stroke: 0.22;
+  --glass-highlight: 0.16;
+  --glass-shadow-opacity: 0.10;
+
+  /* ── Panel States (macOS Tahoe-inspired) ──────────────── */
+  --glass-panel-inactive-opacity: 0.92;
+  --glass-panel-inactive-saturate: 0.85;
+
+  /* ── Crystallize Animation ────────────────────────────── */
+  --glass-crystallize-duration: 400ms;
+  --glass-crystallize-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Light Mode Surface Tokens ────────────────────────── */
+  --glass-bg-regular: rgba(255, 255, 255, 0.72);
+  --glass-bg-clear: rgba(255, 255, 255, 0.45);
+  --glass-bg-panel: rgba(255, 255, 255, 0.68);
+  --glass-border: rgba(255, 255, 255, var(--glass-stroke));
+  --glass-highlight-border: rgba(255, 255, 255, var(--glass-highlight));
+  --glass-shadow: rgba(0, 0, 0, var(--glass-shadow-opacity));
+  --glass-focus-ring: rgba(100, 149, 237, 0.50);
+
+  /* ── Accessibility Fallback Colors (light) ────────────── */
+  --glass-solid-bg: rgb(245, 245, 245);
+  --glass-solid-bg-alt: rgb(240, 240, 240);
+  --glass-solid-border: rgb(200, 200, 200);
+  --glass-high-contrast-border: rgb(40, 40, 40);
+  --glass-high-contrast-focus: rgb(0, 80, 200);
+}
+
+/* ── Dark Mode: system preference ───────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg-regular: rgba(15, 20, 40, 0.68);
+    --glass-bg-clear: rgba(10, 17, 40, 0.40);
+    --glass-bg-panel: rgba(17, 29, 53, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-highlight-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: rgba(0, 0, 0, 0.28);
+    --glass-focus-ring: rgba(100, 149, 237, 0.60);
+    --glass-solid-bg: rgb(17, 20, 35);
+    --glass-solid-bg-alt: rgb(22, 26, 42);
+    --glass-solid-border: rgb(50, 58, 80);
+    --glass-high-contrast-border: rgb(200, 210, 255);
+    --glass-high-contrast-focus: rgb(120, 170, 255);
+  }
+}
+
+/* ── Dark Mode: class-based (Tailwind `dark`, Next.js, etc.) ─────────────── */
+:is(.dark, [data-theme="dark"]) {
+  --glass-bg-regular: rgba(15, 20, 40, 0.68);
+  --glass-bg-clear: rgba(10, 17, 40, 0.40);
+  --glass-bg-panel: rgba(17, 29, 53, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-highlight-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.28);
+  --glass-focus-ring: rgba(100, 149, 237, 0.60);
+  --glass-solid-bg: rgb(17, 20, 35);
+  --glass-solid-bg-alt: rgb(22, 26, 42);
+  --glass-solid-border: rgb(50, 58, 80);
+  --glass-high-contrast-border: rgb(200, 210, 255);
+  --glass-high-contrast-focus: rgb(120, 170, 255);
+}

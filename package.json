@@ -1,0 +1,45 @@
+{
+  "name": "react-glasskit",
+  "version": "0.1.0",
+  "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
+  "keywords": ["react", "design-system", "glass", "glassmorphism", "ui", "css-modules", "typescript", "liquid-glass"],
+  "license": "MIT",
+  "author": "Adam C. Alderson",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alderac/react-glasskit.git"
+  },
+  "homepage": "https://alderac.github.io/react-glasskit",
+  "bugs": {
+    "url": "https://github.com/alderac/react-glasskit/issues"
+  },
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "src",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./css/tokens": "./src/css/tokens.css",
+    "./css/glass": "./src/css/glass.module.css"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0"
+  }
+}

@@ -1,0 +1,251 @@
+/**
+ * GlassKit — Centralized Glass Material Module
+ * ─────────────────────────────────────────────────────────────────────────────
+ * All glass material styling lives here. React wrapper components import from
+ * this single file so that design changes propagate globally.
+ *
+ * Requires tokens.css to be loaded globally in the consuming application.
+ */
+
+/* ── Crystallize Animation ─────────────────────────────────────────────────── */
+
+@keyframes crystallize {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateZ(0);
+    backdrop-filter: blur(0px) saturate(100%);
+    -webkit-backdrop-filter: blur(0px) saturate(100%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+    backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+    -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+  }
+}
+
+/* ── GlassRegular ──────────────────────────────────────────────────────────── */
+
+.regular {
+  position: relative;
+  background-color: var(--glass-bg-regular);
+  backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+  -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight-border);
+  transform: translateZ(0);
+  will-change: backdrop-filter;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* ── GlassClear ────────────────────────────────────────────────────────────── */
+
+.clear {
+  position: relative;
+  background-color: var(--glass-bg-clear);
+  backdrop-filter: blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear));
+  -webkit-backdrop-filter: blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight-border);
+  transform: translateZ(0);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+/**
+ * Dimmed modifier: adds a subtle darkening overlay beneath content.
+ * Required when GlassClear sits over vibrant or media-rich backgrounds
+ * to prevent color interference with text legibility.
+ */
+.clearDimmed::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.clearDimmed > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── GlassPanel ────────────────────────────────────────────────────────────── */
+
+.panel {
+  position: relative;
+  background-color: var(--glass-bg-panel);
+  backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+  -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight-border);
+  transform: translateZ(0);
+  transition:
+    opacity var(--glass-crystallize-duration) ease,
+    filter var(--glass-crystallize-duration) ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+/* Focused: subtle outline highlight */
+.panelFocused {
+  border-color: var(--glass-focus-ring);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight-border),
+    0 0 0 3px var(--glass-focus-ring);
+}
+
+/* Inactive: macOS Tahoe-style — drops opacity and desaturates */
+.panelInactive {
+  opacity: var(--glass-panel-inactive-opacity);
+  filter: saturate(var(--glass-panel-inactive-saturate));
+}
+
+/* Animate: crystallize materialization on mount */
+.panelAnimate {
+  animation: crystallize var(--glass-crystallize-duration) var(--glass-crystallize-easing) both;
+}
+
+/* ── PanelSeparator ────────────────────────────────────────────────────────── */
+
+.separator {
+  position: relative;
+  flex-shrink: 0;
+  background-color: var(--glass-border);
+  border-radius: 2px;
+  opacity: 0.4;
+  transition: opacity 200ms ease, background-color 200ms ease;
+}
+
+.separatorVertical {
+  width: 1px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.separatorHorizontal {
+  height: 1px;
+  width: 100%;
+  cursor: row-resize;
+}
+
+/* Reveal on hover/drag */
+.separator:hover,
+.separator:active {
+  opacity: 0.85;
+  background-color: var(--glass-focus-ring);
+}
+
+/* Expanded touch hit target on coarse pointer devices */
+@media (pointer: coarse) {
+  .separatorVertical::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -8px;
+    right: -8px;
+  }
+
+  .separatorHorizontal::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -8px;
+    bottom: -8px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ── Mandatory Accessibility Fallbacks ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * 1. Reduce Transparency
+ *    Fully disables backdrop-filter and reverts glass to solid backgrounds.
+ */
+@media (prefers-reduced-transparency: reduce) {
+  .regular,
+  .clear,
+  .panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .regular {
+    background-color: var(--glass-solid-bg);
+    border-color: var(--glass-solid-border);
+  }
+
+  .clear {
+    background-color: var(--glass-solid-bg-alt);
+    border-color: var(--glass-solid-border);
+  }
+
+  .panel {
+    background-color: var(--glass-solid-bg);
+    border-color: var(--glass-solid-border);
+  }
+
+  .clearDimmed::before {
+    display: none;
+  }
+}
+
+/**
+ * 2. Reduce Motion
+ *    Disables crystallize animation and snaps all panel transitions instantly.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .panelAnimate {
+    animation: none !important;
+  }
+
+  .panel,
+  .regular,
+  .clear,
+  .separator {
+    transition: none !important;
+  }
+}
+
+/**
+ * 3. Increase Contrast
+ *    Hardens borders, shadows, and focus indicators into solid, high-visibility states.
+ */
+@media (prefers-contrast: more) {
+  .regular,
+  .clear,
+  .panel {
+    border-color: var(--glass-high-contrast-border);
+    border-width: 2px;
+    box-shadow: none;
+  }
+
+  .panelFocused {
+    border-color: var(--glass-high-contrast-focus);
+    box-shadow: 0 0 0 3px var(--glass-high-contrast-focus);
+  }
+
+  .separator {
+    opacity: 1;
+    background-color: var(--glass-high-contrast-border);
+  }
+}
