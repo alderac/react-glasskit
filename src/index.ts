@@ -24,6 +24,11 @@ export type {
   UseActivePanelOptions,
   UseActivePanelResult,
 } from './hooks/useActivePanel';
+export { useResizablePanels } from './hooks/useResizablePanels';
+export type {
+  UseResizablePanelsOptions,
+  UseResizablePanelsResult,
+} from './hooks/useResizablePanels';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 export type { PolymorphicProps, Orientation } from './types';

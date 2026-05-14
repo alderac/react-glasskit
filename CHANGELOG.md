@@ -5,6 +5,14 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-05-14
+
+### Added
+- Added `useResizablePanels` with APG-oriented separator props, pointer resizing, keyboard resizing, and panel flex styles.
+
+### Fixed
+- Guarded resize behavior against stale constraints, pointer cancellation leaks, and zero-size pointer math.
+
 ## [0.1.5] - 2026-05-14
 
 ### Added

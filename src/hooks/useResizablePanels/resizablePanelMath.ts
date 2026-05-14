@@ -28,6 +28,12 @@ export function getPointerPanelSize({
   minSize,
   maxSize,
 }: PointerPanelSizeInput): number {
+  const activeAxisSize = orientation === 'vertical' ? rect.width : rect.height;
+
+  if (activeAxisSize <= 0) {
+    return minSize;
+  }
+
   const rawSize =
     orientation === 'vertical'
       ? ((clientX - rect.left) / rect.width) * 100

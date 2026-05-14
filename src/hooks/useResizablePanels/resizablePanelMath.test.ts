@@ -52,4 +52,28 @@ describe('resizable panel math', () => {
     expect(getKeyboardPanelSize(50, 'Home', 'vertical', 5, 10, 30, 70)).toBe(30);
     expect(getKeyboardPanelSize(50, 'End', 'vertical', 5, 10, 30, 70)).toBe(70);
   });
+
+  it('returns the minimum size when pointer math has a zero active axis', () => {
+    expect(
+      getPointerPanelSize({
+        orientation: 'vertical',
+        clientX: 0,
+        clientY: 0,
+        rect: { left: 0, top: 0, width: 0, height: 100 },
+        minSize: 30,
+        maxSize: 70,
+      })
+    ).toBe(30);
+
+    expect(
+      getPointerPanelSize({
+        orientation: 'horizontal',
+        clientX: 0,
+        clientY: 0,
+        rect: { left: 0, top: 0, width: 100, height: 0 },
+        minSize: 25,
+        maxSize: 75,
+      })
+    ).toBe(25);
+  });
 });
