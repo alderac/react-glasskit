@@ -12,6 +12,13 @@ export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement
    * @default 'vertical'
    */
   orientation?: Orientation;
+  /**
+   * Promotes the separator from a passive visual divider to a resize handle.
+   * Adds the hover/active reveal treatment and orientation-aware resize cursor.
+   * Pair with `onMouseDown` or `onPointerDown` to implement resize behavior.
+   * @default false
+   */
+  resizable?: boolean;
   className?: string;
 }
 
@@ -21,9 +28,9 @@ export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement
  * PanelSeparator
  *
  * Divider for spatial panel layouts, mimicking the iPadOS split-view aesthetic.
- * Nearly invisible at rest — subtly revealed on hover or touch/drag.
- * Touch hit targets automatically expand on coarse pointer devices
- * via a CSS `@media (pointer: coarse)` pseudo-element.
+ * Passive by default. Set `resizable` when the separator should behave like a
+ * resize handle; the hit target expands around the visible hairline via a CSS
+ * pseudo-element without affecting layout.
  *
  * @example
  * <div style={{ display: 'flex', height: '100%' }}>
@@ -33,11 +40,18 @@ export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement
  * </div>
  */
 export const PanelSeparator = React.forwardRef<HTMLDivElement, PanelSeparatorProps>(
-  ({ orientation = 'vertical', className, ...rest }, ref) => {
+  ({ orientation = 'vertical', resizable = false, className, ...rest }, ref) => {
     const orientationClass =
       orientation === 'vertical' ? styles.separatorVertical : styles.separatorHorizontal;
 
-    const classes = [styles.separator, orientationClass, className].filter(Boolean).join(' ');
+    const classes = [
+      styles.separator,
+      orientationClass,
+      resizable ? styles.separatorResizable : '',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     return (
       <div

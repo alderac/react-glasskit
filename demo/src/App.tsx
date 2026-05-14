@@ -1,8 +1,237 @@
-import { useState } from 'react';
+import { Fragment, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glasskit';
+
+const regularCodeSample = [
+  "import { GlassRegular } from 'react-glasskit';",
+  '',
+  'export function NavExample() {',
+  '  return (',
+  '    <GlassRegular',
+  '      as="nav"',
+  '      style={{',
+  "        display: 'flex',",
+  "        alignItems: 'center',",
+  "        justifyContent: 'space-between',",
+  '        gap: 16,',
+  "        padding: '12px 20px',",
+  '      }}',
+  '    >',
+  '      <strong>Acme App</strong>',
+  '      <a href="/dashboard">Dashboard</a>',
+  '      <a href="/projects">Projects</a>',
+  '      <button type="button">Sign In</button>',
+  '    </GlassRegular>',
+  '  );',
+  '}',
+].join('\n');
+
+const panelCodeSample = [
+  "import { useState } from 'react';",
+  "import { GlassPanel, PanelSeparator } from 'react-glasskit';",
+  '',
+  'export function SplitPanelExample() {',
+  "  const [activePanel, setActivePanel] = useState<'editor' | 'inspector'>('editor');",
+  '',
+  '  return (',
+  '    <div style={{ display: \'flex\', height: 320 }}>',
+  '      <GlassPanel',
+  "        focused={activePanel === 'editor'}",
+  "        inactive={activePanel !== 'editor'}",
+  '        animate',
+  '        style={{ flex: 1, padding: 20 }}',
+  "        onClick={() => setActivePanel('editor')}",
+  '      >',
+  '        <h3>Editor</h3>',
+  '        <p>Primary workspace panel. Click to focus.</p>',
+  '      </GlassPanel>',
+  '',
+  '      <PanelSeparator orientation="vertical" />',
+  '',
+  '      <GlassPanel',
+  "        focused={activePanel === 'inspector'}",
+  "        inactive={activePanel !== 'inspector'}",
+  '        animate',
+  '        style={{ flex: 1, padding: 20 }}',
+  "        onClick={() => setActivePanel('inspector')}",
+  '      >',
+  '        <h3>Inspector</h3>',
+  '        <p>Secondary detail panel. Click to focus.</p>',
+  '      </GlassPanel>',
+  '    </div>',
+  '  );',
+  '}',
+].join('\n');
+
+const clearCodeSample = [
+  "import { GlassClear } from 'react-glasskit';",
+  '',
+  'export function FloatingToolbarExample() {',
+  '  return (',
+  '    <div',
+  '      style={{',
+  "        minHeight: 240,",
+  "        display: 'grid',",
+  "        placeItems: 'center',",
+  "        background: 'linear-gradient(135deg, #0ea5e9, #ec4899, #22c55e)',",
+  '      }}',
+  '    >',
+  '      <GlassClear dimmed>',
+  '        <div style={{ display: \'flex\', gap: 12, padding: \'10px 20px\' }}>',
+  '          <button type="button">Move</button>',
+  '          <button type="button">Pen</button>',
+  '          <button type="button">Shape</button>',
+  '          <button type="button">Erase</button>',
+  '        </div>',
+  '      </GlassClear>',
+  '    </div>',
+  '  );',
+  '}',
+].join('\n');
+
+const separatorCodeSample = [
+  "import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';",
+  "import { GlassRegular, PanelSeparator } from 'react-glasskit';",
+  '',
+  'export function SeparatorExamples() {',
+  '  const [leftPaneWidth, setLeftPaneWidth] = useState(58);',
+  '  const resizeStageRef = useRef<HTMLDivElement>(null);',
+  '',
+  '  const handleResizePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {',
+  '    const stage = resizeStageRef.current;',
+  '    if (!stage) return;',
+  '',
+  '    event.preventDefault();',
+  '    const rect = stage.getBoundingClientRect();',
+  '',
+  '    const handlePointerMove = (moveEvent: PointerEvent) => {',
+  '      const nextWidth = ((moveEvent.clientX - rect.left) / rect.width) * 100;',
+  '      setLeftPaneWidth(Math.min(72, Math.max(32, Math.round(nextWidth))));',
+  '    };',
+  '',
+  '    const handlePointerUp = () => {',
+  "      window.removeEventListener('pointermove', handlePointerMove);",
+  "      window.removeEventListener('pointerup', handlePointerUp);",
+  '    };',
+  '',
+  "    window.addEventListener('pointermove', handlePointerMove);",
+  "    window.addEventListener('pointerup', handlePointerUp);",
+  '  };',
+  '',
+  '  return (',
+  '    <>',
+  '      <div style={{ display: \'flex\', height: 150 }}>',
+  '        <GlassRegular style={{ flex: 1 }}>Panel A</GlassRegular>',
+  '        <PanelSeparator orientation="vertical" />',
+  '        <GlassRegular style={{ flex: 1 }}>Panel B</GlassRegular>',
+  '      </div>',
+  '',
+  '      <div ref={resizeStageRef} style={{ display: \'flex\', height: 150 }}>',
+  "        <GlassRegular style={{ flex: '0 0 ' + leftPaneWidth + '%' }}>",
+  '          Timeline {leftPaneWidth}%',
+  '        </GlassRegular>',
+  '        <PanelSeparator',
+  '          orientation="vertical"',
+  '          resizable',
+  '          aria-label="Resize timeline and inspector panes"',
+  '          onPointerDown={handleResizePointerDown}',
+  '        />',
+  '        <GlassRegular style={{ flex: 1 }}>Inspector</GlassRegular>',
+  '      </div>',
+  '    </>',
+  '  );',
+  '}',
+].join('\n');
+
+const codeTokenPattern =
+  /(\/\/.*)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(<\/?[\w.]+|\/?>)|(\b[A-Za-z_$][\w$-]*(?=\=))|(\b(?:import|from|export|function|return|const|let|type|as|if|new)\b)/g;
+
+function highlightCode(source: string): ReactNode[] {
+  return source.split('\n').flatMap((line, lineIndex) => {
+    const nodes: ReactNode[] = [];
+    let lastIndex = 0;
+
+    for (const match of line.matchAll(codeTokenPattern)) {
+      const [token, comment, stringValue, tag, attr, keyword] = match;
+      const index = match.index ?? 0;
+
+      if (index > lastIndex) {
+        nodes.push(line.slice(lastIndex, index));
+      }
+
+      const className = comment
+        ? 'cmt'
+        : stringValue
+          ? 'str'
+          : tag
+            ? 'tag'
+            : attr
+              ? 'attr'
+              : keyword
+                ? 'kw'
+                : undefined;
+
+      nodes.push(
+        className ? (
+          <span className={className} key={`${lineIndex}-${index}`}>
+            {token}
+          </span>
+        ) : (
+          token
+        )
+      );
+
+      lastIndex = index + token.length;
+    }
+
+    if (lastIndex < line.length) {
+      nodes.push(line.slice(lastIndex));
+    }
+
+    if (lineIndex < source.split('\n').length - 1) {
+      nodes.push('\n');
+    }
+
+    return nodes.map((node, nodeIndex) => (
+      <Fragment key={`${lineIndex}-${nodeIndex}`}>
+        {node}
+      </Fragment>
+    ));
+  });
+}
+
+function CodeBlock({ children }: { children: string }) {
+  return (
+    <pre className="demo-code">
+      <code>{highlightCode(children)}</code>
+    </pre>
+  );
+}
 
 export default function App() {
   const [activePanel, setActivePanel] = useState<'left' | 'right'>('left');
+  const [leftPaneWidth, setLeftPaneWidth] = useState(58);
+  const resizeStageRef = useRef<HTMLDivElement>(null);
+
+  const handleResizePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const stage = resizeStageRef.current;
+    if (!stage) return;
+
+    event.preventDefault();
+    const rect = stage.getBoundingClientRect();
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      const nextWidth = ((moveEvent.clientX - rect.left) / rect.width) * 100;
+      setLeftPaneWidth(Math.min(72, Math.max(32, Math.round(nextWidth))));
+    };
+
+    const handlePointerUp = () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+  };
 
   return (
     <>
@@ -31,7 +260,7 @@ export default function App() {
             modals, and panel headers. Polymorphic via the <code>as</code> prop.
           </p>
 
-          <div className="showcase-stage">
+          <div className="showcase-stage showcase-regular">
             <GlassRegular as="nav">
               <div className="demo-nav-inner">
                 <div className="demo-nav-logo">⬡ Acme App</div>
@@ -45,15 +274,7 @@ export default function App() {
             </GlassRegular>
           </div>
 
-          <div className="demo-code">
-            <span className="cmt">{'// Renders as <nav> with full type safety'}</span>{'\n'}
-            <span className="tag">{'<GlassRegular'}</span> <span className="attr">as</span>=<span className="str">"nav"</span><span className="tag">{'>'}</span>{'\n'}
-            {'  '}<span className="tag">{'<div'}</span> <span className="attr">className</span>=<span className="str">"nav-inner"</span><span className="tag">{'>'}</span>{'\n'}
-            {'    '}<span className="tag">{'<Logo />'}</span>{'\n'}
-            {'    '}<span className="tag">{'<NavLinks />'}</span>{'\n'}
-            {'  '}<span className="tag">{'</div>'}</span>{'\n'}
-            <span className="tag">{'</GlassRegular>'}</span>
-          </div>
+          <CodeBlock>{regularCodeSample}</CodeBlock>
         </section>
 
         {/* ── 2. GlassPanel — Focus / Inactive ─────────────── */}
@@ -65,7 +286,7 @@ export default function App() {
             Click each panel to toggle focus — watch the macOS Tahoe-style fade.
           </p>
 
-          <div className="showcase-stage">
+          <div className="showcase-stage showcase-panels">
             <div className="demo-panels-container">
               <GlassPanel
                 focused={activePanel === 'left'}
@@ -115,15 +336,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="demo-code">
-            <span className="tag">{'<GlassPanel'}</span> <span className="attr">focused</span> <span className="attr">animate</span><span className="tag">{'>'}</span>{'\n'}
-            {'  Active panel content'}{'\n'}
-            <span className="tag">{'</GlassPanel>'}</span>{'\n'}
-            <span className="tag">{'<PanelSeparator'}</span> <span className="attr">orientation</span>=<span className="str">"vertical"</span> <span className="tag">{'/>'}</span>{'\n'}
-            <span className="tag">{'<GlassPanel'}</span> <span className="attr">inactive</span><span className="tag">{'>'}</span>{'\n'}
-            {'  Inactive panel content'}{'\n'}
-            <span className="tag">{'</GlassPanel>'}</span>
-          </div>
+          <CodeBlock>{panelCodeSample}</CodeBlock>
         </section>
 
         {/* ── 3. GlassClear — Floating Toolbar ─────────────── */}
@@ -150,12 +363,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="demo-code">
-            <span className="cmt">{'// dimmed adds a darkening layer for text legibility'}</span>{'\n'}
-            <span className="tag">{'<GlassClear'}</span> <span className="attr">dimmed</span><span className="tag">{'>'}</span>{'\n'}
-            {'  '}<span className="tag">{'<Toolbar />'}</span>{'\n'}
-            <span className="tag">{'</GlassClear>'}</span>
-          </div>
+          <CodeBlock>{clearCodeSample}</CodeBlock>
         </section>
 
         {/* ── 4. PanelSeparator ────────────────────────────── */}
@@ -163,30 +371,58 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">PanelSeparator</h2>
           <p className="demo-section-desc">
-            Spatial dividers for split-panel layouts. Nearly invisible at rest —
-            hover to reveal. Expanded touch targets on mobile via CSS.
+            Passive spatial dividers for split-panel layouts. Add <code>resizable</code>
+            when the separator is wired to resize behavior.
           </p>
 
-          <div className="showcase-stage">
-            <div className="demo-separator-stage">
-              <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="demo-separator-pane">Panel A</span>
-              </GlassRegular>
-              <PanelSeparator orientation="vertical" />
-              <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="demo-separator-pane">Panel B</span>
-              </GlassRegular>
-              <PanelSeparator orientation="vertical" />
-              <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="demo-separator-pane">Panel C</span>
-              </GlassRegular>
+          <div className="showcase-stage showcase-separator">
+            <div className="demo-separator-stack">
+              <div className="demo-separator-example">
+                <p className="demo-example-label">Passive divider</p>
+                <div className="demo-separator-stage">
+                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="demo-separator-pane">Panel A</span>
+                  </GlassRegular>
+                  <PanelSeparator orientation="vertical" />
+                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="demo-separator-pane">Panel B</span>
+                  </GlassRegular>
+                  <PanelSeparator orientation="vertical" />
+                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="demo-separator-pane">Panel C</span>
+                  </GlassRegular>
+                </div>
+              </div>
+
+              <div className="demo-separator-example">
+                <p className="demo-example-label">Resizable handle</p>
+                <div className="demo-separator-stage demo-resize-stage" ref={resizeStageRef}>
+                  <GlassRegular
+                    style={{
+                      flex: `0 0 ${leftPaneWidth}%`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minWidth: 0,
+                    }}
+                  >
+                    <span className="demo-separator-pane">Timeline · {leftPaneWidth}%</span>
+                  </GlassRegular>
+                  <PanelSeparator
+                    orientation="vertical"
+                    resizable
+                    aria-label="Resize timeline and inspector panes"
+                    onPointerDown={handleResizePointerDown}
+                  />
+                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 }}>
+                    <span className="demo-separator-pane">Inspector</span>
+                  </GlassRegular>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="demo-code">
-            <span className="tag">{'<PanelSeparator'}</span> <span className="attr">orientation</span>=<span className="str">"vertical"</span> <span className="tag">{'/>'}</span>{'\n'}
-            <span className="tag">{'<PanelSeparator'}</span> <span className="attr">orientation</span>=<span className="str">"horizontal"</span> <span className="tag">{'/>'}</span>
-          </div>
+          <CodeBlock>{separatorCodeSample}</CodeBlock>
         </section>
 
         {/* ── Footer ───────────────────────────────────────── */}

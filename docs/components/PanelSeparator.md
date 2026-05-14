@@ -1,14 +1,16 @@
 # PanelSeparator
 
-Spatial divider for split-panel layouts, mimicking the iPadOS multi-window aesthetic. Nearly invisible at rest — subtly revealed on hover or touch.
+Spatial divider for split-panel layouts, mimicking the iPadOS multi-window aesthetic. Passive by default; opt into resize affordances when the divider is wired to resize behavior.
 
 ## Design
 
 The separator is intentionally unobtrusive:
 
-- **At rest**: `opacity: 0.4` — just barely perceptible
-- **On hover / active**: `opacity: 0.85` with a focus-ring blue tint
-- **Touch devices**: Hit target automatically expands by `±8px` via a CSS pseudo-element (`@media (pointer: coarse)`)
+- **At rest**: `opacity: 0.55` — quietly visible without reading as interactive
+- **Passive**: Default cursor and no hover reveal
+- **Resizable**: `opacity: 0.85` with a focus-ring blue tint on hover / active
+- **Hit target**: Resizable separators expand by `±8px` via an invisible CSS pseudo-element
+- **Cursor**: Uses the default cursor unless `resizable` is set
 - **Orientation**: Renders as a vertical column (`1px × 100%`) or horizontal row (`100% × 1px`)
 
 ## Props
@@ -16,8 +18,9 @@ The separator is intentionally unobtrusive:
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Direction of the dividing line |
+| `resizable` | `boolean` | `false` | Enables resize cursor, hover reveal, and expanded resize hit target |
 | `className` | `string` | — | Additional classes |
-| `...rest` | `HTMLDivElement` props | — | All native div props (incl. `onMouseDown` for drag logic) |
+| `...rest` | `HTMLDivElement` props | — | All native div props, including `onMouseDown` / `onPointerDown` for drag logic |
 
 > PanelSeparator renders with `role="separator"` and `aria-orientation` automatically set.
 
@@ -47,7 +50,7 @@ import { GlassPanel, PanelSeparator } from 'react-glasskit';
 
 ### With Drag-to-Resize
 
-Wire `onMouseDown` to your resize handler. The separator's hit target handles the initial grab; your handler manages the drag delta.
+Wire `onMouseDown` or `onPointerDown` to your resize handler. The separator's hit target handles the initial grab, the component applies the matching resize cursor, and your handler manages the drag delta.
 
 ```tsx
 const handleMouseDown = (e: React.MouseEvent) => {
@@ -69,9 +72,9 @@ const handleMouseDown = (e: React.MouseEvent) => {
   document.addEventListener('mouseup', onMouseUp);
 };
 
-<PanelSeparator orientation="vertical" onMouseDown={handleMouseDown} />
+<PanelSeparator orientation="vertical" resizable onMouseDown={handleMouseDown} />
 ```
 
-## Touch Devices
+## Hit Target
 
-On coarse pointer devices (touchscreens), a CSS `::before` pseudo-element expands the interactive hit area to `±8px` around the visible line without affecting layout. No JavaScript or extra markup required.
+When `resizable` is set, a CSS `::before` pseudo-element expands the interactive hit area to `±8px` around the visible line without affecting layout. No JavaScript or extra markup required.

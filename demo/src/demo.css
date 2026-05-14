@@ -28,11 +28,12 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background-color: #0f111a;
-  /* Crisp grid and dots pattern to maximize visibility of the blur effect */
+  background-color: #080b14;
+  /* Crisp grid and color bands give the glass something visible to refract. */
   background-image: 
-    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v1H0V0zm0 40h1V0h-1v40z' fill='%23a78bfa' fill-opacity='0.15' fill-rule='evenodd'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%23818cf8' fill-opacity='0.2'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, #09090b 0%, #17112e 100%);
+    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v1H0V0zm0 40h1V0h-1v40z' fill='%23c4b5fd' fill-opacity='0.18' fill-rule='evenodd'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%237dd3fc' fill-opacity='0.22'/%3E%3C/svg%3E"),
+    linear-gradient(120deg, rgba(20, 184, 166, 0.28) 0 18%, transparent 18% 38%, rgba(245, 158, 11, 0.20) 38% 54%, transparent 54%),
+    linear-gradient(135deg, #070912 0%, #10192a 52%, #1c1230 100%);
   animation: patternPan 30s linear infinite;
 }
 
@@ -136,19 +137,75 @@ body {
 .showcase-stage {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(7, 10, 20, 0.34);
   padding: 32px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.showcase-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--showcase-backdrop);
+  background-size: var(--showcase-backdrop-size, auto);
+  opacity: 0.92;
+}
+
+.showcase-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 38%),
+    linear-gradient(90deg, rgba(7, 10, 20, 0.18), transparent 22%, transparent 78%, rgba(7, 10, 20, 0.2));
+  pointer-events: none;
+}
+
+.showcase-stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.showcase-regular {
+  --showcase-backdrop:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0 1px, transparent 1px 40px),
+    linear-gradient(110deg, rgba(56, 189, 248, 0.68) 0 16%, rgba(15, 23, 42, 0) 16% 24%, rgba(244, 114, 182, 0.48) 24% 42%, rgba(15, 23, 42, 0) 42% 54%, rgba(250, 204, 21, 0.42) 54% 72%, rgba(15, 23, 42, 0.08) 72%),
+    linear-gradient(135deg, #08111f, #1e1b4b);
+}
+
+.showcase-panels {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.showcase-panels::before,
+.showcase-panels::after {
+  display: none;
+}
+
+.showcase-separator {
+  --showcase-backdrop:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0 1px, transparent 1px 34px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.45) 0 32%, rgba(59, 130, 246, 0.44) 32% 66%, rgba(251, 191, 36, 0.40) 66% 100%),
+    linear-gradient(135deg, #08111f, #17112e);
 }
 
 /* Vibrant image-like background for GlassClear demos with sharp lines for testing blur */
 .showcase-vibrant {
-  background-color: #1e1b4b;
-  background-image: 
-    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v1H0V0zm0 20h1V0h-1v20z' fill='%2360a5fa' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, #3b0764, #1e3a8a);
-  background-size: 20px 20px, 100% 100%;
+  --showcase-backdrop:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.20) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, rgba(125, 211, 252, 0.18) 0 1px, transparent 1px 24px),
+    linear-gradient(115deg, rgba(14, 165, 233, 0.78) 0 20%, rgba(236, 72, 153, 0.58) 20% 46%, rgba(34, 197, 94, 0.45) 46% 68%, rgba(245, 158, 11, 0.55) 68% 100%),
+    linear-gradient(135deg, #04111f, #1e1b4b);
 }
 
 /* ── Navbar Demo ───────────────────────────────────────────────────────────── */
@@ -335,9 +392,32 @@ body {
 
 .demo-separator-stage {
   display: flex;
-  height: 180px;
+  height: 150px;
   align-items: stretch;
   gap: 0;
+}
+
+.demo-separator-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.demo-separator-example {
+  display: grid;
+  gap: 10px;
+}
+
+.demo-example-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(224, 224, 240, 0.58);
+}
+
+.demo-resize-stage {
+  touch-action: none;
 }
 
 .demo-separator-pane {
@@ -354,7 +434,7 @@ body {
 /* ── Code Snippet ──────────────────────────────────────────────────────────── */
 
 .demo-code {
-  margin-top: 16px;
+  margin: 16px 0 0;
   padding: 16px 20px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.35);
@@ -365,6 +445,10 @@ body {
   color: rgba(224, 224, 240, 0.7);
   overflow-x: auto;
   white-space: pre;
+}
+
+.demo-code code {
+  font: inherit;
 }
 
 .demo-code .kw { color: #c4b5fd; }
