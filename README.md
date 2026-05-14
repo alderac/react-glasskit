@@ -23,6 +23,7 @@ glasskit/
     ├── getting-started.md
     ├── design-tokens.md
     ├── accessibility.md
+    ├── roadmap.md
     └── components/
 ```
 
@@ -118,6 +119,10 @@ All three mandatory OS accessibility media queries are handled automatically —
 ```bash
 npm run typecheck
 ```
+
+## Roadmap
+
+React GlassKit is moving toward a public, workspace-first React UI kit for glass-style application layouts. See [docs/roadmap.md](./docs/roadmap.md) for the current public direction.
 
 ## Component Reference
 
