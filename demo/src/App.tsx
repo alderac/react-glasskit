@@ -1,5 +1,12 @@
-import { Fragment, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
-import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glasskit';
+import { Fragment, type ReactNode } from 'react';
+import {
+  GlassRegular,
+  GlassClear,
+  GlassPanel,
+  PanelSeparator,
+  useActivePanel,
+  useResizablePanels,
+} from 'react-glasskit';
 
 const regularCodeSample = [
   "import { GlassRegular } from 'react-glasskit';",
@@ -26,20 +33,21 @@ const regularCodeSample = [
 ].join('\n');
 
 const panelCodeSample = [
-  "import { useState } from 'react';",
-  "import { GlassPanel, PanelSeparator } from 'react-glasskit';",
+  "import { GlassPanel, PanelSeparator, useActivePanel } from 'react-glasskit';",
   '',
   'export function SplitPanelExample() {',
-  "  const [activePanel, setActivePanel] = useState<'editor' | 'inspector'>('editor');",
+  "  const activePanels = useActivePanel<'editor' | 'inspector'>({",
+  "    initialPanelId: 'editor',",
+  '  });',
   '',
   '  return (',
   '    <div style={{ display: \'flex\', height: 320 }}>',
   '      <GlassPanel',
-  "        focused={activePanel === 'editor'}",
-  "        inactive={activePanel !== 'editor'}",
+  "        focused={activePanels.isFocused('editor')}",
+  "        inactive={activePanels.isInactive('editor')}",
   '        animate',
   '        style={{ flex: 1, padding: 20 }}',
-  "        onClick={() => setActivePanel('editor')}",
+  "        onClick={() => activePanels.activatePanel('editor')}",
   '      >',
   '        <h3>Editor</h3>',
   '        <p>Primary workspace panel. Click to focus.</p>',
@@ -48,11 +56,11 @@ const panelCodeSample = [
   '      <PanelSeparator orientation="vertical" />',
   '',
   '      <GlassPanel',
-  "        focused={activePanel === 'inspector'}",
-  "        inactive={activePanel !== 'inspector'}",
+  "        focused={activePanels.isFocused('inspector')}",
+  "        inactive={activePanels.isInactive('inspector')}",
   '        animate',
   '        style={{ flex: 1, padding: 20 }}',
-  "        onClick={() => setActivePanel('inspector')}",
+  "        onClick={() => activePanels.activatePanel('inspector')}",
   '      >',
   '        <h3>Inspector</h3>',
   '        <p>Secondary detail panel. Click to focus.</p>',
@@ -89,33 +97,15 @@ const clearCodeSample = [
 ].join('\n');
 
 const separatorCodeSample = [
-  "import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';",
-  "import { GlassRegular, PanelSeparator } from 'react-glasskit';",
+  "import { GlassRegular, PanelSeparator, useResizablePanels } from 'react-glasskit';",
   '',
   'export function SeparatorExamples() {',
-  '  const [leftPaneWidth, setLeftPaneWidth] = useState(58);',
-  '  const resizeStageRef = useRef<HTMLDivElement>(null);',
-  '',
-  '  const handleResizePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {',
-  '    const stage = resizeStageRef.current;',
-  '    if (!stage) return;',
-  '',
-  '    event.preventDefault();',
-  '    const rect = stage.getBoundingClientRect();',
-  '',
-  '    const handlePointerMove = (moveEvent: PointerEvent) => {',
-  '      const nextWidth = ((moveEvent.clientX - rect.left) / rect.width) * 100;',
-  '      setLeftPaneWidth(Math.min(72, Math.max(32, Math.round(nextWidth))));',
-  '    };',
-  '',
-  '    const handlePointerUp = () => {',
-  "      window.removeEventListener('pointermove', handlePointerMove);",
-  "      window.removeEventListener('pointerup', handlePointerUp);",
-  '    };',
-  '',
-  "    window.addEventListener('pointermove', handlePointerMove);",
-  "    window.addEventListener('pointerup', handlePointerUp);",
-  '  };',
+  '  const panels = useResizablePanels({',
+  "    primaryPanelId: 'timeline-panel',",
+  '    initialSize: 58,',
+  '    minSize: 32,',
+  '    maxSize: 72,',
+  '  });',
   '',
   '  return (',
   '    <>',
@@ -125,17 +115,17 @@ const separatorCodeSample = [
   '        <GlassRegular style={{ flex: 1 }}>Panel B</GlassRegular>',
   '      </div>',
   '',
-  '      <div ref={resizeStageRef} style={{ display: \'flex\', height: 150 }}>',
-  "        <GlassRegular style={{ flex: '0 0 ' + leftPaneWidth + '%' }}>",
-  '          Timeline {leftPaneWidth}%',
+  '      <div ref={panels.containerRef} style={{ display: \'flex\', height: 150 }}>',
+  "        <GlassRegular id=\"timeline-panel\" style={panels.primaryPanelStyle}>",
+  '          Timeline {panels.primarySize}%',
   '        </GlassRegular>',
   '        <PanelSeparator',
   '          orientation="vertical"',
   '          resizable',
   '          aria-label="Resize timeline and inspector panes"',
-  '          onPointerDown={handleResizePointerDown}',
+  '          {...panels.separatorProps}',
   '        />',
-  '        <GlassRegular style={{ flex: 1 }}>Inspector</GlassRegular>',
+  '        <GlassRegular style={panels.secondaryPanelStyle}>Inspector</GlassRegular>',
   '      </div>',
   '    </>',
   '  );',
@@ -208,30 +198,15 @@ function CodeBlock({ children }: { children: string }) {
 }
 
 export default function App() {
-  const [activePanel, setActivePanel] = useState<'left' | 'right'>('left');
-  const [leftPaneWidth, setLeftPaneWidth] = useState(58);
-  const resizeStageRef = useRef<HTMLDivElement>(null);
-
-  const handleResizePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const stage = resizeStageRef.current;
-    if (!stage) return;
-
-    event.preventDefault();
-    const rect = stage.getBoundingClientRect();
-
-    const handlePointerMove = (moveEvent: PointerEvent) => {
-      const nextWidth = ((moveEvent.clientX - rect.left) / rect.width) * 100;
-      setLeftPaneWidth(Math.min(72, Math.max(32, Math.round(nextWidth))));
-    };
-
-    const handlePointerUp = () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerup', handlePointerUp);
-    };
-
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerup', handlePointerUp);
-  };
+  const activePanels = useActivePanel<'left' | 'right'>({
+    initialPanelId: 'left',
+  });
+  const resizablePanels = useResizablePanels({
+    primaryPanelId: 'timeline-panel',
+    initialSize: 58,
+    minSize: 32,
+    maxSize: 72,
+  });
 
   return (
     <>
@@ -289,11 +264,11 @@ export default function App() {
           <div className="showcase-stage showcase-panels">
             <div className="demo-panels-container">
               <GlassPanel
-                focused={activePanel === 'left'}
-                inactive={activePanel !== 'left'}
+                focused={activePanels.isFocused('left')}
+                inactive={activePanels.isInactive('left')}
                 animate
                 style={{ flex: 1 }}
-                onClick={() => setActivePanel('left')}
+                onClick={() => activePanels.activatePanel('left')}
               >
                 <div className="demo-panel-content">
                   <h3>Editor</h3>
@@ -304,8 +279,8 @@ export default function App() {
                     <div className="demo-skeleton-line" />
                     <div className="demo-skeleton-line" />
                   </div>
-                  <div className={`demo-panel-tag ${activePanel === 'left' ? 'focused' : 'inactive'}`}>
-                    {activePanel === 'left' ? '● Focused' : '○ Inactive'}
+                  <div className={`demo-panel-tag ${activePanels.activePanelId === 'left' ? 'focused' : 'inactive'}`}>
+                    {activePanels.activePanelId === 'left' ? '● Focused' : '○ Inactive'}
                   </div>
                 </div>
               </GlassPanel>
@@ -313,11 +288,11 @@ export default function App() {
               <PanelSeparator orientation="vertical" />
 
               <GlassPanel
-                focused={activePanel === 'right'}
-                inactive={activePanel !== 'right'}
+                focused={activePanels.isFocused('right')}
+                inactive={activePanels.isInactive('right')}
                 animate
                 style={{ flex: 1 }}
-                onClick={() => setActivePanel('right')}
+                onClick={() => activePanels.activatePanel('right')}
               >
                 <div className="demo-panel-content">
                   <h3>Inspector</h3>
@@ -328,8 +303,8 @@ export default function App() {
                     <div className="demo-skeleton-line" />
                     <div className="demo-skeleton-line" />
                   </div>
-                  <div className={`demo-panel-tag ${activePanel === 'right' ? 'focused' : 'inactive'}`}>
-                    {activePanel === 'right' ? '● Focused' : '○ Inactive'}
+                  <div className={`demo-panel-tag ${activePanels.activePanelId === 'right' ? 'focused' : 'inactive'}`}>
+                    {activePanels.activePanelId === 'right' ? '● Focused' : '○ Inactive'}
                   </div>
                 </div>
               </GlassPanel>
@@ -396,25 +371,37 @@ export default function App() {
 
               <div className="demo-separator-example">
                 <p className="demo-example-label">Resizable handle</p>
-                <div className="demo-separator-stage demo-resize-stage" ref={resizeStageRef}>
+                <div
+                  className="demo-separator-stage demo-resize-stage"
+                  ref={resizablePanels.containerRef}
+                >
                   <GlassRegular
+                    id="timeline-panel"
                     style={{
-                      flex: `0 0 ${leftPaneWidth}%`,
+                      ...resizablePanels.primaryPanelStyle,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      minWidth: 0,
                     }}
                   >
-                    <span className="demo-separator-pane">Timeline · {leftPaneWidth}%</span>
+                    <span className="demo-separator-pane">
+                      Timeline · {resizablePanels.primarySize}%
+                    </span>
                   </GlassRegular>
                   <PanelSeparator
                     orientation="vertical"
                     resizable
                     aria-label="Resize timeline and inspector panes"
-                    onPointerDown={handleResizePointerDown}
+                    {...resizablePanels.separatorProps}
                   />
-                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 }}>
+                  <GlassRegular
+                    style={{
+                      ...resizablePanels.secondaryPanelStyle,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <span className="demo-separator-pane">Inspector</span>
                   </GlassRegular>
                 </div>
