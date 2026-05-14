@@ -242,7 +242,7 @@ export default function App() {
         {/* ── Hero ─────────────────────────────────────────── */}
         <header className="demo-hero">
           <div className="demo-badge">
-            <span>v0.1.0</span> — Liquid Glass Architecture
+            <span>v0.1.1</span> — Liquid Glass Architecture
           </div>
           <h1>React GlassKit</h1>
           <p>
