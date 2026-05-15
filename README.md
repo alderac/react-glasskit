@@ -4,12 +4,12 @@ A cross-repository, project-agnostic design system for visually layering element
 
 ## Architecture
 
-React GlassKit is intentionally **bundler-agnostic and framework-minimal**. It ships as TypeScript source that any Vite, webpack, or Next.js project can consume directly — CSS Modules are handled by the consuming app's bundler.
+React GlassKit is intentionally **framework-minimal**. The public package resolves to compiled `dist` output with generated type declarations and CSS assets, while source paths remain available for advanced local integration.
 
 ```
 glasskit/
 ├── src/
-│   ├── index.ts              # Public API barrel
+│   ├── index.ts              # Source API barrel
 │   ├── types.ts              # Shared TypeScript utilities
 │   ├── css/
 │   │   ├── tokens.css        # Design tokens (:root custom properties)
@@ -56,15 +56,20 @@ In your consuming project's `package.json`:
 **1. Import the design tokens once at your application root** (e.g., `main.tsx`, `_app.tsx`, `layout.tsx`):
 
 ```ts
-import 'react-glasskit/src/css/tokens.css';
+import 'react-glasskit/css/tokens.css';
 ```
 
-**2. Ensure your bundler handles CSS Modules.** Vite does this out of the box. For webpack, add `css-loader` with `modules: true`.
-
-**3. Import components:**
+**2. Import components and hooks:**
 
 ```tsx
-import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glasskit';
+import {
+  GlassRegular,
+  GlassClear,
+  GlassPanel,
+  PanelSeparator,
+  useActivePanel,
+  useResizablePanels,
+} from 'react-glasskit';
 ```
 
 ## Quick Start
@@ -93,6 +98,35 @@ import { GlassPanel, GlassRegular, GlassClear, PanelSeparator } from 'react-glas
   <button>Tool A</button>
   <button>Tool B</button>
 </GlassClear>
+```
+
+### Resizable Workspace
+
+```tsx
+import { GlassPanel, PanelSeparator, useResizablePanels } from 'react-glasskit';
+
+function WorkspaceSplit() {
+  const panels = useResizablePanels({
+    primaryPanelId: 'editor-panel',
+    initialSize: 58,
+    minSize: 32,
+    maxSize: 72,
+  });
+
+  return (
+    <div ref={panels.containerRef} style={{ display: 'flex', height: 320 }}>
+      <GlassPanel id="editor-panel" style={panels.primaryPanelStyle}>
+        Editor
+      </GlassPanel>
+      <PanelSeparator
+        resizable
+        aria-label="Resize editor and inspector panels"
+        {...panels.separatorProps}
+      />
+      <GlassPanel style={panels.secondaryPanelStyle}>Inspector</GlassPanel>
+    </div>
+  );
+}
 ```
 
 ## Dark Mode

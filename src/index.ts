@@ -16,5 +16,19 @@ export type { GlassPanelProps } from './components/GlassPanel';
 export { PanelSeparator } from './components/PanelSeparator';
 export type { PanelSeparatorProps } from './components/PanelSeparator';
 
+// ── Hooks ───────────────────────────────────────────────────────────────────
+export { useActivePanel } from './hooks/useActivePanel';
+export type {
+  ActivePanelId,
+  PanelState,
+  UseActivePanelOptions,
+  UseActivePanelResult,
+} from './hooks/useActivePanel';
+export { useResizablePanels } from './hooks/useResizablePanels';
+export type {
+  UseResizablePanelsOptions,
+  UseResizablePanelsResult,
+} from './hooks/useResizablePanels';
+
 // ── Types ────────────────────────────────────────────────────────────────────
 export type { PolymorphicProps, Orientation } from './types';

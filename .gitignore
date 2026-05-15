@@ -2,6 +2,8 @@ node_modules/
 dist/
 demo/dist/
 demo/node_modules/
+.tmp/
 .DS_Store
 *.local
 docs/superpowers/
+.agents/

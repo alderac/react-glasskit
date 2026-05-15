@@ -48,32 +48,34 @@ import { GlassPanel, PanelSeparator } from 'react-glasskit';
 </div>
 ```
 
-### With Drag-to-Resize
+### Passive And Interactive Use
 
-Wire `onMouseDown` or `onPointerDown` to your resize handler. The separator's hit target handles the initial grab, the component applies the matching resize cursor, and your handler manages the drag delta.
+`PanelSeparator` is passive by default. It renders the visual divider and orientation attributes, but it does not become keyboard-focusable or resizable on its own.
+
+For interactive resizing, pair it with `useResizablePanels`:
 
 ```tsx
-const handleMouseDown = (e: React.MouseEvent) => {
-  e.preventDefault();
-  const startX = e.clientX;
-  const startWidth = leftPanelRef.current!.offsetWidth;
+const panels = useResizablePanels({
+  primaryPanelId: 'editor-panel',
+  initialSize: 58,
+  minSize: 32,
+  maxSize: 72,
+});
 
-  const onMouseMove = (ev: MouseEvent) => {
-    const delta = ev.clientX - startX;
-    setLeftWidth(Math.max(200, startWidth + delta));
-  };
-
-  const onMouseUp = () => {
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  };
-
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
-};
-
-<PanelSeparator orientation="vertical" resizable onMouseDown={handleMouseDown} />
+<div ref={panels.containerRef} style={{ display: 'flex', height: 320 }}>
+  <GlassPanel id="editor-panel" style={panels.primaryPanelStyle}>
+    Editor
+  </GlassPanel>
+  <PanelSeparator
+    resizable
+    aria-label="Resize editor and inspector panels"
+    {...panels.separatorProps}
+  />
+  <GlassPanel style={panels.secondaryPanelStyle}>Inspector</GlassPanel>
+</div>
 ```
+
+The hook supplies `tabIndex`, `aria-controls`, `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, pointer handlers, and arrow-key handlers. The consuming app still owns the accessible label because only the app knows what panels are being resized.
 
 ## Hit Target
 

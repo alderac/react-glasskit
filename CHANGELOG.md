@@ -5,6 +5,68 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11] - 2026-05-14
+
+### Changed
+- Updated README and getting-started guidance for the public `dist` package path, CSS token import, and v1 workspace hooks.
+
+## [0.1.10] - 2026-05-14
+
+### Changed
+- Updated the GitHub Pages workflow so demo deploys are gated by package typecheck, tests, build, packed-package smoke test, and demo build.
+
+## [0.1.9] - 2026-05-14
+
+### Added
+- Added a packed Vite consumer smoke test that verifies public package imports, type declarations, and CSS token imports from the npm tarball.
+
+### Changed
+- Kept source-path escape hatches in the package while excluding source test files from packed artifacts.
+
+## [0.1.8] - 2026-05-14
+
+### Changed
+- Updated the demo to use `useActivePanel` and `useResizablePanels` for workspace focus and resize examples.
+- Replaced the demo's ad hoc resize code sample with the public v1 hook path.
+
+## [0.1.7] - 2026-05-14
+
+### Added
+- Added visible focus styling for resizable separators, including high-contrast focus treatment.
+- Documented passive versus interactive `PanelSeparator` use and resizable separator accessibility responsibilities.
+
+## [0.1.6] - 2026-05-14
+
+### Added
+- Added `useResizablePanels` with APG-oriented separator props, pointer resizing, keyboard resizing, and panel flex styles.
+
+### Fixed
+- Guarded resize behavior against stale constraints, pointer cancellation leaks, and zero-size pointer math.
+
+## [0.1.5] - 2026-05-14
+
+### Added
+- Added pure resize math helpers for clamped panel sizing, pointer-derived percentages, and keyboard resize steps.
+
+## [0.1.4] - 2026-05-14
+
+### Added
+- Added `useActivePanel` for workspace panel activation state, focused/inactive helpers, and activation callbacks.
+
+## [0.1.3] - 2026-05-14
+
+### Added
+- Added the initial Vitest and React Testing Library harness for component behavior tests.
+- Added focused tests for `GlassRegular`, `GlassPanel`, and `PanelSeparator`.
+
+## [0.1.2] - 2026-05-14
+
+### Added
+- Added the initial public package build path with compiled `dist` output, generated declarations, and CSS assets.
+
+### Changed
+- Updated the default package entry and export map to resolve through `dist` while preserving source-path escape hatches.
+
 ## [0.1.1] - 2026-05-14
 
 ### Added
