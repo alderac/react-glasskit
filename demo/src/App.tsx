@@ -8,6 +8,57 @@ import {
   useResizablePanels,
 } from 'react-glasskit';
 
+const installCodeSample = [
+  'npm install react-glasskit',
+  '',
+  "import 'react-glasskit/css/tokens.css';",
+  "import { GlassPanel, PanelSeparator, useResizablePanels } from 'react-glasskit';",
+].join('\n');
+
+const workspaceFiveCodeSample = [
+  "import { GlassPanel, PanelSeparator, useActivePanel, useResizablePanels } from 'react-glasskit';",
+  "import 'react-glasskit/css/tokens.css';",
+  '',
+  "type WorkspacePanel = 'editor' | 'inspector';",
+  '',
+  'export function Workspace() {',
+  "  const activePanels = useActivePanel<WorkspacePanel>({ initialPanelId: 'editor' });",
+  '  const layout = useResizablePanels({',
+  "    primaryPanelId: 'editor-panel',",
+  '    initialSize: 58,',
+  '    minSize: 32,',
+  '    maxSize: 72,',
+  '  });',
+  '',
+  '  return (',
+  "    <main ref={layout.containerRef} style={{ display: 'flex', minHeight: 360 }}>",
+  '      <GlassPanel',
+  '        id="editor-panel"',
+  "        focused={activePanels.isFocused('editor')}",
+  "        inactive={activePanels.isInactive('editor')}",
+  '        style={layout.primaryPanelStyle}',
+  "        onClick={() => activePanels.activatePanel('editor')}",
+  '      >',
+  '        Editor',
+  '      </GlassPanel>',
+  '      <PanelSeparator',
+  '        resizable',
+  '        aria-label="Resize editor and inspector panels"',
+  '        {...layout.separatorProps}',
+  '      />',
+  '      <GlassPanel',
+  "        focused={activePanels.isFocused('inspector')}",
+  "        inactive={activePanels.isInactive('inspector')}",
+  '        style={layout.secondaryPanelStyle}',
+  "        onClick={() => activePanels.activatePanel('inspector')}",
+  '      >',
+  '        Inspector',
+  '      </GlassPanel>',
+  '    </main>',
+  '  );',
+  '}',
+].join('\n');
+
 const regularCodeSample = [
   "import { GlassRegular } from 'react-glasskit';",
   '',
@@ -221,10 +272,54 @@ export default function App() {
           </div>
           <h1>React GlassKit</h1>
           <p>
-            Translucent frosted glass components for React.
-            Project-agnostic. Accessibility-first. Dark mode built in.
+            Workspace-first glass primitives for React applications: panels,
+            separators, overlays, focus states, and accessibility fallbacks without a
+            full shell framework.
           </p>
         </header>
+
+        <section className="demo-section demo-adoption" aria-labelledby="adoption-title">
+          <p className="demo-section-label">Start Here</p>
+          <h2 className="demo-section-title" id="adoption-title">
+            Workspace in five minutes
+          </h2>
+          <p className="demo-section-desc">
+            Install the package, import tokens once, then compose the public primitives into
+            focused and resizable workspace panels.
+          </p>
+
+          <div className="demo-adoption-grid">
+            <div>
+              <h3>1. Install and import</h3>
+              <CodeBlock>{installCodeSample}</CodeBlock>
+            </div>
+            <div>
+              <h3>2. Compose a workspace</h3>
+              <CodeBlock>{workspaceFiveCodeSample}</CodeBlock>
+            </div>
+          </div>
+        </section>
+
+        <section className="demo-section demo-recipes" aria-labelledby="recipes-title">
+          <p className="demo-section-label">Recipes</p>
+          <h2 className="demo-section-title" id="recipes-title">
+            Copyable paths, not exported shell abstractions
+          </h2>
+          <div className="demo-recipe-grid">
+            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/workspace-in-five-minutes.md">
+              <span>Workspace split</span>
+              <strong>Focused and resizable panels</strong>
+            </a>
+            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/app-shell.md">
+              <span>App shell</span>
+              <strong>Sidebar, header, and primary workspace</strong>
+            </a>
+            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/canvas-hud.md">
+              <span>Canvas HUD</span>
+              <strong>Floating controls over media surfaces</strong>
+            </a>
+          </div>
+        </section>
 
         {/* ── 1. GlassRegular — Navbar ─────────────────────── */}
         <section className="demo-section">
@@ -410,6 +505,27 @@ export default function App() {
           </div>
 
           <CodeBlock>{separatorCodeSample}</CodeBlock>
+        </section>
+
+        <section className="demo-section demo-trust" aria-labelledby="trust-title">
+          <p className="demo-section-label">Trust</p>
+          <h2 className="demo-section-title" id="trust-title">
+            What the package verifies
+          </h2>
+          <div className="demo-trust-grid">
+            <div>
+              <strong>Package path</strong>
+              <span>Build, declaration output, CSS exports, and packed Vite install smoke.</span>
+            </div>
+            <div>
+              <strong>Interaction path</strong>
+              <span>Component tests, active panel state, pointer resize, and keyboard resize.</span>
+            </div>
+            <div>
+              <strong>Accessibility posture</strong>
+              <span>Reduced motion, reduced transparency, increased contrast, and APG-oriented separator props.</span>
+            </div>
+          </div>
         </section>
 
         {/* ── Footer ───────────────────────────────────────── */}

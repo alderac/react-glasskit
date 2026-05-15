@@ -5,6 +5,11 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.15] - 2026-05-15
+
+### Changed
+- Expanded the demo into a lightweight v1 docs surface with install guidance, workspace adoption path, recipe links, and package trust evidence.
+
 ## [0.1.14] - 2026-05-15
 
 ### Added
