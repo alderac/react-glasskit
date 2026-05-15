@@ -169,6 +169,8 @@ All OS accessibility fallbacks are built into the CSS module automatically. See 
 
 ## Next Steps
 
-- Browse the [Component Reference](../README.md#component-reference) for detailed prop tables and examples
-- Review [design-tokens.md](./design-tokens.md) to understand every tunable parameter
-- Read [accessibility.md](./accessibility.md) to understand the a11y guarantees
+- Build the [Workspace In Five Minutes](./recipes/workspace-in-five-minutes.md) recipe first.
+- Browse the [Component Reference](../README.md#what-it-exports) for detailed prop tables and examples.
+- Use [App Shell](./recipes/app-shell.md) or [Canvas HUD](./recipes/canvas-hud.md) when your layout matches those patterns.
+- Review [design-tokens.md](./design-tokens.md) to understand every tunable parameter.
+- Read [accessibility.md](./accessibility.md) to understand what GlassKit owns and what your app still owns.

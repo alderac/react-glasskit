@@ -138,6 +138,10 @@ function WorkspaceSplit() {
 }
 ```
 
+## Recipes
+
+Start with [Workspace In Five Minutes](./docs/recipes/workspace-in-five-minutes.md) when you want the quickest working split-pane example. Use [App Shell](./docs/recipes/app-shell.md) for sidebar/header layouts and [Canvas HUD](./docs/recipes/canvas-hud.md) for floating controls over media or canvas surfaces.
+
 ## Other Patterns
 
 Use `GlassRegular` for chrome that should read as part of the application frame:
