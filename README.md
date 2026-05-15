@@ -184,14 +184,19 @@ See [docs/accessibility.md](./docs/accessibility.md) for the full responsibility
 
 ## Package Checks
 
+The v1 package path is verified with:
+
 ```bash
 npm run typecheck
 npm test
 npm run build
+npm run audit:css
 npm run smoke:package
+npm run smoke:next
+npm --prefix demo run build
 ```
 
-The packed-package smoke test installs the tarball into a generated Vite app and verifies public imports, type declarations, and CSS token imports.
+The packed-package smoke tests install the tarball into generated Vite and Next.js apps and verify public imports, type declarations, and CSS token imports.
 
 ## Roadmap
 
