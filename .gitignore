@@ -6,3 +6,4 @@ demo/node_modules/
 .DS_Store
 *.local
 docs/superpowers/
+.agents/
