@@ -176,6 +176,8 @@ GlassKit includes CSS fallbacks for:
 | `prefers-reduced-motion` | Disables crystallize animation and snaps transitions |
 | `prefers-contrast: more` | Hardens borders and focus indicators |
 
+GlassKit's accessibility posture is evidence-based rather than certification-based. The package verifies its own CSS fallbacks, component behavior, hook behavior, and packed-package imports, while consuming apps remain responsible for final product-level accessibility claims.
+
 Interactive separators follow the WAI-ARIA APG window splitter shape when `PanelSeparator` is paired with `useResizablePanels`: focusability, `aria-controls`, value attributes, arrow keys, Home, End, PageUp, and PageDown. The consuming app still supplies meaningful labels and product-level accessibility review.
 
 See [docs/accessibility.md](./docs/accessibility.md) for the full responsibility boundary.

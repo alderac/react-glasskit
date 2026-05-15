@@ -5,6 +5,15 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.16] - 2026-05-15
+
+### Added
+- Added a CSS accessibility fallback audit for documented media-query and focus treatments.
+
+### Changed
+- Clarified GlassKit-owned versus consumer-owned accessibility responsibilities.
+- Replaced the demo's hardcoded package version badge with version-neutral v1 positioning.
+
 ## [0.1.15] - 2026-05-15
 
 ### Changed
