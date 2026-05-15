@@ -6,6 +6,17 @@ const root = process.cwd();
 const tempRoot = path.join(root, '.tmp');
 const smokeRoot = path.join(tempRoot, 'smoke-next');
 
+// Keep PR CI reproducible; scheduled dependency refreshes can move this fixture deliberately.
+const pinnedNextSmokeDependencies = {
+  '@types/node': '25.8.0',
+  '@types/react': '19.2.14',
+  '@types/react-dom': '19.2.3',
+  next: '16.2.6',
+  react: '19.2.6',
+  'react-dom': '19.2.6',
+  typescript: '6.0.3',
+};
+
 function run(command, args, cwd = root) {
   const resolvedCommand =
     process.platform === 'win32' && command === 'npm' && process.env.npm_execpath
@@ -51,14 +62,8 @@ await writeFile(
         build: 'next build',
       },
       dependencies: {
-        '@types/node': '25.8.0',
-        '@types/react': '19.2.14',
-        '@types/react-dom': '19.2.3',
-        next: '16.2.6',
-        react: '19.2.6',
-        'react-dom': '19.2.6',
+        ...pinnedNextSmokeDependencies,
         'react-glasskit': `file:${tarball}`,
-        typescript: '6.0.3',
       },
     },
     null,

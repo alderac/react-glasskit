@@ -21,9 +21,11 @@ for (const filePath of requiredFiles) {
 }
 
 const entrySource = await readFile('dist/index.js', 'utf8');
+const cssEntryImportPattern =
+  /^\s*(?:\/\*[\s\S]*?\*\/\s*|\/\/[^\n]*\n\s*)*import\s+['"]\.\/index\.css['"](?:\s+with\s+\{[^;]*\})?\s*;/;
 
-if (!entrySource.startsWith("import './index.css';")) {
-  throw new Error("dist/index.js must import './index.css' as its first statement.");
+if (!cssEntryImportPattern.test(entrySource)) {
+  throw new Error("dist/index.js must import './index.css' before runtime exports.");
 }
 
 const declarationSource = await readFile('dist/index.d.ts', 'utf8');
