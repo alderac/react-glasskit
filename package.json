@@ -1,6 +1,6 @@
 {
   "name": "react-glasskit",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
   "keywords": [
     "react",
@@ -54,7 +54,7 @@
   "scripts": {
     "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
     "typecheck": "tsc --noEmit",
-    "build": "npm run clean && vite build && tsc -p tsconfig.build.json && node scripts/copy-dist-css.mjs",
+    "build": "npm run clean && vite build && tsc -p tsconfig.build.json && node scripts/copy-dist-css.mjs && node scripts/assert-dist-package.mjs",
     "test": "vitest run",
     "smoke:package": "npm run build && node scripts/smoke-packed-vite.mjs"
   },
