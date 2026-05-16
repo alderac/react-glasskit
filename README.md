@@ -34,29 +34,34 @@ Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. Glas
 
 ## Installation
 
-### Option A: Local path
+### Published package
 
-For monorepos or same-machine development, add this to your consuming project's `package.json`:
+After the first public npm release:
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "file:../../glasskit"
-  }
-}
+```bash
+npm install react-glasskit
 ```
 
-### Option B: Git dependency
+### Packed tarball for pre-release dogfood
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "git+https://github.com/alderac/react-glasskit.git"
-  }
-}
+Before the first npm release, install from a packed tarball so the consuming app uses the same compiled `dist` output that npm will publish.
+
+From this repository:
+
+```bash
+npm run build
+npm pack
 ```
 
-Then run `npm install` in the consuming app.
+Then install the generated tarball in the consuming app:
+
+```bash
+npm install /absolute/path/to/react-glasskit-0.1.20.tgz
+```
+
+### Git dependencies
+
+Git dependencies are not the supported v1 install path. The public package resolves to compiled `dist` files, and `dist/` is intentionally not tracked in git. Use a packed tarball before publication and the npm package after publication.
 
 ## Setup
 

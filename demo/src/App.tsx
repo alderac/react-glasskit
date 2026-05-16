@@ -19,7 +19,12 @@ function getPreferredDemoTheme(): DemoTheme {
 }
 
 const installCodeSample = [
+  '# after the first public npm release',
   'npm install react-glasskit',
+  '',
+  '# pre-release dogfood from this repo',
+  'npm run build && npm pack',
+  'npm install /absolute/path/to/react-glasskit-0.1.20.tgz',
   '',
   "import 'react-glasskit/css/tokens.css';",
   "import { GlassPanel, PanelSeparator, useResizablePanels } from 'react-glasskit';",
