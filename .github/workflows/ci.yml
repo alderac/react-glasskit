@@ -1,21 +1,15 @@
-name: Deploy Demo to GitHub Pages
+name: CI
 
 on:
-  push:
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,7 +37,7 @@ jobs:
       - name: Audit CSS fallbacks
         run: npm run audit:css
 
-      - name: Smoke test packed package
+      - name: Smoke test packed Vite package
         run: npm run smoke:package
 
       - name: Smoke test packed Next package
@@ -56,19 +50,3 @@ jobs:
       - name: Build demo
         working-directory: demo
         run: npm run build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: demo/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

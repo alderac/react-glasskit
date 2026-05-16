@@ -5,6 +5,52 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.19] - 2026-05-15
+
+### Changed
+- Relaxed the dist CSS import assertion to tolerate harmless bundler formatting while preserving the package contract.
+- Clarified that the packed Next.js smoke fixture pins dependencies intentionally for reproducible PR CI.
+
+## [0.1.18] - 2026-05-15
+
+### Added
+- Added PR-time CI for package checks, accessibility audit, packed Vite and Next smoke tests, and demo build.
+
+### Changed
+- Updated README and roadmap release-readiness guidance around actual v1 trust checks.
+
+## [0.1.17] - 2026-05-15
+
+### Added
+- Added a packed Next.js consumer smoke test for public component, hook, and CSS token imports.
+
+## [0.1.16] - 2026-05-15
+
+### Added
+- Added a CSS accessibility fallback audit for documented media-query and focus treatments.
+
+### Changed
+- Clarified GlassKit-owned versus consumer-owned accessibility responsibilities.
+- Replaced the demo's hardcoded package version badge with version-neutral v1 positioning.
+
+## [0.1.15] - 2026-05-15
+
+### Changed
+- Expanded the demo into a lightweight v1 docs surface with install guidance, workspace adoption path, recipe links, and package trust evidence.
+
+## [0.1.14] - 2026-05-15
+
+### Added
+- Added copyable v1 recipes for a five-minute workspace, app shell, and canvas HUD.
+
+### Changed
+- Linked the recipes from README and getting-started guidance.
+
+## [0.1.13] - 2026-05-15
+
+### Added
+- Added post-build package assertions for dist artifacts, CSS entry wiring, declaration exports, and package export paths.
+
 ## [0.1.12] - 2026-05-15
 
 ### Changed

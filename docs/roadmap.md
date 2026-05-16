@@ -1,6 +1,6 @@
 # Roadmap
 
-React GlassKit is moving toward a public, workspace-first React UI kit for glass-style application layouts. This roadmap is directional, not a release contract. Details may change as the package is tested in real applications.
+React GlassKit is moving toward a public, workspace-first material layer for glass-style React application layouts. This roadmap is directional, not a release contract. Details may change as the package is tested in real applications.
 
 ## Near-Term Direction
 
@@ -12,12 +12,12 @@ React GlassKit is moving toward a public, workspace-first React UI kit for glass
 
 ## V1 Priorities
 
-- Workspace-first examples that show how to build a practical split-pane layout.
-- Copyable recipes for app shells, workspace panels, and canvas-style overlays.
-- Accessible defaults for glass surfaces, motion reduction, contrast preferences, and transparency fallbacks.
-- Lightweight behavior helpers for common workspace interactions.
-- Package smoke tests that verify public imports, CSS paths, and TypeScript declarations.
-- Public documentation that explains why GlassKit is useful beyond hand-rolled glass CSS.
+- Keep the public API focused on primitives, hooks, tokens, and documented CSS paths.
+- Make the first adoption path obvious through the workspace-in-five-minutes recipe.
+- Provide copyable recipes for app shells, workspace panels, and canvas-style overlays.
+- Keep accessibility support visible through tested behavior, CSS fallback audits, and clear consumer responsibilities.
+- Verify public imports, CSS paths, TypeScript declarations, and packed-package installs in Vite and Next.js consumers.
+- Keep public documentation grounded in what the package actually verifies.
 
 ## Later Possibilities
 

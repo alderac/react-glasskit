@@ -138,6 +138,10 @@ function WorkspaceSplit() {
 }
 ```
 
+## Recipes
+
+Start with [Workspace In Five Minutes](./docs/recipes/workspace-in-five-minutes.md) when you want the quickest working split-pane example. Use [App Shell](./docs/recipes/app-shell.md) for sidebar/header layouts and [Canvas HUD](./docs/recipes/canvas-hud.md) for floating controls over media or canvas surfaces.
+
 ## Other Patterns
 
 Use `GlassRegular` for chrome that should read as part of the application frame:
@@ -172,20 +176,27 @@ GlassKit includes CSS fallbacks for:
 | `prefers-reduced-motion` | Disables crystallize animation and snaps transitions |
 | `prefers-contrast: more` | Hardens borders and focus indicators |
 
+GlassKit's accessibility posture is evidence-based rather than certification-based. The package verifies its own CSS fallbacks, component behavior, hook behavior, and packed-package imports, while consuming apps remain responsible for final product-level accessibility claims.
+
 Interactive separators follow the WAI-ARIA APG window splitter shape when `PanelSeparator` is paired with `useResizablePanels`: focusability, `aria-controls`, value attributes, arrow keys, Home, End, PageUp, and PageDown. The consuming app still supplies meaningful labels and product-level accessibility review.
 
 See [docs/accessibility.md](./docs/accessibility.md) for the full responsibility boundary.
 
 ## Package Checks
 
+The v1 package path is verified with:
+
 ```bash
 npm run typecheck
 npm test
 npm run build
+npm run audit:css
 npm run smoke:package
+npm run smoke:next
+npm --prefix demo run build
 ```
 
-The packed-package smoke test installs the tarball into a generated Vite app and verifies public imports, type declarations, and CSS token imports.
+The packed-package smoke tests install the tarball into generated Vite and Next.js apps and verify public imports, type declarations, and CSS token imports.
 
 ## Roadmap
 

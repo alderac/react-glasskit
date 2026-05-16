@@ -39,11 +39,21 @@ User sets: Settings → Accessibility → Reduce Motion
 | PanelSeparator | `opacity: 1`, solid border color |
 | Focus ring on GlassPanel | `0 0 0 3px var(--glass-high-contrast-focus)` |
 
+## Responsibility Matrix
+
+| Area | GlassKit Owns | Consuming App Owns |
+|------|---------------|--------------------|
+| Glass fallbacks | CSS media-query fallbacks for reduced transparency, reduced motion, and increased contrast | Final review of content contrast after app-specific tokens and backgrounds |
+| Focus visuals | Focus treatment for `GlassPanel` and resizable `PanelSeparator` | App-level focus order, focus restoration, and skip-link behavior |
+| Resizable separators | APG-oriented separator props from `useResizablePanels` | Meaningful `aria-label`, panel semantics, and workflow-specific keyboard paths |
+| Recipes | Copyable accessible starting points | Product-specific landmarks, headings, labels, and validation |
+| Compliance claims | Evidence of package behavior | Final WCAG, Section 508, VPAT, procurement, and product claims |
+
 ## Resizable Workspace Separators
 
 Interactive resize behavior follows the WAI-ARIA APG Window Splitter pattern when `PanelSeparator` is paired with `useResizablePanels`.
 
-GlassKit owns:
+GlassKit supplies:
 
 - `role="separator"`
 - keyboard focus through `tabIndex={0}`
@@ -53,12 +63,22 @@ GlassKit owns:
 - arrow-key, Home, End, PageUp, and PageDown resizing
 - visible focus styling for the resizable separator
 
-Consumers own:
+Consumers supply:
 
 - the separator's accessible name
 - panel content semantics
 - app-level focus management after a resize
 - final page-level WCAG or Section 508 claims
+
+## Evidence Summary
+
+Current package confidence comes from:
+
+- component tests for public class/state behavior
+- hook tests for active panel state, resize math, pointer resize, and keyboard resize
+- `npm run build`, which emits package JS, declarations, and CSS assets
+- `npm run smoke:package`, which installs the packed package into a generated Vite app
+- `npm run audit:css`, which verifies the documented CSS fallback rules remain present
 
 ## Overriding Fallback Colors
 
