@@ -74,6 +74,29 @@ const workspaceFiveCodeSample = [
   '}',
 ].join('\n');
 
+const comparisonItems = [
+  {
+    need: 'One decorative overlay',
+    localCss: 'Often enough',
+    glasskit: 'More package than you need',
+  },
+  {
+    need: 'Repeated workspace surfaces',
+    localCss: 'Panel styles drift across files',
+    glasskit: 'Shared primitives and tokens',
+  },
+  {
+    need: 'Accessibility fallbacks',
+    localCss: 'Every media query is app-owned',
+    glasskit: 'Motion, transparency, contrast, and focus fallbacks ship together',
+  },
+  {
+    need: 'Resizable split panels',
+    localCss: 'Pointer, keyboard, and ARIA behavior are custom work',
+    glasskit: 'PanelSeparator and useResizablePanels cover the v1 splitter path',
+  },
+];
+
 const regularCodeSample = [
   "import { GlassRegular } from 'react-glasskit';",
   '',
@@ -339,6 +362,26 @@ export default function App() {
               <h3>2. Compose a workspace</h3>
               <CodeBlock>{workspaceFiveCodeSample}</CodeBlock>
             </div>
+          </div>
+        </section>
+
+        <section className="demo-section demo-comparison" aria-labelledby="comparison-title">
+          <p className="demo-section-label">Why GlassKit</p>
+          <h2 className="demo-section-title" id="comparison-title">
+            When glass becomes a workspace system
+          </h2>
+          <p className="demo-section-desc">
+            Local CSS is still the right answer for one decorative card. GlassKit starts to earn
+            its keep when panels, overlays, focus states, and accessibility fallbacks repeat.
+          </p>
+          <div className="demo-comparison-grid">
+            {comparisonItems.map((item) => (
+              <div className="demo-comparison-row" key={item.need}>
+                <strong>{item.need}</strong>
+                <span>{item.localCss}</span>
+                <span>{item.glasskit}</span>
+              </div>
+            ))}
           </div>
         </section>
 

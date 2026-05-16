@@ -21,6 +21,21 @@ Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. Glas
 - You need docking, tabs, persistence, nested pane composition, or drag reordering.
 - You only need one-off glass CSS for a marketing page.
 
+## Why Not Hand-Roll The CSS?
+
+Hand-rolled glass CSS is a good choice for one decorative surface. GlassKit is for repeated workspace surfaces where the material layer also needs interaction states, fallbacks, and package reliability.
+
+| Need | Hand-rolled CSS | GlassKit |
+|------|-----------------|----------|
+| One marketing card or hero overlay | Usually enough | More package than you need |
+| Repeated panels, inspectors, sidebars, and overlays | Easy to drift across files | Shared primitives and tokens |
+| Reduced motion, reduced transparency, and increased contrast | You own every fallback | Fallbacks ship with the material layer |
+| Active and inactive workspace states | App-specific CSS conventions | `GlassPanel` and `useActivePanel` share the state shape |
+| Accessible split-panel behavior | You implement pointer, keyboard, and ARIA behavior | `PanelSeparator` plus `useResizablePanels` covers the v1 splitter path |
+| Public package confidence | Your app owns packaging | Packed Vite and Next.js smoke tests verify public imports and CSS paths |
+
+Use GlassKit when glass is part of the workspace system. Write local CSS when the effect is isolated and decorative.
+
 ## What It Exports
 
 | Export | Use Case |

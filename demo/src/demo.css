@@ -698,6 +698,31 @@ body {
   color: #172033;
 }
 
+.demo-comparison-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.demo-comparison-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.9fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.demo-comparison-row strong {
+  color: #f8fafc;
+}
+
+.demo-comparison-row span {
+  color: rgba(224, 224, 240, 0.68);
+  line-height: 1.5;
+}
+
 .demo-recipe-link,
 .demo-trust-grid > div {
   display: grid;
@@ -752,6 +777,12 @@ body {
 }
 
 /* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .demo-comparison-row {
+    grid-template-columns: 1fr;
+  }
+}
 
 @media (max-width: 640px) {
   .demo-container {
