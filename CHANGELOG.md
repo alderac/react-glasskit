@@ -5,12 +5,17 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.22] - 2026-05-16
+## [0.1.23] - 2026-05-20
+
+### Added
+- Added browser smoke automation for the demo/docs surface across desktop, mobile, reduced-motion, and forced-colors contexts.
+
+## [0.1.22] - 2026-05-20
 
 ### Added
 - Added a hand-rolled glass CSS versus GlassKit comparison to clarify the v1 adoption value.
 
-## [0.1.21] - 2026-05-16
+## [0.1.21] - 2026-05-20
 
 ### Changed
 - Clarified supported v1 install paths before and after npm publication.
