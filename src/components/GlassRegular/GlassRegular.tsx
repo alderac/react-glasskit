@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PolymorphicProps } from '../../types';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -30,7 +31,7 @@ type GlassRegularProps<C extends React.ElementType = 'div'> = PolymorphicProps<C
  * </GlassRegular>
  */
 function GlassRegularInner<C extends React.ElementType = 'div'>(
-  { as, className, children, ...rest }: GlassRegularProps<C>,
+  { as, className, style, children, ...rest }: GlassRegularProps<C>,
   ref: React.Ref<Element>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
@@ -38,6 +39,7 @@ function GlassRegularInner<C extends React.ElementType = 'div'>(
     <Tag
       ref={ref}
       className={[styles.regular, className].filter(Boolean).join(' ')}
+      style={mergeGlassBackdropStyle('regular', style)}
       {...rest}
     >
       {children}

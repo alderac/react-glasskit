@@ -1,4 +1,5 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -33,7 +34,7 @@ export interface GlassClearProps extends React.HTMLAttributes<HTMLDivElement> {
  * </GlassClear>
  */
 export const GlassClear = React.forwardRef<HTMLDivElement, GlassClearProps>(
-  ({ dimmed = false, className, children, ...rest }, ref) => {
+  ({ dimmed = false, className, style, children, ...rest }, ref) => {
     const classes = [
       styles.clear,
       dimmed ? styles.clearDimmed : '',
@@ -43,7 +44,7 @@ export const GlassClear = React.forwardRef<HTMLDivElement, GlassClearProps>(
       .join(' ');
 
     return (
-      <div ref={ref} className={classes} {...rest}>
+      <div ref={ref} className={classes} style={mergeGlassBackdropStyle('clear', style)} {...rest}>
         {children}
       </div>
     );

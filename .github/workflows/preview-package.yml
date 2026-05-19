@@ -1,0 +1,45 @@
+name: Preview Package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-package-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Publish preview package
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Publish pkg.pr.new preview for pull requests
+        if: github.event_name == 'pull_request'
+        run: npx pkg-pr-new@0.0.75 publish --commentWithSha --packageManager=npm --no-compact
+
+      - name: Publish pkg.pr.new preview for commits
+        if: github.event_name != 'pull_request'
+        run: npx pkg-pr-new@0.0.75 publish --comment=off --packageManager=npm --no-compact

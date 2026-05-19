@@ -16,4 +16,14 @@ describe('GlassPanel', () => {
     expect(panel).toHaveClass(styles.panelInactive);
     expect(panel).toHaveClass(styles.panelAnimate);
   });
+
+  it('preserves backdrop filter styles inline for consumer CSS pipelines', () => {
+    render(<GlassPanel style={{ opacity: 0.8 }}>Editor</GlassPanel>);
+
+    const panel = screen.getByText('Editor');
+    expect(panel.getAttribute('style')).toContain(
+      'backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular))'
+    );
+    expect(panel).toHaveStyle({ opacity: '0.8' });
+  });
 });

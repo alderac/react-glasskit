@@ -21,11 +21,23 @@ for (const filePath of requiredFiles) {
 }
 
 const entrySource = await readFile('dist/index.js', 'utf8');
+const bundledCssSource = await readFile('dist/index.css', 'utf8');
 const cssEntryImportPattern =
   /^\s*(?:\/\*[\s\S]*?\*\/\s*|\/\/[^\n]*\n\s*)*import\s+['"]\.\/index\.css['"](?:\s+with\s+\{[^;]*\})?\s*;/;
 
 if (!cssEntryImportPattern.test(entrySource)) {
   throw new Error("dist/index.js must import './index.css' before runtime exports.");
+}
+
+const requiredCssDeclarationPatterns = {
+  'backdrop-filter:': /(^|[;{\n]\s*)backdrop-filter:/,
+  '-webkit-backdrop-filter:': /-webkit-backdrop-filter:/,
+};
+
+for (const [cssDeclaration, pattern] of Object.entries(requiredCssDeclarationPatterns)) {
+  if (!pattern.test(bundledCssSource)) {
+    throw new Error(`dist/index.css must preserve ${cssDeclaration} for glass surfaces.`);
+  }
 }
 
 const declarationSource = await readFile('dist/index.d.ts', 'utf8');

@@ -12,6 +12,7 @@ export default defineConfig({
     },
     sourcemap: true,
     emptyOutDir: true,
+    cssMinify: false,
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
     },

@@ -1,4 +1,5 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -40,7 +41,7 @@ export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
  * </GlassPanel>
  */
 export const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
-  ({ focused = false, inactive = false, animate = false, className, children, ...rest }, ref) => {
+  ({ focused = false, inactive = false, animate = false, className, style, children, ...rest }, ref) => {
     const classes = [
       styles.panel,
       focused ? styles.panelFocused : '',
@@ -52,7 +53,7 @@ export const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
       .join(' ');
 
     return (
-      <div ref={ref} className={classes} {...rest}>
+      <div ref={ref} className={classes} style={mergeGlassBackdropStyle('regular', style)} {...rest}>
         {children}
       </div>
     );
