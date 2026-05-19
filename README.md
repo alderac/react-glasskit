@@ -79,6 +79,16 @@ import {
 } from 'react-glasskit';
 ```
 
+## Light and Dark Mode
+
+GlassKit follows the user's system color scheme by default. Apps can also force either mode by setting a class or `data-theme` on `<html>` or an app shell:
+
+```html
+<html data-theme="light">
+```
+
+Supported selectors are `.light`, `[data-theme="light"]`, `.dark`, and `[data-theme="dark"]`. The forced selectors are defined after the system preference media query, so a product theme toggle can override the OS preference.
+
 ## Quick Start
 
 This is the core GlassKit use case: a focused, resizable workspace split.
@@ -191,6 +201,7 @@ npm run typecheck
 npm test
 npm run build
 npm run audit:css
+npm run audit:themes
 npm run smoke:package
 npm run smoke:next
 npm --prefix demo run build

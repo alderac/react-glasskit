@@ -2,6 +2,8 @@
 
 All tokens are CSS custom properties defined at `:root` in `tokens.css`. Override any token in your own stylesheet to customize React GlassKit globally.
 
+React GlassKit follows `prefers-color-scheme` by default and supports explicit theme overrides through `class="light"`, `data-theme="light"`, `class="dark"`, or `data-theme="dark"` on a parent element.
+
 ## Material Geometry
 
 | Token | Default | Description |
@@ -43,7 +45,9 @@ All tokens are CSS custom properties defined at `:root` in `tokens.css`. Overrid
 
 ## Surface Color Tokens
 
-These are automatically swapped for dark mode. Override per-theme if needed.
+These follow system light/dark mode automatically. Forced light and dark selectors are also included so app-level theme controls can override the system preference.
+
+The token file also sets `color-scheme: light` for light tokens and `color-scheme: dark` for dark tokens so browser-native controls match the active mode.
 
 | Token | Light Mode | Dark Mode |
 |-------|-----------|-----------|

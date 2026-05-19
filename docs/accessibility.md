@@ -79,6 +79,7 @@ Current package confidence comes from:
 - `npm run build`, which emits package JS, declarations, and CSS assets
 - `npm run smoke:package`, which installs the packed package into a generated Vite app
 - `npm run audit:css`, which verifies the documented CSS fallback rules remain present
+- `npm run audit:themes`, which verifies forced light/dark selectors and demo theme controls remain present
 
 ## Overriding Fallback Colors
 

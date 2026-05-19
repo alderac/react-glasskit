@@ -140,14 +140,21 @@ function ResizableWorkspace() {
 </div>
 ```
 
-## 4. Dark Mode
+## 4. Light and Dark Mode
 
-React GlassKit handles dark mode automatically via two mechanisms:
+React GlassKit follows the user's system preference by default, and it also supports forced light or dark modes through a class or `data-theme` on any parent element.
 
 | Method | How |
 |--------|-----|
+| Force light | Add `class="light"` or `data-theme="light"` to `<html>` or an app shell |
 | System preference | `@media (prefers-color-scheme: dark)` — zero config |
-| Class-based | Add `class="dark"` or `data-theme="dark"` to `<html>` |
+| Force dark | Add `class="dark"` or `data-theme="dark"` to `<html>` or an app shell |
+
+```html
+<html data-theme="light">
+```
+
+The forced selectors are defined after the system media query, so `data-theme="light"` can keep a surface light even when the OS preference is dark.
 
 ## 5. Customizing Tokens
 

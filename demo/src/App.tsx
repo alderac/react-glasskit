@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from 'react';
+import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import {
   GlassRegular,
   GlassClear,
@@ -7,6 +7,16 @@ import {
   useActivePanel,
   useResizablePanels,
 } from 'react-glasskit';
+
+type DemoTheme = 'light' | 'dark';
+
+function getPreferredDemoTheme(): DemoTheme {
+  if (typeof window === 'undefined') {
+    return 'dark';
+  }
+
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
 
 const installCodeSample = [
   'npm install react-glasskit',
@@ -249,6 +259,7 @@ function CodeBlock({ children }: { children: string }) {
 }
 
 export default function App() {
+  const [demoTheme, setDemoTheme] = useState<DemoTheme>(getPreferredDemoTheme);
   const activePanels = useActivePanel<'left' | 'right'>({
     initialPanelId: 'left',
   });
@@ -259,6 +270,14 @@ export default function App() {
     maxSize: 72,
   });
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = demoTheme;
+
+    return () => {
+      delete document.documentElement.dataset.theme;
+    };
+  }, [demoTheme]);
+
   return (
     <>
       {/* Animated mesh gradient background */}
@@ -267,8 +286,26 @@ export default function App() {
       <div className="demo-container">
         {/* ── Hero ─────────────────────────────────────────── */}
         <header className="demo-hero">
-          <div className="demo-badge">
+          <div className="demo-hero-bar">
+            <div className="demo-badge">
             <span>v1 path</span> — Workspace Material Layer
+            </div>
+            <div className="demo-theme-toggle" aria-label="Demo color mode">
+              <button
+                type="button"
+                aria-pressed={demoTheme === 'light'}
+                onClick={() => setDemoTheme('light')}
+              >
+                Light
+              </button>
+              <button
+                type="button"
+                aria-pressed={demoTheme === 'dark'}
+                onClick={() => setDemoTheme('dark')}
+              >
+                Dark
+              </button>
+            </div>
           </div>
           <h1>React GlassKit</h1>
           <p>

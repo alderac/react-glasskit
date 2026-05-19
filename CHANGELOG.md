@@ -5,6 +5,16 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.20] - 2026-05-19
+
+### Added
+- Added explicit light mode support through `.light` and `[data-theme="light"]`, matching the existing dark mode override path.
+- Added component-level light and dark surface overrides so app theme toggles remain reliable across CSS load order differences.
+- Added a demo light/dark mode toggle and a theme audit for forced theme selectors.
+
+### Changed
+- Documented system, forced light, and forced dark theme behavior across the README and docs.
+
 ## [0.1.19] - 2026-05-15
 
 ### Changed

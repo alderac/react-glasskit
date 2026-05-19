@@ -181,6 +181,91 @@
   background-color: var(--glass-focus-ring);
 }
 
+/* Explicit theme selectors keep surfaces synced with app-level theme controls. */
+:global(:is(.light, [data-theme="light"])) .regular {
+  background-color: var(--glass-bg-regular-light);
+  border-color: var(--glass-border-light);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-light),
+    inset 0 1px 0 var(--glass-highlight-border-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .clear {
+  background-color: var(--glass-bg-clear-light);
+  border-color: var(--glass-border-light);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-light),
+    inset 0 1px 0 var(--glass-highlight-border-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .panel {
+  background-color: var(--glass-bg-panel-light);
+  border-color: var(--glass-border-light);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-light),
+    inset 0 1px 0 var(--glass-highlight-border-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .panelFocused {
+  border-color: var(--glass-focus-ring-light);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-light),
+    inset 0 1px 0 var(--glass-highlight-border-light),
+    0 0 0 3px var(--glass-focus-ring-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .separator {
+  background-color: var(--glass-border-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .separatorResizable:hover,
+:global(:is(.light, [data-theme="light"])) .separatorResizable:active,
+:global(:is(.light, [data-theme="light"])) .separatorResizable:focus-visible {
+  background-color: var(--glass-focus-ring-light);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .regular {
+  background-color: var(--glass-bg-regular-dark);
+  border-color: var(--glass-border-dark);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-dark),
+    inset 0 1px 0 var(--glass-highlight-border-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .clear {
+  background-color: var(--glass-bg-clear-dark);
+  border-color: var(--glass-border-dark);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-dark),
+    inset 0 1px 0 var(--glass-highlight-border-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .panel {
+  background-color: var(--glass-bg-panel-dark);
+  border-color: var(--glass-border-dark);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-dark),
+    inset 0 1px 0 var(--glass-highlight-border-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .panelFocused {
+  border-color: var(--glass-focus-ring-dark);
+  box-shadow:
+    0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow-dark),
+    inset 0 1px 0 var(--glass-highlight-border-dark),
+    0 0 0 3px var(--glass-focus-ring-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .separator {
+  background-color: var(--glass-border-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .separatorResizable:hover,
+:global(:is(.dark, [data-theme="dark"])) .separatorResizable:active,
+:global(:is(.dark, [data-theme="dark"])) .separatorResizable:focus-visible {
+  background-color: var(--glass-focus-ring-dark);
+}
+
 .separatorResizable:focus-visible {
   opacity: 1;
   outline: 3px solid var(--glass-focus-ring);
