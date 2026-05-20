@@ -1,14 +1,23 @@
 # Design Tokens Reference
 
-All tokens are CSS custom properties defined at `:root` in `tokens.css`. Override any token in your own stylesheet to customize React GlassKit globally.
+All tokens are CSS custom properties defined at `:root` in `tokens.css`.
+Override any token in your own stylesheet to customize React GlassKit globally.
 
-React GlassKit follows `prefers-color-scheme` by default and supports explicit theme overrides through `class="light"`, `data-theme="light"`, `class="dark"`, or `data-theme="dark"` on a parent element.
+React GlassKit follows `prefers-color-scheme` by default and supports explicit
+theme overrides through `class="light"`, `data-theme="light"`, `class="dark"`,
+or `data-theme="dark"` on a parent element.
 
 ## Material Geometry
 
 | Token | Default | Description |
 |-------|---------|-------------|
-| `--glass-radius` | `12px` | Border radius for all glass surfaces |
+| `--glass-radius-none` | `0px` | Flush edges for viewport-bound chrome and scrims |
+| `--glass-radius-sm` | `6px` | Compact controls and dense toolbars |
+| `--glass-radius-md` | `12px` | Default named glass surface radius |
+| `--glass-radius-lg` | `18px` | Larger panels and cards |
+| `--glass-radius-xl` | `24px` | Spacious cards and feature panels |
+| `--glass-radius-full` | `9999px` | Pills and rounded floating controls |
+| `--glass-radius` | `var(--glass-radius-md)` | Legacy/default global radius token used when a surface `radius` prop is omitted |
 | `--glass-shadow-radius` | `16px` | Blur radius of the drop shadow |
 | `--glass-shadow-y` | `10px` | Y-offset of the drop shadow |
 
@@ -20,6 +29,16 @@ React GlassKit follows `prefers-color-scheme` by default and supports explicit t
 | `--glass-blur-clear` | `12px` | Backdrop blur for GlassClear |
 | `--glass-saturation-regular` | `180%` | Saturation boost for Regular/Panel |
 | `--glass-saturation-clear` | `120%` | Saturation boost for Clear |
+
+## Scrim Tokens
+
+| Token | Default | Description |
+|-------|---------|-------------|
+| `--glass-blur-scrim` | `10px` | Backdrop blur for GlassScrim |
+| `--glass-saturation-scrim` | `140%` | Saturation boost for GlassScrim |
+| `--glass-scrim-bg-soft` | `rgba(255, 255, 255, 0.26)` | Soft scrim dimming color |
+| `--glass-scrim-bg-regular` | `rgba(255, 255, 255, 0.38)` | Regular scrim dimming color |
+| `--glass-scrim-bg-strong` | `rgba(255, 255, 255, 0.52)` | Strong scrim dimming color |
 
 ## Opacity Coefficients
 
@@ -41,16 +60,20 @@ React GlassKit follows `prefers-color-scheme` by default and supports explicit t
 | Token | Default | Description |
 |-------|---------|-------------|
 | `--glass-crystallize-duration` | `400ms` | Duration of the panel materialization animation |
-| `--glass-crystallize-easing` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Easing — slight overshoot for a "snap into place" feel |
+| `--glass-crystallize-easing` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Easing with slight overshoot for a snap-into-place feel |
 
 ## Surface Color Tokens
 
-These follow system light/dark mode automatically. Forced light and dark selectors are also included so app-level theme controls can override the system preference.
+These follow system light/dark mode automatically. Forced light and dark
+selectors are also included so app-level theme controls can override the system
+preference.
 
-The token file also sets `color-scheme: light` for light tokens and `color-scheme: dark` for dark tokens so browser-native controls match the active mode.
+The token file also sets `color-scheme: light` for light tokens and
+`color-scheme: dark` for dark tokens so browser-native controls match the
+active mode.
 
 | Token | Light Mode | Dark Mode |
-|-------|-----------|-----------|
+|-------|------------|-----------|
 | `--glass-bg-regular` | `rgba(255,255,255,0.72)` | `rgba(15,20,40,0.68)` |
 | `--glass-bg-clear` | `rgba(255,255,255,0.45)` | `rgba(10,17,40,0.40)` |
 | `--glass-bg-panel` | `rgba(255,255,255,0.68)` | `rgba(17,29,53,0.72)` |
@@ -74,7 +97,7 @@ Used automatically when OS accessibility settings are active.
 ## Customizing Tokens
 
 ```css
-/* In your app's global CSS — override after importing tokens.css */
+/* In your app's global CSS, override after importing tokens.css */
 :root {
   --glass-radius: 16px;           /* Rounder corners */
   --glass-blur-regular: 32px;     /* Stronger blur */
@@ -84,7 +107,9 @@ Used automatically when OS accessibility settings are active.
 
 ## Using Tokens From Other Styling Systems
 
-GlassKit tokens are ordinary CSS custom properties. Tailwind, shadcn/ui, Bootstrap, Chakra UI, Mantine, MUI, Panda CSS, vanilla-extract, Emotion, and styled-components can all set them from global CSS or generated styles.
+GlassKit tokens are ordinary CSS custom properties. Tailwind, shadcn/ui,
+Bootstrap, Chakra UI, Mantine, MUI, Panda CSS, vanilla-extract, Emotion, and
+styled-components can all set them from global CSS or generated styles.
 
 Prefer this model:
 
@@ -96,4 +121,5 @@ Prefer this model:
 }
 ```
 
-Use framework utilities or style props for layout and typography, then use `--glass-*` variables for the material layer.
+Use framework utilities or style props for layout and typography, then use
+`--glass-*` variables for the material layer.
