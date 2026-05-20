@@ -282,6 +282,7 @@ glasskit/
 │       ├── GlassRegular/     # Navigation-layer glass
 │       ├── GlassClear/       # Media-overlay glass
 │       ├── GlassPanel/       # Workspace panel container
+│       ├── GlassScrim/       # Overlay backdrop material
 │       └── PanelSeparator/   # Spatial dividers for split-panel layouts
 └── docs/
     ├── getting-started.md

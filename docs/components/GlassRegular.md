@@ -78,7 +78,7 @@ import { GlassRegular } from 'react-glasskit';
 ### Modal Background
 
 ```tsx
-<GlassRegular className="w-[480px] rounded-2xl p-6 shadow-xl">
+<GlassRegular radius="xl" className="w-[480px] p-6 shadow-xl">
   <h2>Modal Title</h2>
   <p>Modal content</p>
 </GlassRegular>

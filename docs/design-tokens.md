@@ -32,6 +32,10 @@ or `data-theme="dark"` on a parent element.
 
 ## Scrim Tokens
 
+Live scrim aliases follow system/default behavior. If your app forces themes
+with `.light`, `[data-theme="light"]`, `.dark`, or `[data-theme="dark"]`,
+override the mode-specific scrim constants in the stable constants table too.
+
 | Token | Default | Description |
 |-------|---------|-------------|
 | `--glass-blur-scrim` | `10px` | Backdrop blur for GlassScrim |
@@ -64,9 +68,13 @@ or `data-theme="dark"` on a parent element.
 
 ## Surface Color Tokens
 
-These follow system light/dark mode automatically. Forced light and dark
-selectors are also included so app-level theme controls can override the system
-preference.
+These live aliases follow system light/dark mode automatically. Override these
+when your app only needs the default/system path.
+
+Forced light and dark selectors are also included so app-level theme controls
+can override the system preference. Component selectors inside `.light`,
+`[data-theme="light"]`, `.dark`, and `[data-theme="dark"]` consume the stable
+mode constants in the next section directly.
 
 The token file also sets `color-scheme: light` for light tokens and
 `color-scheme: dark` for dark tokens so browser-native controls match the
@@ -81,6 +89,39 @@ active mode.
 | `--glass-highlight-border` | `rgba(255,255,255,0.16)` | `rgba(255,255,255,0.08)` |
 | `--glass-shadow` | `rgba(0,0,0,0.10)` | `rgba(0,0,0,0.28)` |
 | `--glass-focus-ring` | `rgba(100,149,237,0.50)` | `rgba(100,149,237,0.60)` |
+
+## Mode-Specific Stable Constants
+
+Override these constants when your app uses forced theme selectors. They are
+stable light/dark values that GlassKit's forced-theme component selectors read
+directly, so changing only the live aliases above is not enough for explicit
+`.light`, `[data-theme="light"]`, `.dark`, or `[data-theme="dark"]` modes.
+
+| Light Constant | Default |
+|----------------|---------|
+| `--glass-bg-regular-light` | `rgba(255, 255, 255, 0.72)` |
+| `--glass-bg-clear-light` | `rgba(255, 255, 255, 0.45)` |
+| `--glass-bg-panel-light` | `rgba(255, 255, 255, 0.68)` |
+| `--glass-border-light` | `rgba(255, 255, 255, var(--glass-stroke))` |
+| `--glass-highlight-border-light` | `rgba(255, 255, 255, var(--glass-highlight))` |
+| `--glass-shadow-light` | `rgba(0, 0, 0, var(--glass-shadow-opacity))` |
+| `--glass-focus-ring-light` | `rgba(100, 149, 237, 0.50)` |
+| `--glass-scrim-bg-soft-light` | `rgba(255, 255, 255, 0.26)` |
+| `--glass-scrim-bg-regular-light` | `rgba(255, 255, 255, 0.38)` |
+| `--glass-scrim-bg-strong-light` | `rgba(255, 255, 255, 0.52)` |
+
+| Dark Constant | Default |
+|---------------|---------|
+| `--glass-bg-regular-dark` | `rgba(15, 20, 40, 0.68)` |
+| `--glass-bg-clear-dark` | `rgba(10, 17, 40, 0.40)` |
+| `--glass-bg-panel-dark` | `rgba(17, 29, 53, 0.72)` |
+| `--glass-border-dark` | `rgba(255, 255, 255, 0.10)` |
+| `--glass-highlight-border-dark` | `rgba(255, 255, 255, 0.08)` |
+| `--glass-shadow-dark` | `rgba(0, 0, 0, 0.28)` |
+| `--glass-focus-ring-dark` | `rgba(100, 149, 237, 0.60)` |
+| `--glass-scrim-bg-soft-dark` | `rgba(0, 0, 0, 0.28)` |
+| `--glass-scrim-bg-regular-dark` | `rgba(0, 0, 0, 0.42)` |
+| `--glass-scrim-bg-strong-dark` | `rgba(0, 0, 0, 0.58)` |
 
 ## Accessibility Fallback Tokens
 
