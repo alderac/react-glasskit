@@ -18,6 +18,23 @@ describe('GlassPanel', () => {
     expect(panel).toHaveClass(styles.panelAnimate);
   });
 
+  it('renders as a named section with the requested radius class', () => {
+    render(
+      <GlassPanel as="section" aria-label="Workspace panel" radius="xl">
+        Editor
+      </GlassPanel>
+    );
+
+    const panel = screen.getByRole('region', { name: 'Workspace panel' });
+    expect(panel).toHaveClass(styles.radiusXl);
+  });
+
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassPanel>Editor</GlassPanel>);
+
+    expect(screen.getByText('Editor')).not.toHaveClass(styles.radiusMd);
+  });
+
   it('preserves backdrop filter styles inline for consumer CSS pipelines', () => {
     render(<GlassPanel style={{ opacity: 0.8 }}>Editor</GlassPanel>);
 
@@ -55,6 +72,32 @@ describe('GlassPanel', () => {
     expect(ref.current).toBe(panel);
 
     fireEvent.click(panel);
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders as a button with typed props, ref, click handler, and radius styling', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    const handleClick = vi.fn();
+
+    render(
+      <GlassPanel
+        as="button"
+        ref={ref}
+        type="button"
+        aria-label="Toggle inspector"
+        radius="sm"
+        onClick={handleClick}
+      >
+        Toggle
+      </GlassPanel>
+    );
+
+    const button = screen.getByRole('button', { name: 'Toggle inspector' });
+    expect(button).toHaveAttribute('type', 'button');
+    expect(button).toHaveClass(styles.radiusSm);
+    expect(ref.current).toBe(button);
+
+    fireEvent.click(button);
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });

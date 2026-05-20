@@ -48,7 +48,7 @@ This registers all `--glass-*` CSS custom properties at `:root`. React GlassKit 
 ## 3. Use Components
 
 ```tsx
-import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glasskit';
+import { GlassRegular, GlassClear, GlassPanel, GlassScrim, PanelSeparator } from 'react-glasskit';
 ```
 
 ### Sidebar
@@ -57,6 +57,15 @@ import { GlassRegular, GlassClear, GlassPanel, PanelSeparator } from 'react-glas
 <GlassRegular as="nav" className="sidebar">
   <a href="/">Home</a>
   <a href="/settings">Settings</a>
+</GlassRegular>
+```
+
+### Edge-to-edge header
+
+```tsx
+<GlassRegular as="header" radius="none" className="header">
+  <a href="/">Home</a>
+  <nav aria-label="Primary">...</nav>
 </GlassRegular>
 ```
 

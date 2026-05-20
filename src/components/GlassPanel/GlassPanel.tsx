@@ -1,10 +1,17 @@
 import React from 'react';
+import type {
+  GlassRadius,
+  PolymorphicForwardRefComponent,
+  PolymorphicProps,
+  PolymorphicRef,
+} from '../../types';
 import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
+type OwnProps = {
   /**
    * Renders the panel with a focus highlight border and glow ring.
    * Use to indicate the active panel in a split-panel layout.
@@ -22,9 +29,11 @@ export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
    * Automatically respects `prefers-reduced-motion`.
    */
   animate?: boolean;
+  radius?: GlassRadius;
   className?: string;
-  children?: React.ReactNode;
-}
+};
+
+export type GlassPanelProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -40,24 +49,41 @@ export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
  *   Panel content
  * </GlassPanel>
  */
-export const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
-  ({ focused = false, inactive = false, animate = false, className, style, children, ...rest }, ref) => {
-    const classes = [
-      styles.panel,
-      focused ? styles.panelFocused : '',
-      inactive ? styles.panelInactive : '',
-      animate ? styles.panelAnimate : '',
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+function GlassPanelInner<C extends React.ElementType = 'div'>(
+  {
+    as,
+    focused = false,
+    inactive = false,
+    animate = false,
+    radius,
+    className,
+    style,
+    children,
+    ...rest
+  }: GlassPanelProps<C>,
+  ref: PolymorphicRef<C>
+) {
+  const Tag = (as ?? 'div') as React.ElementType;
+  const classes = [
+    styles.panel,
+    focused ? styles.panelFocused : '',
+    inactive ? styles.panelInactive : '',
+    animate ? styles.panelAnimate : '',
+    radius ? getGlassRadiusClassName(styles, radius) : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-    return (
-      <div ref={ref} className={classes} style={mergeGlassBackdropStyle('regular', style)} {...rest}>
-        {children}
-      </div>
-    );
-  }
-);
+  return (
+    <Tag ref={ref} className={classes} style={mergeGlassBackdropStyle('regular', style)} {...rest}>
+      {children}
+    </Tag>
+  );
+}
 
-GlassPanel.displayName = 'GlassPanel';
+export const GlassPanel = React.forwardRef(
+  GlassPanelInner as unknown as React.ForwardRefRenderFunction<unknown, GlassPanelProps>
+) as PolymorphicForwardRefComponent<'div', OwnProps>;
+
+(GlassPanel as { displayName?: string }).displayName = 'GlassPanel';

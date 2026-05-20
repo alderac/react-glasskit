@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
+import styles from '../../css/glass.module.css';
 import { GlassRegular } from './GlassRegular';
 
 describe('GlassRegular', () => {
@@ -18,6 +19,18 @@ describe('GlassRegular', () => {
     render(<GlassRegular className="custom-shell">Content</GlassRegular>);
 
     expect(screen.getByText('Content')).toHaveClass('custom-shell');
+  });
+
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassRegular>Content</GlassRegular>);
+
+    expect(screen.getByText('Content')).not.toHaveClass(styles.radiusMd);
+  });
+
+  it('applies the requested radius class', () => {
+    render(<GlassRegular radius="none">Content</GlassRegular>);
+
+    expect(screen.getByText('Content')).toHaveClass(styles.radiusNone);
   });
 
   it('preserves backdrop filter styles inline for consumer CSS pipelines', () => {
@@ -58,5 +71,23 @@ describe('GlassRegular', () => {
 
     fireEvent.click(button);
     expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('passes custom forwardRef component props through with radius styling', () => {
+    const AppLink = React.forwardRef<
+      HTMLAnchorElement,
+      React.ComponentPropsWithoutRef<'a'> & { href: string }
+    >((props, ref) => <a ref={ref} {...props} />);
+    AppLink.displayName = 'AppLink';
+
+    render(
+      <GlassRegular as={AppLink} href="/dashboard" aria-label="Open dashboard" radius="lg">
+        Dashboard
+      </GlassRegular>
+    );
+
+    const link = screen.getByRole('link', { name: 'Open dashboard' });
+    expect(link).toHaveAttribute('href', '/dashboard');
+    expect(link).toHaveClass(styles.radiusLg);
   });
 });

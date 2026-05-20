@@ -1,19 +1,28 @@
 import React from 'react';
+import type {
+  GlassRadius,
+  PolymorphicForwardRefComponent,
+  PolymorphicProps,
+  PolymorphicRef,
+} from '../../types';
 import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface GlassClearProps extends React.HTMLAttributes<HTMLDivElement> {
+type OwnProps = {
   /**
    * Adds a semi-transparent darkening overlay beneath children.
    * Required when GlassClear sits directly over vibrant or media-rich
    * content to prevent color interference with text legibility.
    */
   dimmed?: boolean;
+  radius?: GlassRadius;
   className?: string;
-  children?: React.ReactNode;
-}
+};
+
+export type GlassClearProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -33,22 +42,29 @@ export interface GlassClearProps extends React.HTMLAttributes<HTMLDivElement> {
  *   Floating toolbar over video
  * </GlassClear>
  */
-export const GlassClear = React.forwardRef<HTMLDivElement, GlassClearProps>(
-  ({ dimmed = false, className, style, children, ...rest }, ref) => {
-    const classes = [
-      styles.clear,
-      dimmed ? styles.clearDimmed : '',
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+function GlassClearInner<C extends React.ElementType = 'div'>(
+  { as, dimmed = false, radius, className, style, children, ...rest }: GlassClearProps<C>,
+  ref: PolymorphicRef<C>
+) {
+  const Tag = (as ?? 'div') as React.ElementType;
+  const classes = [
+    styles.clear,
+    dimmed ? styles.clearDimmed : '',
+    radius ? getGlassRadiusClassName(styles, radius) : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-    return (
-      <div ref={ref} className={classes} style={mergeGlassBackdropStyle('clear', style)} {...rest}>
-        {children}
-      </div>
-    );
-  }
-);
+  return (
+    <Tag ref={ref} className={classes} style={mergeGlassBackdropStyle('clear', style)} {...rest}>
+      {children}
+    </Tag>
+  );
+}
 
-GlassClear.displayName = 'GlassClear';
+export const GlassClear = React.forwardRef(
+  GlassClearInner as unknown as React.ForwardRefRenderFunction<unknown, GlassClearProps>
+) as PolymorphicForwardRefComponent<'div', OwnProps>;
+
+(GlassClear as { displayName?: string }).displayName = 'GlassClear';

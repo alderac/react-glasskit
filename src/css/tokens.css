@@ -13,15 +13,23 @@
   color-scheme: light;
 
   /* Material geometry */
-  --glass-radius: 12px;
+  --glass-radius-none: 0px;
+  --glass-radius-sm: 6px;
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 18px;
+  --glass-radius-xl: 24px;
+  --glass-radius-full: 9999px;
+  --glass-radius: var(--glass-radius-md);
   --glass-shadow-radius: 16px;
   --glass-shadow-y: 10px;
 
   /* Blur and saturation */
   --glass-blur-regular: 20px;
   --glass-blur-clear: 12px;
+  --glass-blur-scrim: 10px;
   --glass-saturation-regular: 180%;
   --glass-saturation-clear: 120%;
+  --glass-saturation-scrim: 140%;
 
   /* Opacity coefficients */
   --glass-stroke: 0.22;
@@ -40,6 +48,9 @@
   --glass-bg-regular: rgba(255, 255, 255, 0.72);
   --glass-bg-clear: rgba(255, 255, 255, 0.45);
   --glass-bg-panel: rgba(255, 255, 255, 0.68);
+  --glass-scrim-bg-soft: rgba(255, 255, 255, 0.26);
+  --glass-scrim-bg-regular: rgba(255, 255, 255, 0.38);
+  --glass-scrim-bg-strong: rgba(255, 255, 255, 0.52);
   --glass-border: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow: rgba(0, 0, 0, var(--glass-shadow-opacity));
@@ -49,6 +60,9 @@
   --glass-bg-regular-light: rgba(255, 255, 255, 0.72);
   --glass-bg-clear-light: rgba(255, 255, 255, 0.45);
   --glass-bg-panel-light: rgba(255, 255, 255, 0.68);
+  --glass-scrim-bg-soft-light: rgba(255, 255, 255, 0.26);
+  --glass-scrim-bg-regular-light: rgba(255, 255, 255, 0.38);
+  --glass-scrim-bg-strong-light: rgba(255, 255, 255, 0.52);
   --glass-border-light: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border-light: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow-light: rgba(0, 0, 0, var(--glass-shadow-opacity));
@@ -57,6 +71,9 @@
   --glass-bg-regular-dark: rgba(15, 20, 40, 0.68);
   --glass-bg-clear-dark: rgba(10, 17, 40, 0.40);
   --glass-bg-panel-dark: rgba(17, 29, 53, 0.72);
+  --glass-scrim-bg-soft-dark: rgba(0, 0, 0, 0.28);
+  --glass-scrim-bg-regular-dark: rgba(0, 0, 0, 0.42);
+  --glass-scrim-bg-strong-dark: rgba(0, 0, 0, 0.58);
   --glass-border-dark: rgba(255, 255, 255, 0.10);
   --glass-highlight-border-dark: rgba(255, 255, 255, 0.08);
   --glass-shadow-dark: rgba(0, 0, 0, 0.28);
@@ -76,6 +93,9 @@
     --glass-bg-regular: rgba(15, 20, 40, 0.68);
     --glass-bg-clear: rgba(10, 17, 40, 0.40);
     --glass-bg-panel: rgba(17, 29, 53, 0.72);
+    --glass-scrim-bg-soft: var(--glass-scrim-bg-soft-dark);
+    --glass-scrim-bg-regular: var(--glass-scrim-bg-regular-dark);
+    --glass-scrim-bg-strong: var(--glass-scrim-bg-strong-dark);
     --glass-border: rgba(255, 255, 255, 0.10);
     --glass-highlight-border: rgba(255, 255, 255, 0.08);
     --glass-shadow: rgba(0, 0, 0, 0.28);
@@ -94,6 +114,9 @@
   --glass-bg-regular: rgba(255, 255, 255, 0.72);
   --glass-bg-clear: rgba(255, 255, 255, 0.45);
   --glass-bg-panel: rgba(255, 255, 255, 0.68);
+  --glass-scrim-bg-soft: var(--glass-scrim-bg-soft-light);
+  --glass-scrim-bg-regular: var(--glass-scrim-bg-regular-light);
+  --glass-scrim-bg-strong: var(--glass-scrim-bg-strong-light);
   --glass-border: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow: rgba(0, 0, 0, var(--glass-shadow-opacity));
@@ -110,6 +133,9 @@
   --glass-bg-regular: rgba(15, 20, 40, 0.68);
   --glass-bg-clear: rgba(10, 17, 40, 0.40);
   --glass-bg-panel: rgba(17, 29, 53, 0.72);
+  --glass-scrim-bg-soft: var(--glass-scrim-bg-soft-dark);
+  --glass-scrim-bg-regular: var(--glass-scrim-bg-regular-dark);
+  --glass-scrim-bg-strong: var(--glass-scrim-bg-strong-dark);
   --glass-border: rgba(255, 255, 255, 0.10);
   --glass-highlight-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: rgba(0, 0, 0, 0.28);

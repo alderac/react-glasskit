@@ -1,6 +1,8 @@
 # GlassPanel
 
-Container for individual tool panels in split or workspace layouts. Supports macOS Tahoe-style focus/inactive state treatment and the "crystallize" materialization animation.
+Container for individual tool panels in split or workspace layouts. Supports
+macOS Tahoe-style focus/inactive state treatment and the "crystallize"
+materialization animation.
 
 ## Specification
 
@@ -23,12 +25,14 @@ Container for individual tool panels in split or workspace layouts. Supports mac
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `focused` | `boolean` | `false` | Applies a focus-ring border and glow — marks the active panel |
-| `inactive` | `boolean` | `false` | Drops opacity to 0.92, desaturates to 0.85 — macOS Tahoe inactive treatment |
+| `as` | `React.ElementType` | `'div'` | Renders as any HTML element while preserving type safety |
+| `focused` | `boolean` | `false` | Applies a focus-ring border and glow, marking the active panel |
+| `inactive` | `boolean` | `false` | Drops opacity to 0.92 and desaturates to 0.85 for inactive treatment |
 | `animate` | `boolean` | `false` | Triggers the crystallize materialization animation on mount |
-| `className` | `string` | — | Additional classes |
-| `children` | `ReactNode` | — | Panel content |
-| `...rest` | `HTMLDivElement` props | — | All native div props |
+| `radius` | `'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'` | `--glass-radius` | Applies a named radius token. Omit it to preserve the global legacy radius token path. |
+| `className` | `string` | - | Additional classes |
+| `children` | `ReactNode` | - | Panel content |
+| `...rest` | Native props | - | All native props for the target element |
 
 ## The Crystallize Animation
 
@@ -38,13 +42,15 @@ When `animate={true}`, the panel materializes into existence:
 2. Eases to `scale(1)`, `opacity: 1`, `blur: 20px` with a slight spring overshoot
 3. Duration: `400ms`, easing: `cubic-bezier(0.34, 1.56, 0.64, 1)`
 
-The animation is automatically suppressed when `prefers-reduced-motion: reduce` is active.
+The animation is automatically suppressed when `prefers-reduced-motion: reduce`
+is active.
 
 ## The Inactive State (macOS Tahoe)
 
 When `inactive={true}`:
-- Opacity drops to `0.92` — the panel visually recedes
-- `filter: saturate(0.85)` — colors desaturate slightly
+
+- Opacity drops to `0.92`, so the panel visually recedes
+- `filter: saturate(0.85)`, so colors desaturate slightly
 - This mirrors the behavior of unfocused window panes on macOS Sequoia/Tahoe
 
 ## Examples
@@ -72,6 +78,15 @@ import { GlassPanel, PanelSeparator } from 'react-glasskit';
 ```tsx
 <GlassPanel animate className="w-96 h-full p-6">
   Drawer content
+</GlassPanel>
+```
+
+### Semantic Section
+
+```tsx
+<GlassPanel as="section" aria-labelledby="activity-heading" focused radius="lg" className="p-5">
+  <h2 id="activity-heading">Recent activity</h2>
+  <p>Workspace events and review notes.</p>
 </GlassPanel>
 ```
 

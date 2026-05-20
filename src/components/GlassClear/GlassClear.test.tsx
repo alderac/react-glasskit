@@ -1,9 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
+import styles from '../../css/glass.module.css';
 import { GlassClear } from './GlassClear';
 
 describe('GlassClear', () => {
+  it('renders as a dimmed complementary region with the requested radius class', () => {
+    render(
+      <GlassClear as="aside" aria-label="Media controls" dimmed radius="full">
+        Overlay
+      </GlassClear>
+    );
+
+    const surface = screen.getByRole('complementary', { name: 'Media controls' });
+    expect(surface).toHaveClass(styles.clearDimmed);
+    expect(surface).toHaveClass(styles.radiusFull);
+  });
+
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassClear>Overlay</GlassClear>);
+
+    expect(screen.getByText('Overlay')).not.toHaveClass(styles.radiusMd);
+  });
+
   it('preserves clear backdrop filter styles inline for consumer CSS pipelines', () => {
     render(<GlassClear style={{ opacity: 0.8 }}>Overlay</GlassClear>);
 
@@ -41,5 +60,23 @@ describe('GlassClear', () => {
 
     fireEvent.pointerDown(surface);
     expect(handlePointerDown).toHaveBeenCalledTimes(1);
+  });
+
+  it('passes custom forwardRef component props through with radius styling', () => {
+    const AppLink = React.forwardRef<
+      HTMLAnchorElement,
+      React.ComponentPropsWithoutRef<'a'> & { href: string }
+    >((props, ref) => <a ref={ref} {...props} />);
+    AppLink.displayName = 'AppLink';
+
+    render(
+      <GlassClear as={AppLink} href="/media" aria-label="Open media controls" radius="lg">
+        Media
+      </GlassClear>
+    );
+
+    const link = screen.getByRole('link', { name: 'Open media controls' });
+    expect(link).toHaveAttribute('href', '/media');
+    expect(link).toHaveClass(styles.radiusLg);
   });
 });

@@ -1,16 +1,23 @@
 import React from 'react';
-import type { PolymorphicProps } from '../../types';
+import type {
+  GlassRadius,
+  PolymorphicForwardRefComponent,
+  PolymorphicProps,
+  PolymorphicRef,
+} from '../../types';
 import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
 import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type OwnProps = {
   /** Additional class names to merge onto the glass surface */
   className?: string;
+  radius?: GlassRadius;
 };
 
-type GlassRegularProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
+export type GlassRegularProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -31,14 +38,16 @@ type GlassRegularProps<C extends React.ElementType = 'div'> = PolymorphicProps<C
  * </GlassRegular>
  */
 function GlassRegularInner<C extends React.ElementType = 'div'>(
-  { as, className, style, children, ...rest }: GlassRegularProps<C>,
-  ref: React.Ref<Element>
+  { as, className, radius, style, children, ...rest }: GlassRegularProps<C>,
+  ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
   return (
     <Tag
       ref={ref}
-      className={[styles.regular, className].filter(Boolean).join(' ')}
+      className={[styles.regular, radius ? getGlassRadiusClassName(styles, radius) : '', className]
+        .filter(Boolean)
+        .join(' ')}
       style={mergeGlassBackdropStyle('regular', style)}
       {...rest}
     >
@@ -47,11 +56,9 @@ function GlassRegularInner<C extends React.ElementType = 'div'>(
   );
 }
 
-export const GlassRegular = React.forwardRef(GlassRegularInner) as <
-  C extends React.ElementType = 'div'
->(
-  props: GlassRegularProps<C> & { ref?: React.Ref<Element> }
-) => React.ReactElement;
+export const GlassRegular = React.forwardRef(
+  GlassRegularInner as unknown as React.ForwardRefRenderFunction<unknown, GlassRegularProps>
+) as PolymorphicForwardRefComponent<'div', OwnProps>;
 
 // The generic forwardRef cast erases displayName — set it manually
 (GlassRegular as { displayName?: string }).displayName = 'GlassRegular';

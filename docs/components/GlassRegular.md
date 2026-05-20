@@ -1,6 +1,7 @@
 # GlassRegular
 
-Medium-transparency frosted glass surface. The workhorse material for all navigation-layer surfaces.
+Medium-transparency frosted glass surface. The workhorse material for all
+navigation-layer surfaces.
 
 ## Specification
 
@@ -26,9 +27,10 @@ Medium-transparency frosted glass surface. The workhorse material for all naviga
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `as` | `React.ElementType` | `'div'` | Renders as any HTML element while preserving type safety |
-| `className` | `string` | — | Additional classes merged onto the surface |
-| `children` | `ReactNode` | — | Content |
-| `...rest` | Native props | — | All native props for the target element |
+| `radius` | `'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'` | `--glass-radius` | Applies a named radius token. Omit it to preserve the global legacy radius token path. |
+| `className` | `string` | - | Additional classes merged onto the surface |
+| `children` | `ReactNode` | - | Content |
+| `...rest` | Native props | - | All native props for the target element |
 
 ## Examples
 
@@ -60,10 +62,23 @@ import { GlassRegular } from 'react-glasskit';
 </GlassRegular>
 ```
 
+### Edge-To-Edge Header
+
+```tsx
+<GlassRegular
+  as="header"
+  radius="none"
+  className="sticky top-0 z-50 flex h-14 items-center justify-between px-6"
+>
+  <Logo />
+  <nav aria-label="Primary">...</nav>
+</GlassRegular>
+```
+
 ### Modal Background
 
 ```tsx
-<GlassRegular className="w-[480px] rounded-2xl p-6 shadow-xl">
+<GlassRegular radius="xl" className="w-[480px] p-6 shadow-xl">
   <h2>Modal Title</h2>
   <p>Modal content</p>
 </GlassRegular>
@@ -71,4 +86,6 @@ import { GlassRegular } from 'react-glasskit';
 
 ## Dark Mode
 
-Dark mode is fully automatic. Token values swap via `@media (prefers-color-scheme: dark)` or when `.dark` / `[data-theme="dark"]` is present on a parent element.
+Dark mode is fully automatic. Token values swap via
+`@media (prefers-color-scheme: dark)` or when `.dark` /
+`[data-theme="dark"]` is present on a parent element.

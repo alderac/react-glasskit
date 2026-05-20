@@ -32,6 +32,12 @@ const rootBlock = tokensCss.slice(rootBlockStart, rootBlockEnd);
 const requiredRootThemeConstants = [
   '--glass-bg-regular-light',
   '--glass-bg-regular-dark',
+  '--glass-scrim-bg-soft-light',
+  '--glass-scrim-bg-regular-light',
+  '--glass-scrim-bg-strong-light',
+  '--glass-scrim-bg-soft-dark',
+  '--glass-scrim-bg-regular-dark',
+  '--glass-scrim-bg-strong-dark',
 ];
 const missingRootThemeConstants = requiredRootThemeConstants.filter(
   (snippet) => !rootBlock.includes(snippet)
@@ -74,6 +80,47 @@ if (missingComponentSnippets.length > 0) {
   );
 }
 
+const requiredScrimThemeRules = [
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimSoft',
+    '--glass-scrim-bg-soft-light',
+  ],
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimRegular',
+    '--glass-scrim-bg-regular-light',
+  ],
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimStrong',
+    '--glass-scrim-bg-strong-light',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimSoft',
+    '--glass-scrim-bg-soft-dark',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimRegular',
+    '--glass-scrim-bg-regular-dark',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimStrong',
+    '--glass-scrim-bg-strong-dark',
+  ],
+];
+
+const missingScrimThemeRules = requiredScrimThemeRules.filter(
+  ([selector, token]) =>
+    !glassCss.includes(selector) ||
+    !glassCss.slice(glassCss.indexOf(selector), glassCss.indexOf('}', glassCss.indexOf(selector))).includes(token)
+);
+
+if (missingScrimThemeRules.length > 0) {
+  throw new Error(
+    `Missing required scrim component theme rules:\n${missingScrimThemeRules
+      .map(([selector, token]) => `- ${selector}: ${token}`)
+      .join('\n')}`
+  );
+}
+
 if (demoHtml.includes('class="dark"')) {
   throw new Error('Demo HTML must not hard-code dark mode on <html>.');
 }
@@ -84,6 +131,16 @@ const requiredDemoSnippets = [
   'document.documentElement.dataset.theme = demoTheme',
   'aria-pressed={demoTheme ===',
   'demo-theme-toggle',
+  'GlassScrim',
+  'radius="none"',
+  'radius="lg"',
+  'demo-scrim',
+  'demo-link-card',
+];
+
+const requiredDemoJsxSnippets = [
+  '<GlassScrim strength="regular" radius="lg" className="demo-scrim-preview" />',
+  '<GlassPanel as="nav" aria-label="Preview navigation" radius="lg" className="demo-scrim-panel">',
 ];
 
 const missingDemoSnippets = requiredDemoSnippets.filter(
@@ -93,6 +150,18 @@ const missingDemoSnippets = requiredDemoSnippets.filter(
 if (missingDemoSnippets.length > 0) {
   throw new Error(
     `Missing required demo theme snippets:\n${missingDemoSnippets
+      .map((snippet) => `- ${snippet}`)
+      .join('\n')}`
+  );
+}
+
+const missingDemoJsxSnippets = requiredDemoJsxSnippets.filter(
+  (snippet) => !demoApp.includes(snippet)
+);
+
+if (missingDemoJsxSnippets.length > 0) {
+  throw new Error(
+    `Missing required visible demo JSX snippets:\n${missingDemoJsxSnippets
       .map((snippet) => `- ${snippet}`)
       .join('\n')}`
   );

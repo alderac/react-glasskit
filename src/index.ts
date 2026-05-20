@@ -9,10 +9,13 @@
 
 // ── Components ──────────────────────────────────────────────────────────────
 export { GlassRegular } from './components/GlassRegular';
+export type { GlassRegularProps } from './components/GlassRegular/GlassRegular';
 export { GlassClear } from './components/GlassClear';
 export type { GlassClearProps } from './components/GlassClear';
 export { GlassPanel } from './components/GlassPanel';
 export type { GlassPanelProps } from './components/GlassPanel';
+export { GlassScrim } from './components/GlassScrim';
+export type { GlassScrimProps, GlassScrimStrength } from './components/GlassScrim';
 export { PanelSeparator } from './components/PanelSeparator';
 export type { PanelSeparatorProps } from './components/PanelSeparator';
 
@@ -31,4 +34,10 @@ export type {
 } from './hooks/useResizablePanels';
 
 // ── Types ────────────────────────────────────────────────────────────────────
-export type { PolymorphicProps, Orientation } from './types';
+export type {
+  GlassRadius,
+  Orientation,
+  PolymorphicForwardRefComponent,
+  PolymorphicProps,
+  PolymorphicRef,
+} from './types';

@@ -43,6 +43,7 @@ Use GlassKit when glass is part of the workspace system. Write local CSS when th
 | [`GlassRegular`](./docs/components/GlassRegular.md) | Navigation-layer glass for sidebars, toolbars, modals, and panel headers |
 | [`GlassClear`](./docs/components/GlassClear.md) | Clear overlay glass for canvas, media, map, and floating-control surfaces |
 | [`GlassPanel`](./docs/components/GlassPanel.md) | Workspace panel containers with focused, inactive, and animation states |
+| [`GlassScrim`](./docs/components/GlassScrim.md) | Blur/dim backdrop material for overlays, drawers, mobile navigation, and modal stacks |
 | [`PanelSeparator`](./docs/components/PanelSeparator.md) | Passive or resizable spatial dividers between panels |
 | `useActivePanel` | Lightweight active-panel state for focused/inactive workspace treatment |
 | `useResizablePanels` | APG-oriented split-panel resize behavior and separator props |
@@ -93,6 +94,7 @@ import {
   GlassRegular,
   GlassClear,
   GlassPanel,
+  GlassScrim,
   PanelSeparator,
   useActivePanel,
   useResizablePanels,
@@ -224,6 +226,7 @@ npm test
 npm run build
 npm run audit:css
 npm run audit:themes
+npm run audit:geometry
 npm run smoke:package
 npm run smoke:next
 npm run smoke:tailwind
@@ -279,6 +282,7 @@ glasskit/
 │       ├── GlassRegular/     # Navigation-layer glass
 │       ├── GlassClear/       # Media-overlay glass
 │       ├── GlassPanel/       # Workspace panel container
+│       ├── GlassScrim/       # Overlay backdrop material
 │       └── PanelSeparator/   # Spatial dividers for split-panel layouts
 └── docs/
     ├── getting-started.md

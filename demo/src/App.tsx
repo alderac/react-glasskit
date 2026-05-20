@@ -3,6 +3,7 @@ import {
   GlassRegular,
   GlassClear,
   GlassPanel,
+  GlassScrim,
   PanelSeparator,
   useActivePanel,
   useResizablePanels,
@@ -200,6 +201,49 @@ const clearCodeSample = [
   '        </div>',
   '      </GlassClear>',
   '    </div>',
+  '  );',
+  '}',
+].join('\n');
+
+const scrimCodeSample = [
+  "import { GlassPanel, GlassScrim } from 'react-glasskit';",
+  '',
+  'export function MobileNavigation({ onClose }: { onClose: () => void }) {',
+  '  return (',
+  '    <div className="mobile-navigation-layer">',
+  '      <GlassScrim',
+  '        as="button"',
+  '        type="button"',
+  '        aria-label="Close navigation"',
+  '        strength="regular"',
+  '        onClick={onClose}',
+  '      />',
+  '      <GlassPanel as="nav" aria-label="Mobile navigation" radius="none">',
+  '        <a href="/dashboard">Dashboard</a>',
+  '        <a href="/projects">Projects</a>',
+  '        <a href="/settings">Settings</a>',
+  '      </GlassPanel>',
+  '    </div>',
+  '  );',
+  '}',
+].join('\n');
+
+const linkCardCodeSample = [
+  "import Link from 'next/link';",
+  "import { GlassRegular } from 'react-glasskit';",
+  '',
+  'export function InfoCard() {',
+  '  return (',
+  '    <GlassRegular',
+  '      as={Link}',
+  '      href="/info"',
+  '      radius="lg"',
+  '      className="block p-5"',
+  '      aria-label="Open information hub"',
+  '    >',
+  '      <span>Information hub</span>',
+  '      <strong>Polymorphic glass surfaces with Next.js Link</strong>',
+  '    </GlassRegular>',
   '  );',
   '}',
 ].join('\n');
@@ -422,7 +466,12 @@ export default function App() {
               <span>Canvas HUD</span>
               <strong>Floating controls over media surfaces</strong>
             </a>
+            <a className="demo-recipe-link demo-link-card" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/next-link-card.md">
+              <span>Link card</span>
+              <strong>Polymorphic glass surfaces with Next.js Link</strong>
+            </a>
           </div>
+          <CodeBlock>{linkCardCodeSample}</CodeBlock>
         </section>
 
         <section className="demo-section demo-integrations" aria-labelledby="integrations-title">
@@ -563,7 +612,30 @@ export default function App() {
           <CodeBlock>{clearCodeSample}</CodeBlock>
         </section>
 
-        {/* ── 4. PanelSeparator ────────────────────────────── */}
+        {/* ── 4. GlassScrim — Overlay Material ─────────────── */}
+        <section className="demo-section demo-scrim">
+          <p className="demo-section-label">Component</p>
+          <h2 className="demo-section-title">GlassScrim</h2>
+          <p className="demo-section-desc">
+            Backdrop material for drawers, mobile navigation, and modal stacks. The scrim owns
+            blur and dimming, while your app keeps focus, Escape handling, and scroll locks.
+          </p>
+
+          <div className="showcase-stage showcase-scrim">
+            <div className="demo-scrim-stage">
+              <GlassScrim strength="regular" radius="lg" className="demo-scrim-preview" />
+              <GlassPanel as="nav" aria-label="Preview navigation" radius="lg" className="demo-scrim-panel">
+                <a href="#!">Dashboard</a>
+                <a href="#!">Projects</a>
+                <a href="#!">Settings</a>
+              </GlassPanel>
+            </div>
+          </div>
+
+          <CodeBlock>{scrimCodeSample}</CodeBlock>
+        </section>
+
+        {/* ── 5. PanelSeparator ────────────────────────────── */}
         <section className="demo-section">
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">PanelSeparator</h2>

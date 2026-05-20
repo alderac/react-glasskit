@@ -10,9 +10,15 @@ const clearBackdropStyle = {
   WebkitBackdropFilter: 'blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear))',
 } satisfies CSSProperties;
 
+const scrimBackdropStyle = {
+  backdropFilter: 'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
+  WebkitBackdropFilter: 'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
+} satisfies CSSProperties;
+
 const backdropStyles = {
   regular: regularBackdropStyle,
   clear: clearBackdropStyle,
+  scrim: scrimBackdropStyle,
 };
 
 export function mergeGlassBackdropStyle(

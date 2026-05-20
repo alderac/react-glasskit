@@ -82,6 +82,40 @@
   z-index: 1;
 }
 
+.scrim {
+  appearance: none;
+  position: fixed;
+  inset: 0;
+  padding: 0;
+  margin: 0;
+  background-color: var(--glass-scrim-bg-regular);
+  backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
+  -webkit-backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
+  border: 0;
+  box-shadow: none;
+  color: inherit;
+  cursor: default;
+  font: inherit;
+  text-align: inherit;
+  transform: translateZ(0);
+  transition:
+    background-color 200ms ease,
+    backdrop-filter 200ms ease,
+    -webkit-backdrop-filter 200ms ease;
+}
+
+.scrimSoft {
+  background-color: var(--glass-scrim-bg-soft);
+}
+
+.scrimRegular {
+  background-color: var(--glass-scrim-bg-regular);
+}
+
+.scrimStrong {
+  background-color: var(--glass-scrim-bg-strong);
+}
+
 /* ── GlassPanel ────────────────────────────────────────────────────────────── */
 
 .panel {
@@ -100,6 +134,30 @@
     filter var(--glass-crystallize-duration) ease,
     box-shadow 200ms ease,
     border-color 200ms ease;
+}
+
+.radiusNone {
+  border-radius: var(--glass-radius-none);
+}
+
+.radiusSm {
+  border-radius: var(--glass-radius-sm);
+}
+
+.radiusMd {
+  border-radius: var(--glass-radius-md);
+}
+
+.radiusLg {
+  border-radius: var(--glass-radius-lg);
+}
+
+.radiusXl {
+  border-radius: var(--glass-radius-xl);
+}
+
+.radiusFull {
+  border-radius: var(--glass-radius-full);
 }
 
 /* Focused: subtle outline highlight */
@@ -218,6 +276,18 @@
   background-color: var(--glass-border-light);
 }
 
+:global(:is(.light, [data-theme="light"])) .scrimSoft {
+  background-color: var(--glass-scrim-bg-soft-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .scrimRegular {
+  background-color: var(--glass-scrim-bg-regular-light);
+}
+
+:global(:is(.light, [data-theme="light"])) .scrimStrong {
+  background-color: var(--glass-scrim-bg-strong-light);
+}
+
 :global(:is(.light, [data-theme="light"])) .separatorResizable:hover,
 :global(:is(.light, [data-theme="light"])) .separatorResizable:active,
 :global(:is(.light, [data-theme="light"])) .separatorResizable:focus-visible {
@@ -260,6 +330,18 @@
   background-color: var(--glass-border-dark);
 }
 
+:global(:is(.dark, [data-theme="dark"])) .scrimSoft {
+  background-color: var(--glass-scrim-bg-soft-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .scrimRegular {
+  background-color: var(--glass-scrim-bg-regular-dark);
+}
+
+:global(:is(.dark, [data-theme="dark"])) .scrimStrong {
+  background-color: var(--glass-scrim-bg-strong-dark);
+}
+
 :global(:is(.dark, [data-theme="dark"])) .separatorResizable:hover,
 :global(:is(.dark, [data-theme="dark"])) .separatorResizable:active,
 :global(:is(.dark, [data-theme="dark"])) .separatorResizable:focus-visible {
@@ -284,7 +366,8 @@
 @media (prefers-reduced-transparency: reduce) {
   .regular,
   .clear,
-  .panel {
+  .panel,
+  .scrim {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
@@ -304,6 +387,10 @@
     border-color: var(--glass-solid-border);
   }
 
+  .scrim {
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+
   .clearDimmed::before {
     display: none;
   }
@@ -321,7 +408,8 @@
   .panel,
   .regular,
   .clear,
-  .separator {
+  .separator,
+  .scrim {
     transition: none !important;
   }
 }
@@ -347,6 +435,10 @@
   .separator {
     opacity: 1;
     background-color: var(--glass-high-contrast-border);
+  }
+
+  .scrim {
+    background-color: rgba(0, 0, 0, 0.70);
   }
 
   .separatorResizable:focus-visible {
