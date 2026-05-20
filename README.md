@@ -226,10 +226,38 @@ npm run audit:css
 npm run audit:themes
 npm run smoke:package
 npm run smoke:next
+npm run smoke:tailwind
 npm --prefix demo run build
 ```
 
 The packed-package smoke tests install the tarball into generated Vite and Next.js apps and verify public imports, type declarations, and CSS token imports.
+
+Run the full release gate with:
+
+```bash
+npm run release:check
+```
+
+## Release Workflow
+
+Changesets owns version and changelog updates going forward.
+
+For package-facing changes, add a changeset before opening a PR:
+
+```bash
+npm run changeset
+```
+
+Use `patch` for fixes, package docs, compatibility proof, and small behavior corrections; `minor` for new compatible exports or supported feature paths; and `major` for breaking changes to exports, CSS entrypoints, peer ranges, or documented behavior.
+
+After changesets merge to `main`, the Release workflow opens a version PR that updates `package.json`, `package-lock.json`, and `CHANGELOG.md`. Publishing is still manual after that PR merges:
+
+```bash
+npm run release:publish
+git push --follow-tags
+```
+
+The workflow does not publish to npm automatically.
 
 ## Roadmap
 
