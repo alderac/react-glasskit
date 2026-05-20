@@ -33,17 +33,23 @@ describe('GlassScrim', () => {
       <GlassScrim
         as="button"
         ref={ref}
-        type="button"
+        type="submit"
         aria-label="Close navigation"
         onClick={handleClick}
       />
     );
 
     const button = screen.getByRole('button', { name: 'Close navigation' });
-    expect(button).toHaveAttribute('type', 'button');
+    expect(button).toHaveAttribute('type', 'submit');
     expect(ref.current).toBe(button);
 
     fireEvent.click(button);
     expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('defaults polymorphic buttons to type button when type is omitted', () => {
+    render(<GlassScrim as="button" aria-label="Close drawer" />);
+
+    expect(screen.getByRole('button', { name: 'Close drawer' })).toHaveAttribute('type', 'button');
   });
 });

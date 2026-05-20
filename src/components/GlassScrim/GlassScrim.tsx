@@ -38,6 +38,8 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
   ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
+  const buttonType =
+    as === 'button' && !('type' in rest) ? ({ type: 'button' } as const) : undefined;
   const classes = [
     styles.scrim,
     strengthClassNames[strength],
@@ -48,7 +50,13 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
     .join(' ');
 
   return (
-    <Tag ref={ref} className={classes} style={mergeGlassBackdropStyle('scrim', style)} {...rest}>
+    <Tag
+      ref={ref}
+      className={classes}
+      style={mergeGlassBackdropStyle('scrim', style)}
+      {...buttonType}
+      {...rest}
+    >
       {children}
     </Tag>
   );

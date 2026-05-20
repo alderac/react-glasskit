@@ -83,13 +83,20 @@
 }
 
 .scrim {
+  appearance: none;
   position: fixed;
   inset: 0;
+  padding: 0;
+  margin: 0;
   background-color: var(--glass-scrim-bg-regular);
   backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
   -webkit-backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
   border: 0;
   box-shadow: none;
+  color: inherit;
+  cursor: default;
+  font: inherit;
+  text-align: inherit;
   transform: translateZ(0);
   transition:
     background-color 200ms ease,

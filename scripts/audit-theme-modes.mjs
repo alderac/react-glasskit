@@ -32,8 +32,12 @@ const rootBlock = tokensCss.slice(rootBlockStart, rootBlockEnd);
 const requiredRootThemeConstants = [
   '--glass-bg-regular-light',
   '--glass-bg-regular-dark',
+  '--glass-scrim-bg-soft-light',
   '--glass-scrim-bg-regular-light',
+  '--glass-scrim-bg-strong-light',
+  '--glass-scrim-bg-soft-dark',
   '--glass-scrim-bg-regular-dark',
+  '--glass-scrim-bg-strong-dark',
 ];
 const missingRootThemeConstants = requiredRootThemeConstants.filter(
   (snippet) => !rootBlock.includes(snippet)
@@ -60,11 +64,8 @@ if (!(mediaIndex < lightIndex && lightIndex < darkIndex)) {
 const requiredComponentSnippets = [
   ':global(:is(.light, [data-theme="light"]))',
   ':global(:is(.dark, [data-theme="dark"]))',
-  '.scrimRegular',
   '--glass-bg-regular-light',
   '--glass-bg-regular-dark',
-  '--glass-scrim-bg-regular-light',
-  '--glass-scrim-bg-regular-dark',
 ];
 
 const missingComponentSnippets = requiredComponentSnippets.filter(
@@ -75,6 +76,47 @@ if (missingComponentSnippets.length > 0) {
   throw new Error(
     `Missing required component theme snippets:\n${missingComponentSnippets
       .map((snippet) => `- ${snippet}`)
+      .join('\n')}`
+  );
+}
+
+const requiredScrimThemeRules = [
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimSoft',
+    '--glass-scrim-bg-soft-light',
+  ],
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimRegular',
+    '--glass-scrim-bg-regular-light',
+  ],
+  [
+    ':global(:is(.light, [data-theme="light"])) .scrimStrong',
+    '--glass-scrim-bg-strong-light',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimSoft',
+    '--glass-scrim-bg-soft-dark',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimRegular',
+    '--glass-scrim-bg-regular-dark',
+  ],
+  [
+    ':global(:is(.dark, [data-theme="dark"])) .scrimStrong',
+    '--glass-scrim-bg-strong-dark',
+  ],
+];
+
+const missingScrimThemeRules = requiredScrimThemeRules.filter(
+  ([selector, token]) =>
+    !glassCss.includes(selector) ||
+    !glassCss.slice(glassCss.indexOf(selector), glassCss.indexOf('}', glassCss.indexOf(selector))).includes(token)
+);
+
+if (missingScrimThemeRules.length > 0) {
+  throw new Error(
+    `Missing required scrim component theme rules:\n${missingScrimThemeRules
+      .map(([selector, token]) => `- ${selector}: ${token}`)
       .join('\n')}`
   );
 }
