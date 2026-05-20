@@ -31,31 +31,12 @@ jobs:
       - name: Install root dependencies
         run: npm ci
 
-      - name: Typecheck package
-        run: npm run typecheck
-
-      - name: Test package
-        run: npm test
-
-      - name: Build package
-        run: npm run build
-
-      - name: Audit CSS fallbacks
-        run: npm run audit:css
-
-      - name: Smoke test packed package
-        run: npm run smoke:package
-
-      - name: Smoke test packed Next package
-        run: npm run smoke:next
-
       - name: Install demo dependencies
         working-directory: demo
         run: npm ci
 
-      - name: Build demo
-        working-directory: demo
-        run: npm run build
+      - name: Run release verification
+        run: npm run release:check
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
