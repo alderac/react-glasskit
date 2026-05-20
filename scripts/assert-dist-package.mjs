@@ -44,11 +44,20 @@ const declarationSource = await readFile('dist/index.d.ts', 'utf8');
 
 for (const publicSymbol of [
   'GlassRegular',
+  'GlassRegularProps',
   'GlassClear',
+  'GlassClearProps',
   'GlassPanel',
+  'GlassPanelProps',
+  'GlassScrim',
+  'GlassScrimProps',
+  'GlassScrimStrength',
   'PanelSeparator',
   'useActivePanel',
   'useResizablePanels',
+  'GlassRadius',
+  'PolymorphicForwardRefComponent',
+  'PolymorphicRef',
 ]) {
   if (!declarationSource.includes(publicSymbol)) {
     throw new Error(`dist/index.d.ts does not expose ${publicSymbol}.`);
