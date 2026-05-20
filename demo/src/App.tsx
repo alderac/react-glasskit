@@ -97,6 +97,25 @@ const comparisonItems = [
   },
 ];
 
+const integrationItems = [
+  {
+    name: 'Tailwind CSS',
+    description: 'Use utilities for layout and typography while GlassKit tokens control the material.',
+  },
+  {
+    name: 'shadcn/ui',
+    description: 'Keep shadcn controls and use GlassKit as the panel, overlay, and splitter surface.',
+  },
+  {
+    name: 'Headless primitives',
+    description: 'Pair Radix, Base UI, or React Aria behavior with GlassKit surfaces.',
+  },
+  {
+    name: 'Design systems',
+    description: 'Map Bootstrap, Chakra, Mantine, MUI, Panda, or vanilla-extract themes through CSS variables.',
+  },
+];
+
 const regularCodeSample = [
   "import { GlassRegular } from 'react-glasskit';",
   '',
@@ -403,6 +422,29 @@ export default function App() {
               <span>Canvas HUD</span>
               <strong>Floating controls over media surfaces</strong>
             </a>
+          </div>
+        </section>
+
+        <section className="demo-section demo-integrations" aria-labelledby="integrations-title">
+          <p className="demo-section-label">Integrations</p>
+          <h2 className="demo-section-title" id="integrations-title">
+            Works with your stack
+          </h2>
+          <p className="demo-section-desc">
+            GlassKit stays vanilla at the core. Existing UI systems keep their controls,
+            while GlassKit supplies the glass material layer.
+          </p>
+          <div className="demo-integration-grid">
+            {integrationItems.map((item) => (
+              <a
+                className="demo-recipe-link"
+                href="https://github.com/alderac/react-glasskit/blob/main/docs/integrations/index.md"
+                key={item.name}
+              >
+                <span>{item.name}</span>
+                <strong>{item.description}</strong>
+              </a>
+            ))}
           </div>
         </section>
 

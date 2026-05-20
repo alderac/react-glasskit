@@ -4,7 +4,7 @@ A small React material layer for building glass-style workspace interfaces.
 
 GlassKit is for apps that need polished panels, overlays, split surfaces, and focus states without becoming a full UI framework. It gives you the glass-specific pieces that are easy to get wrong: material tokens, reduced-transparency fallbacks, focused/inactive panel states, and accessible resizable separators.
 
-Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. GlassKit is not trying to replace your buttons, forms, menus, tables, or app shell.
+Use it alongside Tailwind CSS, shadcn/ui, Radix UI, React Aria, MUI, or your own components. GlassKit is not trying to replace your buttons, forms, menus, tables, or app shell. See the [integration guide](./docs/integrations/index.md) for the compatibility model.
 
 ## Use This When
 
@@ -171,6 +171,8 @@ function WorkspaceSplit() {
 ## Recipes
 
 Start with [Workspace In Five Minutes](./docs/recipes/workspace-in-five-minutes.md) when you want the quickest working split-pane example. Use [App Shell](./docs/recipes/app-shell.md) for sidebar/header layouts and [Canvas HUD](./docs/recipes/canvas-hud.md) for floating controls over media or canvas surfaces.
+
+Already using Tailwind, shadcn/ui, Radix UI, React Aria, or a CSS-variable design system? Start with the [integration guide](./docs/integrations/index.md).
 
 ## Other Patterns
 

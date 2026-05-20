@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { PanelSeparator } from './PanelSeparator';
 
 describe('PanelSeparator', () => {
@@ -56,5 +57,31 @@ describe('PanelSeparator', () => {
     expect(separator).toHaveAttribute('aria-orientation', 'horizontal');
     expect(separator).toHaveAttribute('aria-controls', 'preview-panel');
     expect(separator).toHaveAttribute('aria-valuenow', '40');
+  });
+
+  it('passes consumer compatibility props through to the separator element', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const handlePointerDown = vi.fn();
+
+    render(
+      <PanelSeparator
+        ref={ref}
+        className="resize-hitbox"
+        style={{ width: '2px' }}
+        aria-label="Resize editor"
+        data-testid="separator"
+        data-pane-edge="editor"
+        onPointerDown={handlePointerDown}
+      />
+    );
+
+    const separator = screen.getByRole('separator', { name: 'Resize editor' });
+    expect(separator).toHaveClass('resize-hitbox');
+    expect(separator).toHaveStyle({ width: '2px' });
+    expect(separator).toHaveAttribute('data-pane-edge', 'editor');
+    expect(ref.current).toBe(separator);
+
+    fireEvent.pointerDown(separator);
+    expect(handlePointerDown).toHaveBeenCalledTimes(1);
   });
 });

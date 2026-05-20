@@ -676,6 +676,7 @@ body {
 }
 
 .demo-adoption-grid,
+.demo-integration-grid,
 .demo-recipe-grid,
 .demo-trust-grid {
   display: grid;
@@ -721,6 +722,10 @@ body {
 .demo-comparison-row span {
   color: rgba(224, 224, 240, 0.68);
   line-height: 1.5;
+}
+
+.demo-integration-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .demo-recipe-link,
@@ -807,6 +812,7 @@ body {
   }
 
   .demo-adoption-grid,
+  .demo-integration-grid,
   .demo-recipe-grid,
   .demo-trust-grid {
     grid-template-columns: 1fr;

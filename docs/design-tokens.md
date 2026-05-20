@@ -81,3 +81,19 @@ Used automatically when OS accessibility settings are active.
   --glass-crystallize-duration: 600ms; /* Slower materialization */
 }
 ```
+
+## Using Tokens From Other Styling Systems
+
+GlassKit tokens are ordinary CSS custom properties. Tailwind, shadcn/ui, Bootstrap, Chakra UI, Mantine, MUI, Panda CSS, vanilla-extract, Emotion, and styled-components can all set them from global CSS or generated styles.
+
+Prefer this model:
+
+```css
+:root {
+  --glass-radius: 14px;
+  --glass-blur-regular: 24px;
+  --glass-focus-ring: rgb(59 130 246 / 0.5);
+}
+```
+
+Use framework utilities or style props for layout and typography, then use `--glass-*` variables for the material layer.

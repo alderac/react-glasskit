@@ -5,6 +5,17 @@ All notable changes to React GlassKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.24] - 2026-05-20
+
+### Added
+- Added integration guides for Tailwind CSS, shadcn/ui, headless primitives, and CSS-variable design systems.
+- Added compatibility-focused component tests for className, style, refs, ARIA/data attributes, and event pass-through.
+- Added a packed Tailwind Vite smoke test for public package imports and utility-class composition.
+
+### Changed
+- Clarified that GlassKit remains vanilla CSS at the core while supporting Tailwind and other ecosystems through recipes and CSS custom properties.
+- Added the Tailwind smoke path and theme audit to the release check.
+
 ## [0.1.23] - 2026-05-20
 
 ### Added

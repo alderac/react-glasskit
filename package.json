@@ -1,6 +1,6 @@
 {
   "name": "react-glasskit",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
   "keywords": [
     "react",
@@ -61,9 +61,10 @@
     "test": "vitest run",
     "smoke:package": "npm run build && node scripts/smoke-packed-vite.mjs",
     "smoke:next": "npm run build && node scripts/smoke-packed-next.mjs",
+    "smoke:tailwind": "npm run build && node scripts/smoke-packed-tailwind.mjs",
     "smoke:demo": "npm --prefix demo run build && node scripts/smoke-demo-browser.mjs",
     "release:pack": "npm pack --dry-run",
-    "release:check": "npm run typecheck && npm test && npm run build && npm run audit:css && npm run smoke:package && npm run smoke:next && npm run smoke:demo && npm run release:pack"
+    "release:check": "npm run typecheck && npm test && npm run build && npm run audit:css && npm run audit:themes && npm run smoke:package && npm run smoke:next && npm run smoke:tailwind && npm run smoke:demo && npm run release:pack"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
