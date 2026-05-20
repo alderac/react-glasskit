@@ -55,7 +55,7 @@ function GlassPanelInner<C extends React.ElementType = 'div'>(
     focused = false,
     inactive = false,
     animate = false,
-    radius = 'md',
+    radius,
     className,
     style,
     children,
@@ -69,7 +69,7 @@ function GlassPanelInner<C extends React.ElementType = 'div'>(
     focused ? styles.panelFocused : '',
     inactive ? styles.panelInactive : '',
     animate ? styles.panelAnimate : '',
-    getGlassRadiusClassName(styles, radius),
+    radius ? getGlassRadiusClassName(styles, radius) : '',
     className,
   ]
     .filter(Boolean)

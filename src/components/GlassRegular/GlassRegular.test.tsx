@@ -21,6 +21,12 @@ describe('GlassRegular', () => {
     expect(screen.getByText('Content')).toHaveClass('custom-shell');
   });
 
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassRegular>Content</GlassRegular>);
+
+    expect(screen.getByText('Content')).not.toHaveClass(styles.radiusMd);
+  });
+
   it('applies the requested radius class', () => {
     render(<GlassRegular radius="none">Content</GlassRegular>);
 

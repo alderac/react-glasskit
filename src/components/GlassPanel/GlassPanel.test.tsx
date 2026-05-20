@@ -29,6 +29,12 @@ describe('GlassPanel', () => {
     expect(panel).toHaveClass(styles.radiusXl);
   });
 
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassPanel>Editor</GlassPanel>);
+
+    expect(screen.getByText('Editor')).not.toHaveClass(styles.radiusMd);
+  });
+
   it('preserves backdrop filter styles inline for consumer CSS pipelines', () => {
     render(<GlassPanel style={{ opacity: 0.8 }}>Editor</GlassPanel>);
 

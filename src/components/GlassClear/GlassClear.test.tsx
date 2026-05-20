@@ -17,6 +17,12 @@ describe('GlassClear', () => {
     expect(surface).toHaveClass(styles.radiusFull);
   });
 
+  it('preserves the global radius token when radius is omitted', () => {
+    render(<GlassClear>Overlay</GlassClear>);
+
+    expect(screen.getByText('Overlay')).not.toHaveClass(styles.radiusMd);
+  });
+
   it('preserves clear backdrop filter styles inline for consumer CSS pipelines', () => {
     render(<GlassClear style={{ opacity: 0.8 }}>Overlay</GlassClear>);
 

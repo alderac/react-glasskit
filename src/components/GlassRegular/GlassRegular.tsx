@@ -38,14 +38,14 @@ export type GlassRegularProps<C extends React.ElementType = 'div'> = Polymorphic
  * </GlassRegular>
  */
 function GlassRegularInner<C extends React.ElementType = 'div'>(
-  { as, className, radius = 'md', style, children, ...rest }: GlassRegularProps<C>,
+  { as, className, radius, style, children, ...rest }: GlassRegularProps<C>,
   ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
   return (
     <Tag
       ref={ref}
-      className={[styles.regular, getGlassRadiusClassName(styles, radius), className]
+      className={[styles.regular, radius ? getGlassRadiusClassName(styles, radius) : '', className]
         .filter(Boolean)
         .join(' ')}
       style={mergeGlassBackdropStyle('regular', style)}

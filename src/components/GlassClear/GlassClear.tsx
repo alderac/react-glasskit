@@ -43,14 +43,14 @@ export type GlassClearProps<C extends React.ElementType = 'div'> = PolymorphicPr
  * </GlassClear>
  */
 function GlassClearInner<C extends React.ElementType = 'div'>(
-  { as, dimmed = false, radius = 'md', className, style, children, ...rest }: GlassClearProps<C>,
+  { as, dimmed = false, radius, className, style, children, ...rest }: GlassClearProps<C>,
   ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
   const classes = [
     styles.clear,
     dimmed ? styles.clearDimmed : '',
-    getGlassRadiusClassName(styles, radius),
+    radius ? getGlassRadiusClassName(styles, radius) : '',
     className,
   ]
     .filter(Boolean)
