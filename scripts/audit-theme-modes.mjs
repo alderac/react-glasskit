@@ -32,6 +32,8 @@ const rootBlock = tokensCss.slice(rootBlockStart, rootBlockEnd);
 const requiredRootThemeConstants = [
   '--glass-bg-regular-light',
   '--glass-bg-regular-dark',
+  '--glass-scrim-bg-regular-light',
+  '--glass-scrim-bg-regular-dark',
 ];
 const missingRootThemeConstants = requiredRootThemeConstants.filter(
   (snippet) => !rootBlock.includes(snippet)
@@ -58,8 +60,11 @@ if (!(mediaIndex < lightIndex && lightIndex < darkIndex)) {
 const requiredComponentSnippets = [
   ':global(:is(.light, [data-theme="light"]))',
   ':global(:is(.dark, [data-theme="dark"]))',
+  '.scrimRegular',
   '--glass-bg-regular-light',
   '--glass-bg-regular-dark',
+  '--glass-scrim-bg-regular-light',
+  '--glass-scrim-bg-regular-dark',
 ];
 
 const missingComponentSnippets = requiredComponentSnippets.filter(

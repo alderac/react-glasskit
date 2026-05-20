@@ -6,6 +6,7 @@ const requiredSnippets = [
   '@media (prefers-reduced-transparency: reduce)',
   'backdrop-filter: none !important;',
   '-webkit-backdrop-filter: none !important;',
+  '.scrim',
   '.clearDimmed::before',
   'display: none;',
   '@media (prefers-reduced-motion: reduce)',
