@@ -9,6 +9,7 @@
 
 // ── Components ──────────────────────────────────────────────────────────────
 export { GlassRegular } from './components/GlassRegular';
+export type { GlassRegularProps } from './components/GlassRegular/GlassRegular';
 export { GlassClear } from './components/GlassClear';
 export type { GlassClearProps } from './components/GlassClear';
 export { GlassPanel } from './components/GlassPanel';
