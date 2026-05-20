@@ -39,17 +39,27 @@ describe('resizable panel math', () => {
   });
 
   it('maps arrow keys for vertical separators', () => {
-    expect(getKeyboardPanelSize(50, 'ArrowLeft', 'vertical', 5, 10, 30, 70)).toBe(45);
-    expect(getKeyboardPanelSize(50, 'ArrowRight', 'vertical', 5, 10, 30, 70)).toBe(55);
+    expect(
+      getKeyboardPanelSize(50, 'ArrowLeft', 'vertical', 5, 10, 30, 70)
+    ).toBe(45);
+    expect(
+      getKeyboardPanelSize(50, 'ArrowRight', 'vertical', 5, 10, 30, 70)
+    ).toBe(55);
   });
 
   it('maps arrow keys for horizontal separators', () => {
-    expect(getKeyboardPanelSize(50, 'ArrowUp', 'horizontal', 5, 10, 30, 70)).toBe(45);
-    expect(getKeyboardPanelSize(50, 'ArrowDown', 'horizontal', 5, 10, 30, 70)).toBe(55);
+    expect(
+      getKeyboardPanelSize(50, 'ArrowUp', 'horizontal', 5, 10, 30, 70)
+    ).toBe(45);
+    expect(
+      getKeyboardPanelSize(50, 'ArrowDown', 'horizontal', 5, 10, 30, 70)
+    ).toBe(55);
   });
 
   it('supports Home and End key bounds', () => {
-    expect(getKeyboardPanelSize(50, 'Home', 'vertical', 5, 10, 30, 70)).toBe(30);
+    expect(getKeyboardPanelSize(50, 'Home', 'vertical', 5, 10, 30, 70)).toBe(
+      30
+    );
     expect(getKeyboardPanelSize(50, 'End', 'vertical', 5, 10, 30, 70)).toBe(70);
   });
 

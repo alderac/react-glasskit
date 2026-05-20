@@ -1,5 +1,5 @@
-export { useResizablePanels } from './useResizablePanels';
 export type {
   UseResizablePanelsOptions,
   UseResizablePanelsResult,
 } from './useResizablePanels';
+export { useResizablePanels } from './useResizablePanels';

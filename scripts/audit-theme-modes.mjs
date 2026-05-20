@@ -27,7 +27,10 @@ if (missingTokenSnippets.length > 0) {
 }
 
 const rootBlockStart = tokensCss.indexOf(':root {');
-const rootBlockEnd = tokensCss.indexOf('@media (prefers-color-scheme: dark)', rootBlockStart);
+const rootBlockEnd = tokensCss.indexOf(
+  '@media (prefers-color-scheme: dark)',
+  rootBlockStart
+);
 const rootBlock = tokensCss.slice(rootBlockStart, rootBlockEnd);
 const requiredRootThemeConstants = [
   '--glass-bg-regular-light',
@@ -109,8 +112,15 @@ const requiredScrimThemeRules = [
 
 const missingScrimThemeRules = requiredScrimThemeRules.filter(
   ([selector, token]) =>
-    !glassCss.includes(selector) ||
-    !glassCss.slice(glassCss.indexOf(selector), glassCss.indexOf('}', glassCss.indexOf(selector))).includes(token)
+    !(
+      glassCss.includes(selector) &&
+      glassCss
+        .slice(
+          glassCss.indexOf(selector),
+          glassCss.indexOf('}', glassCss.indexOf(selector))
+        )
+        .includes(token)
+    )
 );
 
 if (missingScrimThemeRules.length > 0) {
@@ -138,13 +148,37 @@ const requiredDemoSnippets = [
   'demo-link-card',
 ];
 
+const hasJsxTagWithProps = (source, tagName, props) => {
+  const tagPattern = new RegExp(`<${tagName}\\b[^>]*>`, 'g');
+  return [...source.matchAll(tagPattern)].some(([tag]) =>
+    props.every((prop) => tag.includes(prop))
+  );
+};
+
 const requiredDemoJsxSnippets = [
-  '<GlassScrim strength="regular" radius="lg" className="demo-scrim-preview" />',
-  '<GlassPanel as="nav" aria-label="Preview navigation" radius="lg" className="demo-scrim-panel">',
+  {
+    label: 'GlassScrim regular preview',
+    props: [
+      'className="demo-scrim-preview"',
+      'radius="lg"',
+      'strength="regular"',
+    ],
+    tagName: 'GlassScrim',
+  },
+  {
+    label: 'GlassPanel scrim navigation preview',
+    props: [
+      'aria-label="Preview navigation"',
+      'as="nav"',
+      'className="demo-scrim-panel"',
+      'radius="lg"',
+    ],
+    tagName: 'GlassPanel',
+  },
 ];
 
 const missingDemoSnippets = requiredDemoSnippets.filter(
-  (snippet) => !demoApp.includes(snippet) && !demoCss.includes(snippet)
+  (snippet) => !(demoApp.includes(snippet) || demoCss.includes(snippet))
 );
 
 if (missingDemoSnippets.length > 0) {
@@ -156,13 +190,13 @@ if (missingDemoSnippets.length > 0) {
 }
 
 const missingDemoJsxSnippets = requiredDemoJsxSnippets.filter(
-  (snippet) => !demoApp.includes(snippet)
+  ({ props, tagName }) => !hasJsxTagWithProps(demoApp, tagName, props)
 );
 
 if (missingDemoJsxSnippets.length > 0) {
   throw new Error(
     `Missing required visible demo JSX snippets:\n${missingDemoJsxSnippets
-      .map((snippet) => `- ${snippet}`)
+      .map(({ label }) => `- ${label}`)
       .join('\n')}`
   );
 }

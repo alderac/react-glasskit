@@ -19,7 +19,9 @@ const requiredSnippets = [
   '.separatorResizable:focus-visible',
 ];
 
-const missingSnippets = requiredSnippets.filter((snippet) => !css.includes(snippet));
+const missingSnippets = requiredSnippets.filter(
+  (snippet) => !css.includes(snippet)
+);
 
 if (missingSnippets.length > 0) {
   throw new Error(
@@ -35,7 +37,9 @@ const getBlock = (startSnippet, endSnippet) => {
     return '';
   }
 
-  const end = endSnippet ? css.indexOf(endSnippet, start + startSnippet.length) : css.length;
+  const end = endSnippet
+    ? css.indexOf(endSnippet, start + startSnippet.length)
+    : css.length;
   return css.slice(start, end === -1 ? css.length : end);
 };
 

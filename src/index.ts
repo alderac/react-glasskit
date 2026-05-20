@@ -7,31 +7,33 @@
  *   import 'react-glasskit/src/css/tokens.css'
  */
 
+export type { GlassClearProps } from './components/GlassClear';
+export { GlassClear } from './components/GlassClear';
+export type { GlassPanelProps } from './components/GlassPanel';
+export { GlassPanel } from './components/GlassPanel';
 // ── Components ──────────────────────────────────────────────────────────────
 export { GlassRegular } from './components/GlassRegular';
 export type { GlassRegularProps } from './components/GlassRegular/GlassRegular';
-export { GlassClear } from './components/GlassClear';
-export type { GlassClearProps } from './components/GlassClear';
-export { GlassPanel } from './components/GlassPanel';
-export type { GlassPanelProps } from './components/GlassPanel';
+export type {
+  GlassScrimProps,
+  GlassScrimStrength,
+} from './components/GlassScrim';
 export { GlassScrim } from './components/GlassScrim';
-export type { GlassScrimProps, GlassScrimStrength } from './components/GlassScrim';
-export { PanelSeparator } from './components/PanelSeparator';
 export type { PanelSeparatorProps } from './components/PanelSeparator';
-
-// ── Hooks ───────────────────────────────────────────────────────────────────
-export { useActivePanel } from './hooks/useActivePanel';
+export { PanelSeparator } from './components/PanelSeparator';
 export type {
   ActivePanelId,
   PanelState,
   UseActivePanelOptions,
   UseActivePanelResult,
 } from './hooks/useActivePanel';
-export { useResizablePanels } from './hooks/useResizablePanels';
+// ── Hooks ───────────────────────────────────────────────────────────────────
+export { useActivePanel } from './hooks/useActivePanel';
 export type {
   UseResizablePanelsOptions,
   UseResizablePanelsResult,
 } from './hooks/useResizablePanels';
+export { useResizablePanels } from './hooks/useResizablePanels';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 export type {

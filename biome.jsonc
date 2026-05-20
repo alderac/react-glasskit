@@ -1,0 +1,91 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/vitest"
+  ],
+  "formatter": {
+    "lineEnding": "auto"
+  },
+  "javascript": {
+    "formatter": {
+      "lineEnding": "auto",
+      "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "formatter": {
+      "lineEnding": "auto"
+    },
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "lineEnding": "auto"
+    }
+  },
+  "linter": {
+    "rules": {
+      "performance": {
+        "noBarrelFile": "off"
+      },
+      "style": {
+        "useConsistentTypeDefinitions": "off",
+        "useFilenamingConvention": "off"
+      },
+      "suspicious": {
+        "noReactForwardRef": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["src/components/PanelSeparator/PanelSeparator.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useAriaPropsForRole": "off",
+            "useFocusableInteractive": "off",
+            "useSemanticElements": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/hooks/useResizablePanels/useResizablePanels.test.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useAriaPropsSupportedByRole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/css/glass.module.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["demo/src/App.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "off"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
+    }
+  ]
+}

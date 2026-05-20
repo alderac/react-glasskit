@@ -1,5 +1,5 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -19,7 +19,9 @@ const pinnedNextSmokeDependencies = {
 
 function run(command, args, cwd = root) {
   const resolvedCommand =
-    process.platform === 'win32' && command === 'npm' && process.env.npm_execpath
+    process.platform === 'win32' &&
+    command === 'npm' &&
+    process.env.npm_execpath
       ? process.execPath
       : command;
 

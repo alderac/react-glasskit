@@ -19,8 +19,10 @@
   to {
     opacity: 1;
     transform: scale(1) translateZ(0);
-    backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
-    -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
+    backdrop-filter: blur(var(--glass-blur-regular))
+      saturate(var(--glass-saturation-regular));
+    -webkit-backdrop-filter: blur(var(--glass-blur-regular))
+      saturate(var(--glass-saturation-regular));
   }
 }
 
@@ -29,19 +31,21 @@
 .regular {
   position: relative;
   background-color: var(--glass-bg-regular);
-  backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
-  -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
   border: 1px solid var(--glass-border);
   border-radius: var(--glass-radius);
   box-shadow:
     0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
     inset 0 1px 0 var(--glass-highlight-border);
+  -webkit-backdrop-filter: blur(var(--glass-blur-regular))
+    saturate(var(--glass-saturation-regular));
+  backdrop-filter: blur(var(--glass-blur-regular))
+    saturate(var(--glass-saturation-regular));
   transform: translateZ(0);
-  will-change: backdrop-filter;
   transition:
     background-color 200ms ease,
     border-color 200ms ease,
     box-shadow 200ms ease;
+  will-change: backdrop-filter;
 }
 
 /* ── GlassClear ────────────────────────────────────────────────────────────── */
@@ -49,13 +53,15 @@
 .clear {
   position: relative;
   background-color: var(--glass-bg-clear);
-  backdrop-filter: blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear));
-  -webkit-backdrop-filter: blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear));
   border: 1px solid var(--glass-border);
   border-radius: var(--glass-radius);
   box-shadow:
     0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
     inset 0 1px 0 var(--glass-highlight-border);
+  -webkit-backdrop-filter: blur(var(--glass-blur-clear))
+    saturate(var(--glass-saturation-clear));
+  backdrop-filter: blur(var(--glass-blur-clear))
+    saturate(var(--glass-saturation-clear));
   transform: translateZ(0);
   transition:
     background-color 200ms ease,
@@ -68,13 +74,13 @@
  * to prevent color interference with text legibility.
  */
 .clearDimmed::before {
-  content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: rgba(0, 0, 0, 0.18);
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
+  content: "";
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: inherit;
 }
 
 .clearDimmed > * {
@@ -83,20 +89,22 @@
 }
 
 .scrim {
-  appearance: none;
   position: fixed;
   inset: 0;
   padding: 0;
   margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  appearance: none;
+  cursor: default;
   background-color: var(--glass-scrim-bg-regular);
-  backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
-  -webkit-backdrop-filter: blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim));
   border: 0;
   box-shadow: none;
-  color: inherit;
-  cursor: default;
-  font: inherit;
-  text-align: inherit;
+  -webkit-backdrop-filter: blur(var(--glass-blur-scrim))
+    saturate(var(--glass-saturation-scrim));
+  backdrop-filter: blur(var(--glass-blur-scrim))
+    saturate(var(--glass-saturation-scrim));
   transform: translateZ(0);
   transition:
     background-color 200ms ease,
@@ -121,13 +129,15 @@
 .panel {
   position: relative;
   background-color: var(--glass-bg-panel);
-  backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
-  -webkit-backdrop-filter: blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular));
   border: 1px solid var(--glass-border);
   border-radius: var(--glass-radius);
   box-shadow:
     0 var(--glass-shadow-y) var(--glass-shadow-radius) var(--glass-shadow),
     inset 0 1px 0 var(--glass-highlight-border);
+  -webkit-backdrop-filter: blur(var(--glass-blur-regular))
+    saturate(var(--glass-saturation-regular));
+  backdrop-filter: blur(var(--glass-blur-regular))
+    saturate(var(--glass-saturation-regular));
   transform: translateZ(0);
   transition:
     opacity var(--glass-crystallize-duration) ease,
@@ -178,19 +188,22 @@
 
 /* Animate: crystallize materialization on mount */
 .panelAnimate {
-  animation: crystallize var(--glass-crystallize-duration) var(--glass-crystallize-easing) both;
+  animation: crystallize var(--glass-crystallize-duration)
+    var(--glass-crystallize-easing) both;
 }
 
 /* ── PanelSeparator ────────────────────────────────────────────────────────── */
 
 .separator {
   position: relative;
+  z-index: 2;
   flex-shrink: 0;
   background-color: var(--glass-border);
   border-radius: 2px;
   opacity: 0.55;
-  z-index: 2;
-  transition: opacity 200ms ease, background-color 200ms ease;
+  transition:
+    opacity 200ms ease,
+    background-color 200ms ease;
 }
 
 .separatorVertical {
@@ -199,8 +212,8 @@
 }
 
 .separatorHorizontal {
-  height: 1px;
   width: 100%;
+  height: 1px;
 }
 
 .separatorResizable.separatorVertical {
@@ -213,30 +226,30 @@
 
 /* Invisible hit target keeps the hairline divider easy to target when resizable. */
 .separatorResizable.separatorVertical::before {
-  content: '';
   position: absolute;
   top: 0;
+  right: -8px;
   bottom: 0;
   left: -8px;
-  right: -8px;
+  content: "";
   background: transparent;
 }
 
 .separatorResizable.separatorHorizontal::before {
-  content: '';
   position: absolute;
-  left: 0;
-  right: 0;
   top: -8px;
+  right: 0;
   bottom: -8px;
+  left: 0;
+  content: "";
   background: transparent;
 }
 
 /* Reveal only when the separator is being used as an interactive resize handle. */
 .separatorResizable:hover,
 .separatorResizable:active {
-  opacity: 0.85;
   background-color: var(--glass-focus-ring);
+  opacity: 0.85;
 }
 
 /* Explicit theme selectors keep surfaces synced with app-level theme controls. */
@@ -349,10 +362,10 @@
 }
 
 .separatorResizable:focus-visible {
-  opacity: 1;
   outline: 3px solid var(--glass-focus-ring);
   outline-offset: 3px;
   background-color: var(--glass-focus-ring);
+  opacity: 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -368,8 +381,8 @@
   .clear,
   .panel,
   .scrim {
-    backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 
   .regular {
@@ -433,12 +446,12 @@
   }
 
   .separator {
-    opacity: 1;
     background-color: var(--glass-high-contrast-border);
+    opacity: 1;
   }
 
   .scrim {
-    background-color: rgba(0, 0, 0, 0.70);
+    background-color: rgba(0, 0, 0, 0.7);
   }
 
   .separatorResizable:focus-visible {

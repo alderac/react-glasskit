@@ -7,12 +7,14 @@ import { GlassClear } from './GlassClear';
 describe('GlassClear', () => {
   it('renders as a dimmed complementary region with the requested radius class', () => {
     render(
-      <GlassClear as="aside" aria-label="Media controls" dimmed radius="full">
+      <GlassClear aria-label="Media controls" as="aside" dimmed radius="full">
         Overlay
       </GlassClear>
     );
 
-    const surface = screen.getByRole('complementary', { name: 'Media controls' });
+    const surface = screen.getByRole('complementary', {
+      name: 'Media controls',
+    });
     expect(surface).toHaveClass(styles.clearDimmed);
     expect(surface).toHaveClass(styles.radiusFull);
   });
@@ -39,13 +41,13 @@ describe('GlassClear', () => {
 
     render(
       <GlassClear
-        ref={ref}
-        className="floating-toolbar"
-        style={{ opacity: 0.9 }}
         aria-label="Canvas toolbar"
-        data-testid="toolbar"
+        className="floating-toolbar"
         data-density="compact"
+        data-testid="toolbar"
         onPointerDown={handlePointerDown}
+        ref={ref}
+        style={{ opacity: 0.9 }}
       >
         Overlay
       </GlassClear>
@@ -70,7 +72,12 @@ describe('GlassClear', () => {
     AppLink.displayName = 'AppLink';
 
     render(
-      <GlassClear as={AppLink} href="/media" aria-label="Open media controls" radius="lg">
+      <GlassClear
+        aria-label="Open media controls"
+        as={AppLink}
+        href="/media"
+        radius="lg"
+      >
         Media
       </GlassClear>
     );

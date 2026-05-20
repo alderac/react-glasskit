@@ -1,13 +1,13 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
+import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 import type {
   GlassRadius,
   PolymorphicForwardRefComponent,
   PolymorphicProps,
   PolymorphicRef,
 } from '../../types';
-import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
-import styles from '../../css/glass.module.css';
-import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -22,7 +22,8 @@ type OwnProps = {
   className?: string;
 };
 
-export type GlassClearProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
+export type GlassClearProps<C extends React.ElementType = 'div'> =
+  PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -43,7 +44,15 @@ export type GlassClearProps<C extends React.ElementType = 'div'> = PolymorphicPr
  * </GlassClear>
  */
 function GlassClearInner<C extends React.ElementType = 'div'>(
-  { as, dimmed = false, radius, className, style, children, ...rest }: GlassClearProps<C>,
+  {
+    as,
+    dimmed = false,
+    radius,
+    className,
+    style,
+    children,
+    ...rest
+  }: GlassClearProps<C>,
   ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
@@ -57,14 +66,22 @@ function GlassClearInner<C extends React.ElementType = 'div'>(
     .join(' ');
 
   return (
-    <Tag ref={ref} className={classes} style={mergeGlassBackdropStyle('clear', style)} {...rest}>
+    <Tag
+      className={classes}
+      ref={ref}
+      style={mergeGlassBackdropStyle('clear', style)}
+      {...rest}
+    >
       {children}
     </Tag>
   );
 }
 
 export const GlassClear = React.forwardRef(
-  GlassClearInner as unknown as React.ForwardRefRenderFunction<unknown, GlassClearProps>
+  GlassClearInner as unknown as React.ForwardRefRenderFunction<
+    unknown,
+    GlassClearProps
+  >
 ) as PolymorphicForwardRefComponent<'div', OwnProps>;
 
 (GlassClear as { displayName?: string }).displayName = 'GlassClear';

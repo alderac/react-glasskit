@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
+import path from 'node:path';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // Let the demo import from the library source directly
-      'react-glasskit': path.resolve(__dirname, '../src'),
+      'react-glasskit': path.resolve(import.meta.dirname, '../src'),
     },
   },
   build: {

@@ -1,43 +1,30 @@
 import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const host = '127.0.0.1';
 const port = '4174';
 const basePath = '/react-glasskit/';
 const baseUrl = `http://${host}:${port}${basePath}`;
-
-function npmInvocation(args) {
-  if (process.platform === 'win32' && process.env.npm_execpath) {
-    return {
-      command: process.execPath,
-      args: [process.env.npm_execpath, ...args],
-    };
-  }
-
-  return { command: 'npm', args };
-}
+const demoDir = fileURLToPath(new URL('../demo/', import.meta.url));
+const viteBin = fileURLToPath(
+  new URL('../demo/node_modules/vite/bin/vite.js', import.meta.url)
+);
+const resizeSeparatorName = /resize timeline and inspector panes/i;
 
 function startDemoServer() {
-  const { command, args } = npmInvocation([
-    '--prefix',
-    'demo',
-    'run',
-    'preview',
-    '--',
-    '--host',
-    host,
-    '--port',
-    port,
-    '--strictPort',
-  ]);
-
-  const child = spawn(command, args, {
-    stdio: ['ignore', 'pipe', 'pipe'],
-    env: {
-      ...process.env,
-      BROWSER: 'none',
-    },
-  });
+  const child = spawn(
+    process.execPath,
+    [viteBin, 'preview', '--host', host, '--port', port, '--strictPort'],
+    {
+      cwd: demoDir,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        BROWSER: 'none',
+      },
+    }
+  );
 
   child.stdout.on('data', (chunk) => process.stdout.write(chunk));
   child.stderr.on('data', (chunk) => process.stderr.write(chunk));
@@ -46,20 +33,28 @@ function startDemoServer() {
 }
 
 async function stopDemoServer(child) {
-  if (!child.pid || child.exitCode !== null) return;
-
-  if (process.platform === 'win32') {
-    await new Promise((resolve) => {
-      const taskkill = spawn('taskkill', ['/pid', String(child.pid), '/T', '/F'], {
-        stdio: 'ignore',
-      });
-      taskkill.on('close', resolve);
-      taskkill.on('error', resolve);
-    });
+  if (!child.pid || child.exitCode !== null) {
     return;
   }
 
-  child.kill('SIGTERM');
+  child.kill();
+
+  await new Promise((resolve) => {
+    const timeout = setTimeout(resolve, 5000);
+
+    child.once('close', () => {
+      clearTimeout(timeout);
+      resolve();
+    });
+    child.once('error', () => {
+      clearTimeout(timeout);
+      resolve();
+    });
+  });
+
+  if (child.exitCode === null) {
+    child.kill('SIGKILL');
+  }
 }
 
 async function waitForDemo() {
@@ -69,7 +64,9 @@ async function waitForDemo() {
   while (Date.now() - startedAt < timeoutMs) {
     try {
       const response = await fetch(baseUrl);
-      if (response.ok) return;
+      if (response.ok) {
+        return;
+      }
     } catch {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
@@ -96,14 +93,16 @@ async function smokeContext(browser, name, contextOptions) {
   await assertHeading(page, 'What the package verifies');
 
   const separator = page
-    .getByRole('separator', { name: /resize timeline and inspector panes/i })
+    .getByRole('separator', { name: resizeSeparatorName })
     .first();
 
   await separator.focus();
 
   const initialValue = await separator.getAttribute('aria-valuenow');
   if (initialValue !== '58') {
-    throw new Error(`${name}: expected separator to start at aria-valuenow="58".`);
+    throw new Error(
+      `${name}: expected separator to start at aria-valuenow="58".`
+    );
   }
 
   await page.keyboard.press('ArrowRight');

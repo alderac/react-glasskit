@@ -6,7 +6,13 @@ import 'react-glasskit/css/tokens.css';
 import './demo.css';
 import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('Missing root element.');
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>

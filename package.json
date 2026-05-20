@@ -68,13 +68,16 @@
     "release:check": "npm run typecheck && npm test && npm run build && npm run audit:css && npm run audit:themes && npm run audit:geometry && npm run smoke:package && npm run smoke:next && npm run smoke:tailwind && npm run smoke:demo && npm run release:pack",
     "changeset": "changeset",
     "changeset:version": "changeset version && npm install --package-lock-only --ignore-scripts",
-    "release:publish": "npm run release:check && changeset publish"
+    "release:publish": "npm run release:check && changeset publish",
+    "lint": "ultracite check",
+    "lint:fix": "ultracite fix"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
     "@changesets/cli": "^2.31.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -86,6 +89,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "typescript": "^5.4.0",
+    "ultracite": "^7.7.0",
     "vite": "^8.0.13",
     "vitest": "^4.1.6"
   }

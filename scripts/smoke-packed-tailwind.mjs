@@ -8,7 +8,9 @@ const smokeRoot = path.join(tempRoot, 'smoke-tailwind');
 
 function run(command, args, cwd = root) {
   const resolvedCommand =
-    process.platform === 'win32' && command === 'npm' && process.env.npm_execpath
+    process.platform === 'win32' &&
+    command === 'npm' &&
+    process.env.npm_execpath
       ? process.execPath
       : command;
 
@@ -28,7 +30,12 @@ await rm(smokeRoot, { recursive: true, force: true });
 await mkdir(path.join(smokeRoot, 'src'), { recursive: true });
 await mkdir(tempRoot, { recursive: true });
 
-const packOutput = run('npm', ['pack', '--pack-destination', tempRoot, '--ignore-scripts']);
+const packOutput = run('npm', [
+  'pack',
+  '--pack-destination',
+  tempRoot,
+  '--ignore-scripts',
+]);
 const tarballName = packOutput.trim().split(/\r?\n/).at(-1);
 
 if (!tarballName) {
