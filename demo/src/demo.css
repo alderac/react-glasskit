@@ -332,6 +332,22 @@ body {
 
 /* ── Navbar Demo ───────────────────────────────────────────────────────────── */
 
+.showcase-scrim {
+  --showcase-backdrop:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 40px),
+    linear-gradient(135deg, rgba(6, 182, 212, 0.68), rgba(124, 58, 237, 0.58) 48%, rgba(244, 63, 94, 0.54)),
+    linear-gradient(135deg, #07111f, #1e1b4b);
+}
+
+[data-theme="light"] .showcase-scrim {
+  --showcase-backdrop:
+    repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.10) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(0deg, rgba(15, 23, 42, 0.08) 0 1px, transparent 1px 40px),
+    linear-gradient(135deg, rgba(6, 182, 212, 0.36), rgba(124, 58, 237, 0.24) 48%, rgba(244, 63, 94, 0.30)),
+    linear-gradient(135deg, #ecfeff, #f5f3ff);
+}
+
 .demo-nav-inner {
   display: flex;
   align-items: center;
@@ -552,6 +568,48 @@ body {
 }
 
 /* ── Separator Demo ────────────────────────────────────────────────────────── */
+
+.demo-scrim-stage {
+  position: relative;
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.demo-scrim-preview {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.demo-scrim-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px 24px;
+}
+
+.demo-scrim-panel a {
+  color: rgba(224, 224, 240, 0.82);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+[data-theme="light"] .demo-scrim-panel a {
+  color: rgba(23, 32, 51, 0.78);
+}
+
+.demo-link-card strong {
+  font-size: 1rem;
+}
 
 .demo-separator-stage {
   display: flex;

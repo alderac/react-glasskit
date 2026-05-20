@@ -131,6 +131,11 @@ const requiredDemoSnippets = [
   'document.documentElement.dataset.theme = demoTheme',
   'aria-pressed={demoTheme ===',
   'demo-theme-toggle',
+  'GlassScrim',
+  'radius="none"',
+  'radius="lg"',
+  'demo-scrim',
+  'demo-link-card',
 ];
 
 const missingDemoSnippets = requiredDemoSnippets.filter(
