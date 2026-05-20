@@ -1,4 +1,10 @@
-import type { ElementType, ComponentPropsWithoutRef, PropsWithChildren } from 'react';
+import type {
+  ComponentPropsWithRef,
+  ComponentPropsWithoutRef,
+  ElementType,
+  PropsWithChildren,
+  ReactElement,
+} from 'react';
 
 // ─── Polymorphic Component Utilities ─────────────────────────────────────────
 // Enables the `as` prop, allowing GlassRegular to render as any HTML element
@@ -13,7 +19,18 @@ export type PolymorphicProps<
 > = PropsWithChildren<OwnProps & AsProp<C>> &
   Omit<ComponentPropsWithoutRef<C>, PropsToOmit<C, OwnProps>>;
 
+export type PolymorphicRef<C extends ElementType> = ComponentPropsWithRef<C>['ref'];
+
+export type PolymorphicForwardRefComponent<
+  DefaultElement extends ElementType,
+  OwnProps = Record<string, never>
+> = <C extends ElementType = DefaultElement>(
+  props: PolymorphicProps<C, OwnProps> & { ref?: PolymorphicRef<C> }
+) => ReactElement | null;
+
 // ─── Shared Component Types ───────────────────────────────────────────────────
 
 /** Orientation for PanelSeparator layout dividers */
 export type Orientation = 'horizontal' | 'vertical';
+
+export type GlassRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';

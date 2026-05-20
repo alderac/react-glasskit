@@ -13,7 +13,13 @@
   color-scheme: light;
 
   /* Material geometry */
-  --glass-radius: 12px;
+  --glass-radius-none: 0px;
+  --glass-radius-sm: 6px;
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 18px;
+  --glass-radius-xl: 24px;
+  --glass-radius-full: 9999px;
+  --glass-radius: var(--glass-radius-md);
   --glass-shadow-radius: 16px;
   --glass-shadow-y: 10px;
 

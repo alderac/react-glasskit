@@ -26,6 +26,30 @@
 
 /* ── GlassRegular ──────────────────────────────────────────────────────────── */
 
+.radiusNone {
+  border-radius: var(--glass-radius-none);
+}
+
+.radiusSm {
+  border-radius: var(--glass-radius-sm);
+}
+
+.radiusMd {
+  border-radius: var(--glass-radius-md);
+}
+
+.radiusLg {
+  border-radius: var(--glass-radius-lg);
+}
+
+.radiusXl {
+  border-radius: var(--glass-radius-xl);
+}
+
+.radiusFull {
+  border-radius: var(--glass-radius-full);
+}
+
 .regular {
   position: relative;
   background-color: var(--glass-bg-regular);
