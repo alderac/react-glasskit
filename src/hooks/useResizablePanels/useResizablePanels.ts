@@ -17,23 +17,22 @@ import {
 } from './resizablePanelMath';
 
 export interface UseResizablePanelsOptions {
-  primaryPanelId: string;
-  orientation?: Orientation;
   initialSize?: number;
-  minSize?: number;
-  maxSize?: number;
-  step?: number;
   largeStep?: number;
+  maxSize?: number;
+  minSize?: number;
   onSizeChange?: (size: number) => void;
+  orientation?: Orientation;
+  primaryPanelId: string;
+  step?: number;
 }
 
 export interface UseResizablePanelsResult {
   containerRef: RefObject<HTMLDivElement>;
-  primarySize: number;
-  secondarySize: number;
-  setPrimarySize: (size: number) => void;
   primaryPanelStyle: CSSProperties;
+  primarySize: number;
   secondaryPanelStyle: CSSProperties;
+  secondarySize: number;
   separatorProps: {
     role: 'separator';
     tabIndex: 0;
@@ -45,6 +44,7 @@ export interface UseResizablePanelsResult {
     onPointerDown: (event: ReactPointerEvent<HTMLElement>) => void;
     onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   };
+  setPrimarySize: (size: number) => void;
 }
 
 export function useResizablePanels({
@@ -68,7 +68,9 @@ export function useResizablePanels({
       const nextSize = clampPanelSize(size, minSize, maxSize);
 
       setPrimarySizeState((currentSize) => {
-        if (currentSize === nextSize) return currentSize;
+        if (currentSize === nextSize) {
+          return currentSize;
+        }
         return nextSize;
       });
 
@@ -83,7 +85,9 @@ export function useResizablePanels({
   const handlePointerDown = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
       const container = containerRef.current;
-      if (!container) return;
+      if (!container) {
+        return;
+      }
 
       event.preventDefault();
       activeCleanupRef.current?.();
@@ -133,12 +137,22 @@ export function useResizablePanels({
         maxSize
       );
 
-      if (nextSize === primarySize) return;
+      if (nextSize === primarySize) {
+        return;
+      }
 
       event.preventDefault();
       setPrimarySize(nextSize);
     },
-    [largeStep, maxSize, minSize, orientation, primarySize, setPrimarySize, step]
+    [
+      largeStep,
+      maxSize,
+      minSize,
+      orientation,
+      primarySize,
+      setPrimarySize,
+      step,
+    ]
   );
 
   useEffect(
@@ -150,7 +164,7 @@ export function useResizablePanels({
 
   useEffect(() => {
     setPrimarySize(primarySize);
-  }, [minSize, maxSize, primarySize, setPrimarySize]);
+  }, [primarySize, setPrimarySize]);
 
   const primaryPanelStyle = useMemo<CSSProperties>(
     () =>

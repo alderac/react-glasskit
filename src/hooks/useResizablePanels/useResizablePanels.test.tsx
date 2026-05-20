@@ -13,7 +13,7 @@ function ResizableHarness() {
   });
 
   return (
-    <div ref={panels.containerRef} data-testid="stage">
+    <div data-testid="stage" ref={panels.containerRef}>
       <section id="editor-panel" style={panels.primaryPanelStyle}>
         Editor
       </section>
@@ -27,11 +27,7 @@ function ResizableHarness() {
   );
 }
 
-function ResizableConstraintHarness({
-  maxSize,
-}: {
-  maxSize: number;
-}) {
+function ResizableConstraintHarness({ maxSize }: { maxSize: number }) {
   const panels = useResizablePanels({
     primaryPanelId: 'editor-panel',
     initialSize: 70,
@@ -88,7 +84,11 @@ describe('useResizablePanels', () => {
       toJSON: () => undefined,
     });
 
-    fireEvent.pointerDown(separator, { clientX: 100, clientY: 0, pointerId: 1 });
+    fireEvent.pointerDown(separator, {
+      clientX: 100,
+      clientY: 0,
+      pointerId: 1,
+    });
     fireEvent.pointerMove(window, { clientX: 140, clientY: 0 });
     fireEvent.pointerUp(window);
 
@@ -130,12 +130,28 @@ describe('useResizablePanels', () => {
       toJSON: () => undefined,
     });
 
-    fireEvent.pointerDown(separator, { clientX: 100, clientY: 0, pointerId: 1 });
+    fireEvent.pointerDown(separator, {
+      clientX: 100,
+      clientY: 0,
+      pointerId: 1,
+    });
     fireEvent.pointerCancel(window);
 
-    expect(addListener).toHaveBeenCalledWith('pointercancel', expect.any(Function));
-    expect(removeListener).toHaveBeenCalledWith('pointermove', expect.any(Function));
-    expect(removeListener).toHaveBeenCalledWith('pointerup', expect.any(Function));
-    expect(removeListener).toHaveBeenCalledWith('pointercancel', expect.any(Function));
+    expect(addListener).toHaveBeenCalledWith(
+      'pointercancel',
+      expect.any(Function)
+    );
+    expect(removeListener).toHaveBeenCalledWith(
+      'pointermove',
+      expect.any(Function)
+    );
+    expect(removeListener).toHaveBeenCalledWith(
+      'pointerup',
+      expect.any(Function)
+    );
+    expect(removeListener).toHaveBeenCalledWith(
+      'pointercancel',
+      expect.any(Function)
+    );
   });
 });

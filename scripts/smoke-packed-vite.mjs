@@ -1,5 +1,5 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -7,7 +7,11 @@ const tempRoot = path.join(root, '.tmp');
 const smokeRoot = path.join(tempRoot, 'smoke-vite');
 
 function run(command, args, cwd = root) {
-  if (process.platform === 'win32' && command === 'npm' && process.env.npm_execpath) {
+  if (
+    process.platform === 'win32' &&
+    command === 'npm' &&
+    process.env.npm_execpath
+  ) {
     return execFileSync(process.execPath, [process.env.npm_execpath, ...args], {
       cwd,
       encoding: 'utf8',

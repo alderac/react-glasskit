@@ -15,12 +15,12 @@ describe('PanelSeparator', () => {
   it('accepts APG props when paired with resize behavior', () => {
     render(
       <PanelSeparator
-        resizable
-        aria-label="Resize editor and inspector"
         aria-controls="editor-panel"
-        aria-valuemin={30}
+        aria-label="Resize editor and inspector"
         aria-valuemax={70}
+        aria-valuemin={30}
         aria-valuenow={50}
+        resizable
         tabIndex={0}
       />
     );
@@ -39,13 +39,13 @@ describe('PanelSeparator', () => {
   it('lets hook-supplied APG props override defaults', () => {
     render(
       <PanelSeparator
-        orientation="horizontal"
-        aria-label="Resize preview and logs"
         aria-controls="preview-panel"
+        aria-label="Resize preview and logs"
         aria-orientation="horizontal"
-        aria-valuemin={20}
         aria-valuemax={80}
+        aria-valuemin={20}
         aria-valuenow={40}
+        orientation="horizontal"
         tabIndex={0}
       />
     );
@@ -65,13 +65,13 @@ describe('PanelSeparator', () => {
 
     render(
       <PanelSeparator
-        ref={ref}
-        className="resize-hitbox"
-        style={{ width: '2px' }}
         aria-label="Resize editor"
-        data-testid="separator"
+        className="resize-hitbox"
         data-pane-edge="editor"
+        data-testid="separator"
         onPointerDown={handlePointerDown}
+        ref={ref}
+        style={{ width: '2px' }}
       />
     );
 

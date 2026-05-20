@@ -1,13 +1,13 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
+import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 import type {
   GlassRadius,
   PolymorphicForwardRefComponent,
   PolymorphicProps,
   PolymorphicRef,
 } from '../../types';
-import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
-import styles from '../../css/glass.module.css';
-import { getGlassRadiusClassName } from '../../css/radius';
 
 export type GlassScrimStrength = 'soft' | 'regular' | 'strong';
 
@@ -17,7 +17,8 @@ type OwnProps = {
   className?: string;
 };
 
-export type GlassScrimProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
+export type GlassScrimProps<C extends React.ElementType = 'div'> =
+  PolymorphicProps<C, OwnProps>;
 
 const strengthClassNames = {
   soft: styles.scrimSoft,
@@ -55,8 +56,8 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
 
   return (
     <Tag
-      ref={ref}
       className={classes}
+      ref={ref}
       style={mergeGlassBackdropStyle('scrim', style)}
       {...elementProps}
     >
@@ -66,7 +67,10 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
 }
 
 export const GlassScrim = React.forwardRef(
-  GlassScrimInner as unknown as React.ForwardRefRenderFunction<unknown, GlassScrimProps>
+  GlassScrimInner as unknown as React.ForwardRefRenderFunction<
+    unknown,
+    GlassScrimProps
+  >
 ) as PolymorphicForwardRefComponent<'div', OwnProps>;
 
 (GlassScrim as { displayName?: string }).displayName = 'GlassScrim';

@@ -1,18 +1,24 @@
 import type { CSSProperties } from 'react';
 
 const regularBackdropStyle = {
-  backdropFilter: 'blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular))',
-  WebkitBackdropFilter: 'blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular))',
+  backdropFilter:
+    'blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular))',
+  WebkitBackdropFilter:
+    'blur(var(--glass-blur-regular)) saturate(var(--glass-saturation-regular))',
 } satisfies CSSProperties;
 
 const clearBackdropStyle = {
-  backdropFilter: 'blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear))',
-  WebkitBackdropFilter: 'blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear))',
+  backdropFilter:
+    'blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear))',
+  WebkitBackdropFilter:
+    'blur(var(--glass-blur-clear)) saturate(var(--glass-saturation-clear))',
 } satisfies CSSProperties;
 
 const scrimBackdropStyle = {
-  backdropFilter: 'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
-  WebkitBackdropFilter: 'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
+  backdropFilter:
+    'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
+  WebkitBackdropFilter:
+    'blur(var(--glass-blur-scrim)) saturate(var(--glass-saturation-scrim))',
 } satisfies CSSProperties;
 
 const backdropStyles = {

@@ -1,13 +1,13 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
+import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 import type {
   GlassRadius,
   PolymorphicForwardRefComponent,
   PolymorphicProps,
   PolymorphicRef,
 } from '../../types';
-import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
-import styles from '../../css/glass.module.css';
-import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -17,7 +17,8 @@ type OwnProps = {
   radius?: GlassRadius;
 };
 
-export type GlassRegularProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
+export type GlassRegularProps<C extends React.ElementType = 'div'> =
+  PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -44,10 +45,14 @@ function GlassRegularInner<C extends React.ElementType = 'div'>(
   const Tag = (as ?? 'div') as React.ElementType;
   return (
     <Tag
-      ref={ref}
-      className={[styles.regular, radius ? getGlassRadiusClassName(styles, radius) : '', className]
+      className={[
+        styles.regular,
+        radius ? getGlassRadiusClassName(styles, radius) : '',
+        className,
+      ]
         .filter(Boolean)
         .join(' ')}
+      ref={ref}
       style={mergeGlassBackdropStyle('regular', style)}
       {...rest}
     >
@@ -57,9 +62,11 @@ function GlassRegularInner<C extends React.ElementType = 'div'>(
 }
 
 export const GlassRegular = React.forwardRef(
-  GlassRegularInner as unknown as React.ForwardRefRenderFunction<unknown, GlassRegularProps>
+  GlassRegularInner as unknown as React.ForwardRefRenderFunction<
+    unknown,
+    GlassRegularProps
+  >
 ) as PolymorphicForwardRefComponent<'div', OwnProps>;
 
 // The generic forwardRef cast erases displayName — set it manually
 (GlassRegular as { displayName?: string }).displayName = 'GlassRegular';
-

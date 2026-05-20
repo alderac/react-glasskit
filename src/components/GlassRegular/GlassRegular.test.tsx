@@ -7,12 +7,14 @@ import { GlassRegular } from './GlassRegular';
 describe('GlassRegular', () => {
   it('renders as a polymorphic element', () => {
     render(
-      <GlassRegular as="nav" aria-label="Primary navigation">
+      <GlassRegular aria-label="Primary navigation" as="nav">
         Workspace
       </GlassRegular>
     );
 
-    expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('navigation', { name: 'Primary navigation' })
+    ).toBeInTheDocument();
   });
 
   it('merges consumer class names', () => {
@@ -49,14 +51,14 @@ describe('GlassRegular', () => {
 
     render(
       <GlassRegular
-        as="button"
-        ref={ref}
-        type="button"
-        className="command-button"
-        style={{ opacity: 0.9 }}
         aria-label="Open command menu"
+        as="button"
+        className="command-button"
         data-variant="toolbar"
         onClick={handleClick}
+        ref={ref}
+        style={{ opacity: 0.9 }}
+        type="button"
       >
         Command
       </GlassRegular>
@@ -81,7 +83,12 @@ describe('GlassRegular', () => {
     AppLink.displayName = 'AppLink';
 
     render(
-      <GlassRegular as={AppLink} href="/dashboard" aria-label="Open dashboard" radius="lg">
+      <GlassRegular
+        aria-label="Open dashboard"
+        as={AppLink}
+        href="/dashboard"
+        radius="lg"
+      >
         Dashboard
       </GlassRegular>
     );

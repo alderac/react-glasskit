@@ -1,22 +1,26 @@
 import type { Orientation } from '../../types';
 
 export interface ResizeRect {
+  height: number;
   left: number;
   top: number;
   width: number;
-  height: number;
 }
 
 export interface PointerPanelSizeInput {
-  orientation: Orientation;
   clientX: number;
   clientY: number;
-  rect: ResizeRect;
-  minSize: number;
   maxSize: number;
+  minSize: number;
+  orientation: Orientation;
+  rect: ResizeRect;
 }
 
-export function clampPanelSize(size: number, minSize: number, maxSize: number): number {
+export function clampPanelSize(
+  size: number,
+  minSize: number,
+  maxSize: number
+): number {
   return Math.min(maxSize, Math.max(minSize, Math.round(size)));
 }
 
@@ -54,12 +58,24 @@ export function getKeyboardPanelSize(
   const decrementKey = orientation === 'vertical' ? 'ArrowLeft' : 'ArrowUp';
   const incrementKey = orientation === 'vertical' ? 'ArrowRight' : 'ArrowDown';
 
-  if (key === 'Home') return minSize;
-  if (key === 'End') return maxSize;
-  if (key === decrementKey) return clampPanelSize(currentSize - step, minSize, maxSize);
-  if (key === incrementKey) return clampPanelSize(currentSize + step, minSize, maxSize);
-  if (key === 'PageUp') return clampPanelSize(currentSize - largeStep, minSize, maxSize);
-  if (key === 'PageDown') return clampPanelSize(currentSize + largeStep, minSize, maxSize);
+  if (key === 'Home') {
+    return minSize;
+  }
+  if (key === 'End') {
+    return maxSize;
+  }
+  if (key === decrementKey) {
+    return clampPanelSize(currentSize - step, minSize, maxSize);
+  }
+  if (key === incrementKey) {
+    return clampPanelSize(currentSize + step, minSize, maxSize);
+  }
+  if (key === 'PageUp') {
+    return clampPanelSize(currentSize - largeStep, minSize, maxSize);
+  }
+  if (key === 'PageDown') {
+    return clampPanelSize(currentSize + largeStep, minSize, maxSize);
+  }
 
   return currentSize;
 }

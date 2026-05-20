@@ -1,8 +1,8 @@
-import { Fragment, useEffect, useState, type ReactNode } from 'react';
+import { Fragment, type ReactNode, useEffect, useState } from 'react';
 import {
-  GlassRegular,
   GlassClear,
   GlassPanel,
+  GlassRegular,
   GlassScrim,
   PanelSeparator,
   useActivePanel,
@@ -16,7 +16,9 @@ function getPreferredDemoTheme(): DemoTheme {
     return 'dark';
   }
 
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  return window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark';
 }
 
 const installCodeSample = [
@@ -89,31 +91,37 @@ const comparisonItems = [
   {
     need: 'Accessibility fallbacks',
     localCss: 'Every media query is app-owned',
-    glasskit: 'Motion, transparency, contrast, and focus fallbacks ship together',
+    glasskit:
+      'Motion, transparency, contrast, and focus fallbacks ship together',
   },
   {
     need: 'Resizable split panels',
     localCss: 'Pointer, keyboard, and ARIA behavior are custom work',
-    glasskit: 'PanelSeparator and useResizablePanels cover the v1 splitter path',
+    glasskit:
+      'PanelSeparator and useResizablePanels cover the v1 splitter path',
   },
 ];
 
 const integrationItems = [
   {
     name: 'Tailwind CSS',
-    description: 'Use utilities for layout and typography while GlassKit tokens control the material.',
+    description:
+      'Use utilities for layout and typography while GlassKit tokens control the material.',
   },
   {
     name: 'shadcn/ui',
-    description: 'Keep shadcn controls and use GlassKit as the panel, overlay, and splitter surface.',
+    description:
+      'Keep shadcn controls and use GlassKit as the panel, overlay, and splitter surface.',
   },
   {
     name: 'Headless primitives',
-    description: 'Pair Radix, Base UI, or React Aria behavior with GlassKit surfaces.',
+    description:
+      'Pair Radix, Base UI, or React Aria behavior with GlassKit surfaces.',
   },
   {
     name: 'Design systems',
-    description: 'Map Bootstrap, Chakra, Mantine, MUI, Panda, or vanilla-extract themes through CSS variables.',
+    description:
+      'Map Bootstrap, Chakra, Mantine, MUI, Panda, or vanilla-extract themes through CSS variables.',
   },
 ];
 
@@ -150,7 +158,7 @@ const panelCodeSample = [
   '  });',
   '',
   '  return (',
-  '    <div style={{ display: \'flex\', height: 320 }}>',
+  "    <div style={{ display: 'flex', height: 320 }}>",
   '      <GlassPanel',
   "        focused={activePanels.isFocused('editor')}",
   "        inactive={activePanels.isInactive('editor')}",
@@ -186,14 +194,14 @@ const clearCodeSample = [
   '  return (',
   '    <div',
   '      style={{',
-  "        minHeight: 240,",
+  '        minHeight: 240,',
   "        display: 'grid',",
   "        placeItems: 'center',",
   "        background: 'linear-gradient(135deg, #0ea5e9, #ec4899, #22c55e)',",
   '      }}',
   '    >',
   '      <GlassClear dimmed>',
-  '        <div style={{ display: \'flex\', gap: 12, padding: \'10px 20px\' }}>',
+  "        <div style={{ display: 'flex', gap: 12, padding: '10px 20px' }}>",
   '          <button type="button">Move</button>',
   '          <button type="button">Pen</button>',
   '          <button type="button">Shape</button>',
@@ -261,14 +269,14 @@ const separatorCodeSample = [
   '',
   '  return (',
   '    <>',
-  '      <div style={{ display: \'flex\', height: 150 }}>',
+  "      <div style={{ display: 'flex', height: 150 }}>",
   '        <GlassRegular style={{ flex: 1 }}>Panel A</GlassRegular>',
   '        <PanelSeparator orientation="vertical" />',
   '        <GlassRegular style={{ flex: 1 }}>Panel B</GlassRegular>',
   '      </div>',
   '',
-  '      <div ref={panels.containerRef} style={{ display: \'flex\', height: 150 }}>',
-  "        <GlassRegular id=\"timeline-panel\" style={panels.primaryPanelStyle}>",
+  "      <div ref={panels.containerRef} style={{ display: 'flex', height: 150 }}>",
+  '        <GlassRegular id="timeline-panel" style={panels.primaryPanelStyle}>',
   '          Timeline {panels.primarySize}%',
   '        </GlassRegular>',
   '        <PanelSeparator',
@@ -285,32 +293,50 @@ const separatorCodeSample = [
 ].join('\n');
 
 const codeTokenPattern =
-  /(\/\/.*)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(<\/?[\w.]+|\/?>)|(\b[A-Za-z_$][\w$-]*(?=\=))|(\b(?:import|from|export|function|return|const|let|type|as|if|new)\b)/g;
+  /(\/\/.*)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(<\/?[\w.]+|\/?>)|(\b[A-Za-z_$][\w$-]*(?==))|(\b(?:import|from|export|function|return|const|let|type|as|if|new)\b)/g;
+
+function getTokenClassName(match: RegExpExecArray) {
+  const [, comment, stringValue, tag, attr, keyword] = match;
+
+  if (comment) {
+    return 'cmt';
+  }
+
+  if (stringValue) {
+    return 'str';
+  }
+
+  if (tag) {
+    return 'tag';
+  }
+
+  if (attr) {
+    return 'attr';
+  }
+
+  if (keyword) {
+    return 'kw';
+  }
+
+  return;
+}
 
 function highlightCode(source: string): ReactNode[] {
-  return source.split('\n').flatMap((line, lineIndex) => {
+  const lines = source.split('\n');
+
+  return lines.flatMap((line, lineIndex) => {
     const nodes: ReactNode[] = [];
     let lastIndex = 0;
 
     for (const match of line.matchAll(codeTokenPattern)) {
-      const [token, comment, stringValue, tag, attr, keyword] = match;
+      const [token] = match;
       const index = match.index ?? 0;
 
       if (index > lastIndex) {
         nodes.push(line.slice(lastIndex, index));
       }
 
-      const className = comment
-        ? 'cmt'
-        : stringValue
-          ? 'str'
-          : tag
-            ? 'tag'
-            : attr
-              ? 'attr'
-              : keyword
-                ? 'kw'
-                : undefined;
+      const className = getTokenClassName(match);
 
       nodes.push(
         className ? (
@@ -329,14 +355,12 @@ function highlightCode(source: string): ReactNode[] {
       nodes.push(line.slice(lastIndex));
     }
 
-    if (lineIndex < source.split('\n').length - 1) {
+    if (lineIndex < lines.length - 1) {
       nodes.push('\n');
     }
 
     return nodes.map((node, nodeIndex) => (
-      <Fragment key={`${lineIndex}-${nodeIndex}`}>
-        {node}
-      </Fragment>
+      <Fragment key={`${lineIndex}-${nodeIndex}`}>{node}</Fragment>
     ));
   });
 }
@@ -379,20 +403,24 @@ export default function App() {
         <header className="demo-hero">
           <div className="demo-hero-bar">
             <div className="demo-badge">
-            <span>v1 path</span> — Workspace Material Layer
+              <span>v1 path</span> — Workspace Material Layer
             </div>
-            <div className="demo-theme-toggle" aria-label="Demo color mode">
+            <div
+              aria-label="Demo color mode"
+              className="demo-theme-toggle"
+              role="group"
+            >
               <button
-                type="button"
                 aria-pressed={demoTheme === 'light'}
                 onClick={() => setDemoTheme('light')}
+                type="button"
               >
                 Light
               </button>
               <button
-                type="button"
                 aria-pressed={demoTheme === 'dark'}
                 onClick={() => setDemoTheme('dark')}
+                type="button"
               >
                 Dark
               </button>
@@ -401,19 +429,22 @@ export default function App() {
           <h1>React GlassKit</h1>
           <p>
             Workspace-first glass primitives for React applications: panels,
-            separators, overlays, focus states, and accessibility fallbacks without a
-            full shell framework.
+            separators, overlays, focus states, and accessibility fallbacks
+            without a full shell framework.
           </p>
         </header>
 
-        <section className="demo-section demo-adoption" aria-labelledby="adoption-title">
+        <section
+          aria-labelledby="adoption-title"
+          className="demo-section demo-adoption"
+        >
           <p className="demo-section-label">Start Here</p>
           <h2 className="demo-section-title" id="adoption-title">
             Workspace in five minutes
           </h2>
           <p className="demo-section-desc">
-            Install the package, import tokens once, then compose the public primitives into
-            focused and resizable workspace panels.
+            Install the package, import tokens once, then compose the public
+            primitives into focused and resizable workspace panels.
           </p>
 
           <div className="demo-adoption-grid">
@@ -428,14 +459,18 @@ export default function App() {
           </div>
         </section>
 
-        <section className="demo-section demo-comparison" aria-labelledby="comparison-title">
+        <section
+          aria-labelledby="comparison-title"
+          className="demo-section demo-comparison"
+        >
           <p className="demo-section-label">Why GlassKit</p>
           <h2 className="demo-section-title" id="comparison-title">
             When glass becomes a workspace system
           </h2>
           <p className="demo-section-desc">
-            Local CSS is still the right answer for one decorative card. GlassKit starts to earn
-            its keep when panels, overlays, focus states, and accessibility fallbacks repeat.
+            Local CSS is still the right answer for one decorative card.
+            GlassKit starts to earn its keep when panels, overlays, focus
+            states, and accessibility fallbacks repeat.
           </p>
           <div className="demo-comparison-grid">
             {comparisonItems.map((item) => (
@@ -448,25 +483,40 @@ export default function App() {
           </div>
         </section>
 
-        <section className="demo-section demo-recipes" aria-labelledby="recipes-title">
+        <section
+          aria-labelledby="recipes-title"
+          className="demo-section demo-recipes"
+        >
           <p className="demo-section-label">Recipes</p>
           <h2 className="demo-section-title" id="recipes-title">
             Copyable paths, not exported shell abstractions
           </h2>
           <div className="demo-recipe-grid">
-            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/workspace-in-five-minutes.md">
+            <a
+              className="demo-recipe-link"
+              href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/workspace-in-five-minutes.md"
+            >
               <span>Workspace split</span>
               <strong>Focused and resizable panels</strong>
             </a>
-            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/app-shell.md">
+            <a
+              className="demo-recipe-link"
+              href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/app-shell.md"
+            >
               <span>App shell</span>
               <strong>Sidebar, header, and primary workspace</strong>
             </a>
-            <a className="demo-recipe-link" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/canvas-hud.md">
+            <a
+              className="demo-recipe-link"
+              href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/canvas-hud.md"
+            >
               <span>Canvas HUD</span>
               <strong>Floating controls over media surfaces</strong>
             </a>
-            <a className="demo-recipe-link demo-link-card" href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/next-link-card.md">
+            <a
+              className="demo-recipe-link demo-link-card"
+              href="https://github.com/alderac/react-glasskit/blob/main/docs/recipes/next-link-card.md"
+            >
               <span>Link card</span>
               <strong>Polymorphic glass surfaces with Next.js Link</strong>
             </a>
@@ -474,14 +524,17 @@ export default function App() {
           <CodeBlock>{linkCardCodeSample}</CodeBlock>
         </section>
 
-        <section className="demo-section demo-integrations" aria-labelledby="integrations-title">
+        <section
+          aria-labelledby="integrations-title"
+          className="demo-section demo-integrations"
+        >
           <p className="demo-section-label">Integrations</p>
           <h2 className="demo-section-title" id="integrations-title">
             Works with your stack
           </h2>
           <p className="demo-section-desc">
-            GlassKit stays vanilla at the core. Existing UI systems keep their controls,
-            while GlassKit supplies the glass material layer.
+            GlassKit stays vanilla at the core. Existing UI systems keep their
+            controls, while GlassKit supplies the glass material layer.
           </p>
           <div className="demo-integration-grid">
             {integrationItems.map((item) => (
@@ -502,8 +555,9 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">GlassRegular</h2>
           <p className="demo-section-desc">
-            Medium-transparency surface for navigation layers — sidebars, toolbars,
-            modals, and panel headers. Polymorphic via the <code>as</code> prop.
+            Medium-transparency surface for navigation layers — sidebars,
+            toolbars, modals, and panel headers. Polymorphic via the{' '}
+            <code>as</code> prop.
           </p>
 
           <div className="showcase-stage showcase-regular">
@@ -511,11 +565,19 @@ export default function App() {
               <div className="demo-nav-inner">
                 <div className="demo-nav-logo">⬡ Acme App</div>
                 <ul className="demo-nav-links">
-                  <li><a href="#!">Dashboard</a></li>
-                  <li><a href="#!">Projects</a></li>
-                  <li><a href="#!">Settings</a></li>
+                  <li>
+                    <a href="#!">Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="#!">Projects</a>
+                  </li>
+                  <li>
+                    <a href="#!">Settings</a>
+                  </li>
                 </ul>
-                <button className="demo-nav-btn">Sign In</button>
+                <button className="demo-nav-btn" type="button">
+                  Sign In
+                </button>
               </div>
             </GlassRegular>
           </div>
@@ -528,18 +590,19 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">GlassPanel</h2>
           <p className="demo-section-desc">
-            Workspace panel container with focus, inactive, and crystallize animation states.
-            Click each panel to toggle focus — watch the macOS Tahoe-style fade.
+            Workspace panel container with focus, inactive, and crystallize
+            animation states. Click each panel to toggle focus — watch the macOS
+            Tahoe-style fade.
           </p>
 
           <div className="showcase-stage showcase-panels">
             <div className="demo-panels-container">
               <GlassPanel
+                animate
                 focused={activePanels.isFocused('left')}
                 inactive={activePanels.isInactive('left')}
-                animate
-                style={{ flex: 1 }}
                 onClick={() => activePanels.activatePanel('left')}
+                style={{ flex: 1 }}
               >
                 <div className="demo-panel-content">
                   <h3>Editor</h3>
@@ -550,8 +613,12 @@ export default function App() {
                     <div className="demo-skeleton-line" />
                     <div className="demo-skeleton-line" />
                   </div>
-                  <div className={`demo-panel-tag ${activePanels.activePanelId === 'left' ? 'focused' : 'inactive'}`}>
-                    {activePanels.activePanelId === 'left' ? '● Focused' : '○ Inactive'}
+                  <div
+                    className={`demo-panel-tag ${activePanels.activePanelId === 'left' ? 'focused' : 'inactive'}`}
+                  >
+                    {activePanels.activePanelId === 'left'
+                      ? '● Focused'
+                      : '○ Inactive'}
                   </div>
                 </div>
               </GlassPanel>
@@ -559,11 +626,11 @@ export default function App() {
               <PanelSeparator orientation="vertical" />
 
               <GlassPanel
+                animate
                 focused={activePanels.isFocused('right')}
                 inactive={activePanels.isInactive('right')}
-                animate
-                style={{ flex: 1 }}
                 onClick={() => activePanels.activatePanel('right')}
+                style={{ flex: 1 }}
               >
                 <div className="demo-panel-content">
                   <h3>Inspector</h3>
@@ -574,8 +641,12 @@ export default function App() {
                     <div className="demo-skeleton-line" />
                     <div className="demo-skeleton-line" />
                   </div>
-                  <div className={`demo-panel-tag ${activePanels.activePanelId === 'right' ? 'focused' : 'inactive'}`}>
-                    {activePanels.activePanelId === 'right' ? '● Focused' : '○ Inactive'}
+                  <div
+                    className={`demo-panel-tag ${activePanels.activePanelId === 'right' ? 'focused' : 'inactive'}`}
+                  >
+                    {activePanels.activePanelId === 'right'
+                      ? '● Focused'
+                      : '○ Inactive'}
                   </div>
                 </div>
               </GlassPanel>
@@ -590,20 +661,43 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">GlassClear</h2>
           <p className="demo-section-desc">
-            High-transparency glass for media-rich overlays. Must sit over vibrant content.
-            Use the <code>dimmed</code> prop to prevent color bleed.
+            High-transparency glass for media-rich overlays. Must sit over
+            vibrant content. Use the <code>dimmed</code> prop to prevent color
+            bleed.
           </p>
 
           <div className="showcase-stage showcase-vibrant">
             <div className="demo-clear-wrapper">
               <GlassClear dimmed>
                 <div className="demo-clear-toolbar">
-                  <button className="demo-tool-btn active" title="Move">⇱</button>
-                  <button className="demo-tool-btn" title="Pen">✎</button>
-                  <button className="demo-tool-btn" title="Shapes">◇</button>
+                  <button
+                    className="demo-tool-btn active"
+                    title="Move"
+                    type="button"
+                  >
+                    ⇱
+                  </button>
+                  <button className="demo-tool-btn" title="Pen" type="button">
+                    ✎
+                  </button>
+                  <button
+                    className="demo-tool-btn"
+                    title="Shapes"
+                    type="button"
+                  >
+                    ◇
+                  </button>
                   <div className="demo-tool-divider" />
-                  <button className="demo-tool-btn" title="Eraser">⌫</button>
-                  <button className="demo-tool-btn" title="Color">◉</button>
+                  <button
+                    className="demo-tool-btn"
+                    title="Eraser"
+                    type="button"
+                  >
+                    ⌫
+                  </button>
+                  <button className="demo-tool-btn" title="Color" type="button">
+                    ◉
+                  </button>
                 </div>
               </GlassClear>
             </div>
@@ -617,14 +711,24 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">GlassScrim</h2>
           <p className="demo-section-desc">
-            Backdrop material for drawers, mobile navigation, and modal stacks. The scrim owns
-            blur and dimming, while your app keeps focus, Escape handling, and scroll locks.
+            Backdrop material for drawers, mobile navigation, and modal stacks.
+            The scrim owns blur and dimming, while your app keeps focus, Escape
+            handling, and scroll locks.
           </p>
 
           <div className="showcase-stage showcase-scrim">
             <div className="demo-scrim-stage">
-              <GlassScrim strength="regular" radius="lg" className="demo-scrim-preview" />
-              <GlassPanel as="nav" aria-label="Preview navigation" radius="lg" className="demo-scrim-panel">
+              <GlassScrim
+                className="demo-scrim-preview"
+                radius="lg"
+                strength="regular"
+              />
+              <GlassPanel
+                aria-label="Preview navigation"
+                as="nav"
+                className="demo-scrim-panel"
+                radius="lg"
+              >
                 <a href="#!">Dashboard</a>
                 <a href="#!">Projects</a>
                 <a href="#!">Settings</a>
@@ -640,7 +744,8 @@ export default function App() {
           <p className="demo-section-label">Component</p>
           <h2 className="demo-section-title">PanelSeparator</h2>
           <p className="demo-section-desc">
-            Passive spatial dividers for split-panel layouts. Add <code>resizable</code>
+            Passive spatial dividers for split-panel layouts. Add{' '}
+            <code>resizable</code>
             when the separator is wired to resize behavior.
           </p>
 
@@ -649,15 +754,36 @@ export default function App() {
               <div className="demo-separator-example">
                 <p className="demo-example-label">Passive divider</p>
                 <div className="demo-separator-stage">
-                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <GlassRegular
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <span className="demo-separator-pane">Panel A</span>
                   </GlassRegular>
                   <PanelSeparator orientation="vertical" />
-                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <GlassRegular
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <span className="demo-separator-pane">Panel B</span>
                   </GlassRegular>
                   <PanelSeparator orientation="vertical" />
-                  <GlassRegular style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <GlassRegular
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <span className="demo-separator-pane">Panel C</span>
                   </GlassRegular>
                 </div>
@@ -683,9 +809,9 @@ export default function App() {
                     </span>
                   </GlassRegular>
                   <PanelSeparator
+                    aria-label="Resize timeline and inspector panes"
                     orientation="vertical"
                     resizable
-                    aria-label="Resize timeline and inspector panes"
                     {...resizablePanels.separatorProps}
                   />
                   <GlassRegular
@@ -706,7 +832,10 @@ export default function App() {
           <CodeBlock>{separatorCodeSample}</CodeBlock>
         </section>
 
-        <section className="demo-section demo-trust" aria-labelledby="trust-title">
+        <section
+          aria-labelledby="trust-title"
+          className="demo-section demo-trust"
+        >
           <p className="demo-section-label">Trust</p>
           <h2 className="demo-section-title" id="trust-title">
             What the package verifies
@@ -714,15 +843,24 @@ export default function App() {
           <div className="demo-trust-grid">
             <div>
               <strong>Package path</strong>
-              <span>Build, declaration output, CSS exports, and packed Vite install smoke.</span>
+              <span>
+                Build, declaration output, CSS exports, and packed Vite install
+                smoke.
+              </span>
             </div>
             <div>
               <strong>Interaction path</strong>
-              <span>Component tests, active panel state, pointer resize, and keyboard resize.</span>
+              <span>
+                Component tests, active panel state, pointer resize, and
+                keyboard resize.
+              </span>
             </div>
             <div>
               <strong>Accessibility posture</strong>
-              <span>Reduced motion, reduced transparency, increased contrast, and APG-oriented separator props.</span>
+              <span>
+                Reduced motion, reduced transparency, increased contrast, and
+                APG-oriented separator props.
+              </span>
             </div>
           </div>
         </section>
@@ -730,7 +868,11 @@ export default function App() {
         {/* ── Footer ───────────────────────────────────────── */}
         <footer className="demo-footer">
           <p>
-            <a href="https://github.com/alderac/react-glasskit" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://github.com/alderac/react-glasskit"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               GitHub
             </a>
             {' · '}

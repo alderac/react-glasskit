@@ -7,7 +7,7 @@ import { GlassPanel } from './GlassPanel';
 describe('GlassPanel', () => {
   it('applies focused, inactive, and animate state classes', () => {
     render(
-      <GlassPanel focused inactive animate>
+      <GlassPanel animate focused inactive>
         Editor
       </GlassPanel>
     );
@@ -20,7 +20,7 @@ describe('GlassPanel', () => {
 
   it('renders as a named section with the requested radius class', () => {
     render(
-      <GlassPanel as="section" aria-label="Workspace panel" radius="xl">
+      <GlassPanel aria-label="Workspace panel" as="section" radius="xl">
         Editor
       </GlassPanel>
     );
@@ -51,13 +51,13 @@ describe('GlassPanel', () => {
 
     render(
       <GlassPanel
-        ref={ref}
-        className="consumer-panel"
-        style={{ opacity: 0.9 }}
         aria-label="Inspector panel"
-        data-testid="panel"
+        className="consumer-panel"
         data-state="open"
+        data-testid="panel"
         onClick={handleClick}
+        ref={ref}
+        style={{ opacity: 0.9 }}
       >
         Inspector
       </GlassPanel>
@@ -81,12 +81,12 @@ describe('GlassPanel', () => {
 
     render(
       <GlassPanel
+        aria-label="Toggle inspector"
         as="button"
+        onClick={handleClick}
+        radius="sm"
         ref={ref}
         type="button"
-        aria-label="Toggle inspector"
-        radius="sm"
-        onClick={handleClick}
       >
         Toggle
       </GlassPanel>

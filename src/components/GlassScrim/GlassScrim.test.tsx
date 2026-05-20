@@ -6,7 +6,7 @@ import { GlassScrim } from './GlassScrim';
 
 describe('GlassScrim', () => {
   it('renders the regular fixed scrim with no radius by default', () => {
-    render(<GlassScrim data-testid="scrim" aria-hidden="true" />);
+    render(<GlassScrim aria-hidden="true" data-testid="scrim" />);
 
     const scrim = screen.getByTestId('scrim');
     expect(scrim).toHaveClass(styles.scrim);
@@ -18,7 +18,7 @@ describe('GlassScrim', () => {
   });
 
   it('applies requested strength and radius classes', () => {
-    render(<GlassScrim data-testid="scrim" strength="strong" radius="lg" />);
+    render(<GlassScrim data-testid="scrim" radius="lg" strength="strong" />);
 
     const scrim = screen.getByTestId('scrim');
     expect(scrim).toHaveClass(styles.scrimStrong);
@@ -31,11 +31,11 @@ describe('GlassScrim', () => {
 
     render(
       <GlassScrim
+        aria-label="Close navigation"
         as="button"
+        onClick={handleClick}
         ref={ref}
         type="submit"
-        aria-label="Close navigation"
-        onClick={handleClick}
       />
     );
 
@@ -48,20 +48,30 @@ describe('GlassScrim', () => {
   });
 
   it('defaults polymorphic buttons to type button when type is omitted', () => {
-    render(<GlassScrim as="button" aria-label="Close drawer" />);
+    render(<GlassScrim aria-label="Close drawer" as="button" />);
 
-    expect(screen.getByRole('button', { name: 'Close drawer' })).toHaveAttribute('type', 'button');
+    expect(
+      screen.getByRole('button', { name: 'Close drawer' })
+    ).toHaveAttribute('type', 'button');
   });
 
   it('defaults polymorphic buttons to type button when type is undefined', () => {
-    render(<GlassScrim as="button" type={undefined} aria-label="Close sheet" />);
+    render(
+      <GlassScrim aria-label="Close sheet" as="button" type={undefined} />
+    );
 
-    expect(screen.getByRole('button', { name: 'Close sheet' })).toHaveAttribute('type', 'button');
+    expect(screen.getByRole('button', { name: 'Close sheet' })).toHaveAttribute(
+      'type',
+      'button'
+    );
   });
 
   it('preserves explicit polymorphic button types', () => {
-    render(<GlassScrim as="button" type="submit" aria-label="Submit form" />);
+    render(<GlassScrim aria-label="Submit form" as="button" type="submit" />);
 
-    expect(screen.getByRole('button', { name: 'Submit form' })).toHaveAttribute('type', 'submit');
+    expect(screen.getByRole('button', { name: 'Submit form' })).toHaveAttribute(
+      'type',
+      'submit'
+    );
   });
 });

@@ -10,9 +10,6 @@
  */
 
 :root {
-  color-scheme: light;
-
-  /* Material geometry */
   --glass-radius-none: 0px;
   --glass-radius-sm: 6px;
   --glass-radius-md: 12px;
@@ -34,7 +31,7 @@
   /* Opacity coefficients */
   --glass-stroke: 0.22;
   --glass-highlight: 0.16;
-  --glass-shadow-opacity: 0.10;
+  --glass-shadow-opacity: 0.1;
 
   /* Panel states */
   --glass-panel-inactive-opacity: 0.92;
@@ -54,7 +51,7 @@
   --glass-border: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow: rgba(0, 0, 0, var(--glass-shadow-opacity));
-  --glass-focus-ring: rgba(100, 149, 237, 0.50);
+  --glass-focus-ring: rgba(100, 149, 237, 0.5);
 
   /* Stable theme constants used by component-level overrides. */
   --glass-bg-regular-light: rgba(255, 255, 255, 0.72);
@@ -66,18 +63,18 @@
   --glass-border-light: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border-light: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow-light: rgba(0, 0, 0, var(--glass-shadow-opacity));
-  --glass-focus-ring-light: rgba(100, 149, 237, 0.50);
+  --glass-focus-ring-light: rgba(100, 149, 237, 0.5);
 
   --glass-bg-regular-dark: rgba(15, 20, 40, 0.68);
-  --glass-bg-clear-dark: rgba(10, 17, 40, 0.40);
+  --glass-bg-clear-dark: rgba(10, 17, 40, 0.4);
   --glass-bg-panel-dark: rgba(17, 29, 53, 0.72);
   --glass-scrim-bg-soft-dark: rgba(0, 0, 0, 0.28);
   --glass-scrim-bg-regular-dark: rgba(0, 0, 0, 0.42);
   --glass-scrim-bg-strong-dark: rgba(0, 0, 0, 0.58);
-  --glass-border-dark: rgba(255, 255, 255, 0.10);
+  --glass-border-dark: rgba(255, 255, 255, 0.1);
   --glass-highlight-border-dark: rgba(255, 255, 255, 0.08);
   --glass-shadow-dark: rgba(0, 0, 0, 0.28);
-  --glass-focus-ring-dark: rgba(100, 149, 237, 0.60);
+  --glass-focus-ring-dark: rgba(100, 149, 237, 0.6);
 
   /* Accessibility fallback colors (light) */
   --glass-solid-bg: rgb(245, 245, 245);
@@ -85,32 +82,32 @@
   --glass-solid-border: rgb(200, 200, 200);
   --glass-high-contrast-border: rgb(40, 40, 40);
   --glass-high-contrast-focus: rgb(0, 80, 200);
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
     --glass-bg-regular: rgba(15, 20, 40, 0.68);
-    --glass-bg-clear: rgba(10, 17, 40, 0.40);
+    --glass-bg-clear: rgba(10, 17, 40, 0.4);
     --glass-bg-panel: rgba(17, 29, 53, 0.72);
     --glass-scrim-bg-soft: var(--glass-scrim-bg-soft-dark);
     --glass-scrim-bg-regular: var(--glass-scrim-bg-regular-dark);
     --glass-scrim-bg-strong: var(--glass-scrim-bg-strong-dark);
-    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-border: rgba(255, 255, 255, 0.1);
     --glass-highlight-border: rgba(255, 255, 255, 0.08);
     --glass-shadow: rgba(0, 0, 0, 0.28);
-    --glass-focus-ring: rgba(100, 149, 237, 0.60);
+    --glass-focus-ring: rgba(100, 149, 237, 0.6);
     --glass-solid-bg: rgb(17, 20, 35);
     --glass-solid-bg-alt: rgb(22, 26, 42);
     --glass-solid-border: rgb(50, 58, 80);
     --glass-high-contrast-border: rgb(200, 210, 255);
     --glass-high-contrast-focus: rgb(120, 170, 255);
+    color-scheme: dark;
   }
 }
 
 /* Class/data-attribute overrides win over the system preference. */
 :is(.light, [data-theme="light"]) {
-  color-scheme: light;
   --glass-bg-regular: rgba(255, 255, 255, 0.72);
   --glass-bg-clear: rgba(255, 255, 255, 0.45);
   --glass-bg-panel: rgba(255, 255, 255, 0.68);
@@ -120,29 +117,30 @@
   --glass-border: rgba(255, 255, 255, var(--glass-stroke));
   --glass-highlight-border: rgba(255, 255, 255, var(--glass-highlight));
   --glass-shadow: rgba(0, 0, 0, var(--glass-shadow-opacity));
-  --glass-focus-ring: rgba(100, 149, 237, 0.50);
+  --glass-focus-ring: rgba(100, 149, 237, 0.5);
   --glass-solid-bg: rgb(245, 245, 245);
   --glass-solid-bg-alt: rgb(240, 240, 240);
   --glass-solid-border: rgb(200, 200, 200);
   --glass-high-contrast-border: rgb(40, 40, 40);
   --glass-high-contrast-focus: rgb(0, 80, 200);
+  color-scheme: light;
 }
 
 :is(.dark, [data-theme="dark"]) {
-  color-scheme: dark;
   --glass-bg-regular: rgba(15, 20, 40, 0.68);
-  --glass-bg-clear: rgba(10, 17, 40, 0.40);
+  --glass-bg-clear: rgba(10, 17, 40, 0.4);
   --glass-bg-panel: rgba(17, 29, 53, 0.72);
   --glass-scrim-bg-soft: var(--glass-scrim-bg-soft-dark);
   --glass-scrim-bg-regular: var(--glass-scrim-bg-regular-dark);
   --glass-scrim-bg-strong: var(--glass-scrim-bg-strong-dark);
-  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --glass-highlight-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: rgba(0, 0, 0, 0.28);
-  --glass-focus-ring: rgba(100, 149, 237, 0.60);
+  --glass-focus-ring: rgba(100, 149, 237, 0.6);
   --glass-solid-bg: rgb(17, 20, 35);
   --glass-solid-bg-alt: rgb(22, 26, 42);
   --glass-solid-border: rgb(50, 58, 80);
   --glass-high-contrast-border: rgb(200, 210, 255);
   --glass-high-contrast-focus: rgb(120, 170, 255);
+  color-scheme: dark;
 }

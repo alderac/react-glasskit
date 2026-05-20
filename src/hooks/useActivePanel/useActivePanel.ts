@@ -13,19 +13,20 @@ export interface UseActivePanelOptions<TPanelId extends ActivePanelId> {
 }
 
 export interface UseActivePanelResult<TPanelId extends ActivePanelId> {
-  activePanelId: TPanelId;
   activatePanel: (panelId: TPanelId) => void;
-  setActivePanelId: (panelId: TPanelId) => void;
+  activePanelId: TPanelId;
+  getPanelState: (panelId: TPanelId) => PanelState;
   isFocused: (panelId: TPanelId) => boolean;
   isInactive: (panelId: TPanelId) => boolean;
-  getPanelState: (panelId: TPanelId) => PanelState;
+  setActivePanelId: (panelId: TPanelId) => void;
 }
 
 export function useActivePanel<TPanelId extends ActivePanelId>({
   initialPanelId,
   onActivePanelChange,
 }: UseActivePanelOptions<TPanelId>): UseActivePanelResult<TPanelId> {
-  const [activePanelId, setActivePanelIdState] = useState<TPanelId>(initialPanelId);
+  const [activePanelId, setActivePanelIdState] =
+    useState<TPanelId>(initialPanelId);
 
   const activatePanel = useCallback(
     (panelId: TPanelId) => {

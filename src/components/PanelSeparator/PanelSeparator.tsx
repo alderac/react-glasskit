@@ -1,10 +1,12 @@
 import React from 'react';
-import type { Orientation } from '../../types';
 import styles from '../../css/glass.module.css';
+import type { Orientation } from '../../types';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PanelSeparatorProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
   /**
    * Direction of the dividing line.
    * - `vertical`: a 1px tall column (between side-by-side panels)
@@ -19,7 +21,6 @@ export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement
    * @default false
    */
   resizable?: boolean;
-  className?: string;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -39,10 +40,18 @@ export interface PanelSeparatorProps extends React.HTMLAttributes<HTMLDivElement
  *   <GlassPanel>Right</GlassPanel>
  * </div>
  */
-export const PanelSeparator = React.forwardRef<HTMLDivElement, PanelSeparatorProps>(
-  ({ orientation = 'vertical', resizable = false, className, ...rest }, ref) => {
+export const PanelSeparator = React.forwardRef<
+  HTMLDivElement,
+  PanelSeparatorProps
+>(
+  (
+    { orientation = 'vertical', resizable = false, className, ...rest },
+    ref
+  ) => {
     const orientationClass =
-      orientation === 'vertical' ? styles.separatorVertical : styles.separatorHorizontal;
+      orientation === 'vertical'
+        ? styles.separatorVertical
+        : styles.separatorHorizontal;
 
     const classes = [
       styles.separator,
@@ -55,10 +64,10 @@ export const PanelSeparator = React.forwardRef<HTMLDivElement, PanelSeparatorPro
 
     return (
       <div
-        ref={ref}
-        role="separator"
         aria-orientation={orientation}
         className={classes}
+        ref={ref}
+        role="separator"
         {...rest}
       />
     );

@@ -1,13 +1,13 @@
 import React from 'react';
+import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
+import styles from '../../css/glass.module.css';
+import { getGlassRadiusClassName } from '../../css/radius';
 import type {
   GlassRadius,
   PolymorphicForwardRefComponent,
   PolymorphicProps,
   PolymorphicRef,
 } from '../../types';
-import { mergeGlassBackdropStyle } from '../../css/backdropStyle';
-import styles from '../../css/glass.module.css';
-import { getGlassRadiusClassName } from '../../css/radius';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -33,7 +33,8 @@ type OwnProps = {
   className?: string;
 };
 
-export type GlassPanelProps<C extends React.ElementType = 'div'> = PolymorphicProps<C, OwnProps>;
+export type GlassPanelProps<C extends React.ElementType = 'div'> =
+  PolymorphicProps<C, OwnProps>;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -76,14 +77,22 @@ function GlassPanelInner<C extends React.ElementType = 'div'>(
     .join(' ');
 
   return (
-    <Tag ref={ref} className={classes} style={mergeGlassBackdropStyle('regular', style)} {...rest}>
+    <Tag
+      className={classes}
+      ref={ref}
+      style={mergeGlassBackdropStyle('regular', style)}
+      {...rest}
+    >
       {children}
     </Tag>
   );
 }
 
 export const GlassPanel = React.forwardRef(
-  GlassPanelInner as unknown as React.ForwardRefRenderFunction<unknown, GlassPanelProps>
+  GlassPanelInner as unknown as React.ForwardRefRenderFunction<
+    unknown,
+    GlassPanelProps
+  >
 ) as PolymorphicForwardRefComponent<'div', OwnProps>;
 
 (GlassPanel as { displayName?: string }).displayName = 'GlassPanel';
