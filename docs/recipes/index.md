@@ -23,3 +23,7 @@ GlassKit recipes are copyable starting points for workspace-style React interfac
 - Accessible names for controls and resize handles.
 - Routing, persistence, docking, tabs, and data loading.
 - Final WCAG, Section 508, VPAT, procurement, or product-level accessibility claims.
+
+## Framework And Design-System Integration
+
+If your app already uses Tailwind CSS, shadcn/ui, Radix UI, React Aria, Bootstrap, Chakra UI, Mantine, MUI, Panda CSS, vanilla-extract, Emotion, or styled-components, start with the [integration guide](../integrations/index.md). The integration docs show how to keep GlassKit as the material layer without rewriting the rest of your UI stack.

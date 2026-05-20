@@ -1,6 +1,6 @@
 {
   "name": "react-glasskit",
-  "version": "0.1.20",
+  "version": "0.1.24",
   "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
   "keywords": [
     "react",
@@ -55,11 +55,16 @@
     "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
     "typecheck": "tsc --noEmit",
     "build": "npm run clean && vite build && tsc -p tsconfig.build.json && node scripts/copy-dist-css.mjs && node scripts/assert-dist-package.mjs",
+    "prepack": "npm run build",
     "audit:css": "node scripts/audit-css-fallbacks.mjs",
     "audit:themes": "node scripts/audit-theme-modes.mjs",
     "test": "vitest run",
     "smoke:package": "npm run build && node scripts/smoke-packed-vite.mjs",
-    "smoke:next": "npm run build && node scripts/smoke-packed-next.mjs"
+    "smoke:next": "npm run build && node scripts/smoke-packed-next.mjs",
+    "smoke:tailwind": "npm run build && node scripts/smoke-packed-tailwind.mjs",
+    "smoke:demo": "npm --prefix demo run build && node scripts/smoke-demo-browser.mjs",
+    "release:pack": "npm pack --dry-run",
+    "release:check": "npm run typecheck && npm test && npm run build && npm run audit:css && npm run audit:themes && npm run smoke:package && npm run smoke:next && npm run smoke:tailwind && npm run smoke:demo && npm run release:pack"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -72,6 +77,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^6.0.2",
     "jsdom": "^29.1.1",
+    "playwright": "^1.60.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "typescript": "^5.4.0",

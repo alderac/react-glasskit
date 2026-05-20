@@ -4,7 +4,7 @@ A small React material layer for building glass-style workspace interfaces.
 
 GlassKit is for apps that need polished panels, overlays, split surfaces, and focus states without becoming a full UI framework. It gives you the glass-specific pieces that are easy to get wrong: material tokens, reduced-transparency fallbacks, focused/inactive panel states, and accessible resizable separators.
 
-Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. GlassKit is not trying to replace your buttons, forms, menus, tables, or app shell.
+Use it alongside Tailwind CSS, shadcn/ui, Radix UI, React Aria, MUI, or your own components. GlassKit is not trying to replace your buttons, forms, menus, tables, or app shell. See the [integration guide](./docs/integrations/index.md) for the compatibility model.
 
 ## Use This When
 
@@ -21,6 +21,21 @@ Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. Glas
 - You need docking, tabs, persistence, nested pane composition, or drag reordering.
 - You only need one-off glass CSS for a marketing page.
 
+## Why Not Hand-Roll The CSS?
+
+Hand-rolled glass CSS is a good choice for one decorative surface. GlassKit is for repeated workspace surfaces where the material layer also needs interaction states, fallbacks, and package reliability.
+
+| Need | Hand-rolled CSS | GlassKit |
+|------|-----------------|----------|
+| One marketing card or hero overlay | Usually enough | More package than you need |
+| Repeated panels, inspectors, sidebars, and overlays | Easy to drift across files | Shared primitives and tokens |
+| Reduced motion, reduced transparency, and increased contrast | You own every fallback | Fallbacks ship with the material layer |
+| Active and inactive workspace states | App-specific CSS conventions | `GlassPanel` and `useActivePanel` share the state shape |
+| Accessible split-panel behavior | You implement pointer, keyboard, and ARIA behavior | `PanelSeparator` plus `useResizablePanels` covers the v1 splitter path |
+| Public package confidence | Your app owns packaging | Packed Vite and Next.js smoke tests verify public imports and CSS paths |
+
+Use GlassKit when glass is part of the workspace system. Write local CSS when the effect is isolated and decorative.
+
 ## What It Exports
 
 | Export | Use Case |
@@ -34,29 +49,34 @@ Use it alongside shadcn/ui, Radix, React Aria, MUI, or your own components. Glas
 
 ## Installation
 
-### Option A: Local path
+### Published package
 
-For monorepos or same-machine development, add this to your consuming project's `package.json`:
+After the first public npm release:
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "file:../../glasskit"
-  }
-}
+```bash
+npm install react-glasskit
 ```
 
-### Option B: Git dependency
+### Packed tarball for pre-release dogfood
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "git+https://github.com/alderac/react-glasskit.git"
-  }
-}
+Before the first npm release, install from a packed tarball so the consuming app uses the same compiled `dist` output that npm will publish.
+
+From this repository:
+
+```bash
+npm run build
+npm pack
 ```
 
-Then run `npm install` in the consuming app.
+Then install the generated tarball in the consuming app:
+
+```bash
+npm install /absolute/path/to/react-glasskit-0.1.20.tgz
+```
+
+### Git dependencies
+
+Git dependencies are not the supported v1 install path. The public package resolves to compiled `dist` files, and `dist/` is intentionally not tracked in git. Use a packed tarball before publication and the npm package after publication.
 
 ## Setup
 
@@ -151,6 +171,8 @@ function WorkspaceSplit() {
 ## Recipes
 
 Start with [Workspace In Five Minutes](./docs/recipes/workspace-in-five-minutes.md) when you want the quickest working split-pane example. Use [App Shell](./docs/recipes/app-shell.md) for sidebar/header layouts and [Canvas HUD](./docs/recipes/canvas-hud.md) for floating controls over media or canvas surfaces.
+
+Already using Tailwind, shadcn/ui, Radix UI, React Aria, or a CSS-variable design system? Start with the [integration guide](./docs/integrations/index.md).
 
 ## Other Patterns
 

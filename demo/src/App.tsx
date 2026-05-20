@@ -19,7 +19,12 @@ function getPreferredDemoTheme(): DemoTheme {
 }
 
 const installCodeSample = [
+  '# after the first public npm release',
   'npm install react-glasskit',
+  '',
+  '# pre-release dogfood from this repo',
+  'npm run build && npm pack',
+  'npm install /absolute/path/to/react-glasskit-0.1.20.tgz',
   '',
   "import 'react-glasskit/css/tokens.css';",
   "import { GlassPanel, PanelSeparator, useResizablePanels } from 'react-glasskit';",
@@ -68,6 +73,48 @@ const workspaceFiveCodeSample = [
   '  );',
   '}',
 ].join('\n');
+
+const comparisonItems = [
+  {
+    need: 'One decorative overlay',
+    localCss: 'Often enough',
+    glasskit: 'More package than you need',
+  },
+  {
+    need: 'Repeated workspace surfaces',
+    localCss: 'Panel styles drift across files',
+    glasskit: 'Shared primitives and tokens',
+  },
+  {
+    need: 'Accessibility fallbacks',
+    localCss: 'Every media query is app-owned',
+    glasskit: 'Motion, transparency, contrast, and focus fallbacks ship together',
+  },
+  {
+    need: 'Resizable split panels',
+    localCss: 'Pointer, keyboard, and ARIA behavior are custom work',
+    glasskit: 'PanelSeparator and useResizablePanels cover the v1 splitter path',
+  },
+];
+
+const integrationItems = [
+  {
+    name: 'Tailwind CSS',
+    description: 'Use utilities for layout and typography while GlassKit tokens control the material.',
+  },
+  {
+    name: 'shadcn/ui',
+    description: 'Keep shadcn controls and use GlassKit as the panel, overlay, and splitter surface.',
+  },
+  {
+    name: 'Headless primitives',
+    description: 'Pair Radix, Base UI, or React Aria behavior with GlassKit surfaces.',
+  },
+  {
+    name: 'Design systems',
+    description: 'Map Bootstrap, Chakra, Mantine, MUI, Panda, or vanilla-extract themes through CSS variables.',
+  },
+];
 
 const regularCodeSample = [
   "import { GlassRegular } from 'react-glasskit';",
@@ -337,6 +384,26 @@ export default function App() {
           </div>
         </section>
 
+        <section className="demo-section demo-comparison" aria-labelledby="comparison-title">
+          <p className="demo-section-label">Why GlassKit</p>
+          <h2 className="demo-section-title" id="comparison-title">
+            When glass becomes a workspace system
+          </h2>
+          <p className="demo-section-desc">
+            Local CSS is still the right answer for one decorative card. GlassKit starts to earn
+            its keep when panels, overlays, focus states, and accessibility fallbacks repeat.
+          </p>
+          <div className="demo-comparison-grid">
+            {comparisonItems.map((item) => (
+              <div className="demo-comparison-row" key={item.need}>
+                <strong>{item.need}</strong>
+                <span>{item.localCss}</span>
+                <span>{item.glasskit}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="demo-section demo-recipes" aria-labelledby="recipes-title">
           <p className="demo-section-label">Recipes</p>
           <h2 className="demo-section-title" id="recipes-title">
@@ -355,6 +422,29 @@ export default function App() {
               <span>Canvas HUD</span>
               <strong>Floating controls over media surfaces</strong>
             </a>
+          </div>
+        </section>
+
+        <section className="demo-section demo-integrations" aria-labelledby="integrations-title">
+          <p className="demo-section-label">Integrations</p>
+          <h2 className="demo-section-title" id="integrations-title">
+            Works with your stack
+          </h2>
+          <p className="demo-section-desc">
+            GlassKit stays vanilla at the core. Existing UI systems keep their controls,
+            while GlassKit supplies the glass material layer.
+          </p>
+          <div className="demo-integration-grid">
+            {integrationItems.map((item) => (
+              <a
+                className="demo-recipe-link"
+                href="https://github.com/alderac/react-glasskit/blob/main/docs/integrations/index.md"
+                key={item.name}
+              >
+                <span>{item.name}</span>
+                <strong>{item.description}</strong>
+              </a>
+            ))}
           </div>
         </section>
 

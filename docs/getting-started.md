@@ -10,27 +10,30 @@ This guide walks through integrating React GlassKit into an existing React proje
 
 ## 1. Install
 
-### Local path (monorepo or same machine)
+### Published package
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "file:../path/to/glasskit"
-  }
-}
+After the first public npm release:
+
+```bash
+npm install react-glasskit
 ```
 
-### Git dependency
+### Packed tarball for pre-release dogfood
 
-```json
-{
-  "dependencies": {
-    "react-glasskit": "git+https://github.com/alderac/react-glasskit.git"
-  }
-}
+Before the first npm release, build and pack GlassKit:
+
+```bash
+npm run build
+npm pack
 ```
 
-Then run `npm install`.
+Then install the generated tarball in your consuming app:
+
+```bash
+npm install /absolute/path/to/react-glasskit-0.1.20.tgz
+```
+
+Git dependencies are not the supported v1 path because the public package uses compiled `dist` output and `dist/` is not committed to git.
 
 ## 2. Import Design Tokens
 
