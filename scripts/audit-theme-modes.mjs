@@ -138,6 +138,11 @@ const requiredDemoSnippets = [
   'demo-link-card',
 ];
 
+const requiredDemoJsxSnippets = [
+  '<GlassScrim strength="regular" radius="lg" className="demo-scrim-preview" />',
+  '<GlassPanel as="nav" aria-label="Preview navigation" radius="lg" className="demo-scrim-panel">',
+];
+
 const missingDemoSnippets = requiredDemoSnippets.filter(
   (snippet) => !demoApp.includes(snippet) && !demoCss.includes(snippet)
 );
@@ -145,6 +150,18 @@ const missingDemoSnippets = requiredDemoSnippets.filter(
 if (missingDemoSnippets.length > 0) {
   throw new Error(
     `Missing required demo theme snippets:\n${missingDemoSnippets
+      .map((snippet) => `- ${snippet}`)
+      .join('\n')}`
+  );
+}
+
+const missingDemoJsxSnippets = requiredDemoJsxSnippets.filter(
+  (snippet) => !demoApp.includes(snippet)
+);
+
+if (missingDemoJsxSnippets.length > 0) {
+  throw new Error(
+    `Missing required visible demo JSX snippets:\n${missingDemoJsxSnippets
       .map((snippet) => `- ${snippet}`)
       .join('\n')}`
   );

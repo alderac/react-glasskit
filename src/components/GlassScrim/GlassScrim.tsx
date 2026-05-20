@@ -38,8 +38,12 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
   ref: PolymorphicRef<C>
 ) {
   const Tag = (as ?? 'div') as React.ElementType;
-  const buttonType =
-    as === 'button' && !('type' in rest) ? ({ type: 'button' } as const) : undefined;
+  const elementProps = { ...rest } as Record<string, unknown>;
+
+  if (as === 'button' && elementProps.type === undefined) {
+    elementProps.type = 'button';
+  }
+
   const classes = [
     styles.scrim,
     strengthClassNames[strength],
@@ -54,8 +58,7 @@ function GlassScrimInner<C extends React.ElementType = 'div'>(
       ref={ref}
       className={classes}
       style={mergeGlassBackdropStyle('scrim', style)}
-      {...buttonType}
-      {...rest}
+      {...elementProps}
     >
       {children}
     </Tag>

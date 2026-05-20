@@ -52,4 +52,16 @@ describe('GlassScrim', () => {
 
     expect(screen.getByRole('button', { name: 'Close drawer' })).toHaveAttribute('type', 'button');
   });
+
+  it('defaults polymorphic buttons to type button when type is undefined', () => {
+    render(<GlassScrim as="button" type={undefined} aria-label="Close sheet" />);
+
+    expect(screen.getByRole('button', { name: 'Close sheet' })).toHaveAttribute('type', 'button');
+  });
+
+  it('preserves explicit polymorphic button types', () => {
+    render(<GlassScrim as="button" type="submit" aria-label="Submit form" />);
+
+    expect(screen.getByRole('button', { name: 'Submit form' })).toHaveAttribute('type', 'submit');
+  });
 });
