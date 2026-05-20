@@ -6,6 +6,8 @@ Use Changesets for package-facing changes that should appear in `CHANGELOG.md` o
 npm run changeset
 ```
 
+Commit titles do not drive releases in this repo. Changesets reads `.changeset/*.md` files, so use `npm run changeset` for package-facing changes instead of relying on Conventional Commit or semantic-release-style commit messages.
+
 Choose the smallest semver bump that describes the public package change:
 
 - `patch`: fixes, docs shipped in the package, compatibility proof, and small behavior corrections.
