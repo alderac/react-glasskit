@@ -31,4 +31,10 @@ export type {
 } from './hooks/useResizablePanels';
 
 // ── Types ────────────────────────────────────────────────────────────────────
-export type { PolymorphicProps, Orientation } from './types';
+export type {
+  GlassRadius,
+  Orientation,
+  PolymorphicForwardRefComponent,
+  PolymorphicProps,
+  PolymorphicRef,
+} from './types';

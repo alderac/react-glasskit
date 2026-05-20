@@ -15,7 +15,7 @@ type PropsToOmit<C extends ElementType, P> = keyof (AsProp<C> & P);
 
 export type PolymorphicProps<
   C extends ElementType,
-  OwnProps = Record<string, never>
+  OwnProps = Record<never, never>
 > = PropsWithChildren<OwnProps & AsProp<C>> &
   Omit<ComponentPropsWithoutRef<C>, PropsToOmit<C, OwnProps>>;
 
@@ -23,7 +23,7 @@ export type PolymorphicRef<C extends ElementType> = ComponentPropsWithRef<C>['re
 
 export type PolymorphicForwardRefComponent<
   DefaultElement extends ElementType,
-  OwnProps = Record<string, never>
+  OwnProps = Record<never, never>
 > = <C extends ElementType = DefaultElement>(
   props: PolymorphicProps<C, OwnProps> & { ref?: PolymorphicRef<C> }
 ) => ReactElement | null;
