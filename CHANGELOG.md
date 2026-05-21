@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 5286a6d: Unify the glass surface API with polymorphic GlassPanel and GlassClear, named radius controls, a new GlassScrim primitive, and recipe documentation for brand themes, edge-to-edge chrome, and link cards.
+
 ## 0.1.25
 
 ### Patch Changes
