@@ -4,7 +4,7 @@
  * Import components from this barrel. Import CSS tokens separately in your
  * app entry point:
  *
- *   import 'react-glasskit/src/css/tokens.css'
+ *   import 'react-glasskit/css/tokens.css'
  */
 
 export type { GlassClearProps } from './components/GlassClear';

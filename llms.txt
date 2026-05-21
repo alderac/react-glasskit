@@ -1,0 +1,77 @@
+# React GlassKit
+
+React GlassKit is a small React material layer for glass-style workspace interfaces. Use it for polished panels, overlays, split surfaces, focus states, and accessibility-oriented glass fallbacks without adopting a full UI framework.
+
+Package name: react-glasskit
+Repository: https://github.com/alderac/react-glasskit
+Homepage: https://alderac.github.io/react-glasskit
+License: MIT
+
+## Use When
+
+- Building React workspaces, editors, creative tools, dashboards, map UIs, media tools, or internal operations surfaces.
+- Glass panels and overlays repeat across the product and need shared material tokens.
+- Split-pane surfaces, active and inactive panel states, or floating controls sit over canvas, map, video, or dense app content.
+- Reduced motion, reduced transparency, increased contrast, and accessible separator behavior matter.
+
+## Avoid When
+
+- The product needs a complete UI kit with buttons, forms, menus, tables, date pickers, or application shell primitives.
+- The product needs docking, tabs, persistence, nested pane composition, or drag reordering from the library.
+- The project only needs one decorative glass card on a marketing page.
+
+## Install And Import
+
+Install after publication:
+
+```bash
+npm install react-glasskit
+```
+
+For pre-release dogfood, run `npm pack` in this repository and install the generated tarball path in the consuming app.
+
+Import tokens once at the application root:
+
+```ts
+import 'react-glasskit/css/tokens.css';
+```
+
+Import components and hooks from the package barrel:
+
+```tsx
+import {
+  GlassClear,
+  GlassPanel,
+  GlassRegular,
+  GlassScrim,
+  PanelSeparator,
+  useActivePanel,
+  useResizablePanels,
+} from 'react-glasskit';
+```
+
+## Public API
+
+- `GlassRegular`: navigation-layer glass for sidebars, toolbars, modals, and panel headers.
+- `GlassClear`: high-transparency overlay glass for canvas, media, maps, and floating controls.
+- `GlassPanel`: workspace panel container with focused, inactive, and animation states.
+- `GlassScrim`: blur and dim backdrop material for overlays, drawers, mobile navigation, and modal stacks.
+- `PanelSeparator`: passive or resizable spatial divider between panels.
+- `useActivePanel`: lightweight active-panel state for focused and inactive workspace treatment.
+- `useResizablePanels`: split-panel resize behavior and APG-oriented separator props.
+
+## Styling Contract
+
+GlassKit uses vanilla CSS, CSS Modules, and CSS custom properties. Consumers can combine it with Tailwind CSS, shadcn/ui, Radix UI, React Aria, MUI, or custom design systems through `className`, `style`, refs, ARIA/data/event pass-through, and `--glass-*` token overrides.
+
+Do not assume GlassKit replaces a UI kit. It supplies the glass material layer.
+
+## Verification
+
+For repository work, run the focused check that matches the change. Before release-facing pull requests, run:
+
+```bash
+npm run release:check
+```
+
+This verifies typecheck, tests, build, CSS audits, agent-visible docs audit, packed Vite/Next/Tailwind smokes, demo browser smoke, and npm pack dry-run.
