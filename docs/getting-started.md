@@ -30,7 +30,8 @@ npm pack
 Then install the generated tarball in your consuming app:
 
 ```bash
-npm install /absolute/path/to/react-glasskit-0.1.20.tgz
+# npm pack prints the generated tarball filename.
+npm install /absolute/path/to/the-generated-react-glasskit-tarball.tgz
 ```
 
 Git dependencies are not the supported v1 path because the public package uses compiled `dist` output and `dist/` is not committed to git.

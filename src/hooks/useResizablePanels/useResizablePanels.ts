@@ -17,22 +17,39 @@ import {
 } from './resizablePanelMath';
 
 export interface UseResizablePanelsOptions {
+  /** Initial primary panel size as a percentage of the container. */
   initialSize?: number;
+  /** Keyboard PageUp/PageDown step size in percentage points. */
   largeStep?: number;
+  /** Maximum primary panel size as a percentage of the container. */
   maxSize?: number;
+  /** Minimum primary panel size as a percentage of the container. */
   minSize?: number;
+  /** Called whenever the clamped primary size changes. */
   onSizeChange?: (size: number) => void;
+  /** Resize axis: `vertical` for side-by-side panels, `horizontal` for stacked panels. */
   orientation?: Orientation;
+  /** DOM id of the primary panel controlled by the separator. Used for `aria-controls`. */
   primaryPanelId: string;
+  /** Arrow-key resize step size in percentage points. */
   step?: number;
 }
 
 export interface UseResizablePanelsResult {
+  /** Attach to the flex container that owns the primary panel, separator, and secondary panel. */
   containerRef: RefObject<HTMLDivElement>;
+  /** Flex style for the primary panel. Merge with layout styles on the primary surface. */
   primaryPanelStyle: CSSProperties;
+  /** Primary panel size as a percentage of the container. */
   primarySize: number;
+  /** Flex style for the secondary panel. Merge with layout styles on the secondary surface. */
   secondaryPanelStyle: CSSProperties;
+  /** Secondary panel size as a percentage of the container. */
   secondarySize: number;
+  /**
+   * Props for `PanelSeparator` when `resizable` is enabled.
+   * Consumers still own the accessible label because only the app knows what panels are resized.
+   */
   separatorProps: {
     role: 'separator';
     tabIndex: 0;
@@ -44,6 +61,7 @@ export interface UseResizablePanelsResult {
     onPointerDown: (event: ReactPointerEvent<HTMLElement>) => void;
     onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   };
+  /** Imperatively set the primary panel size; values are clamped to min and max. */
   setPrimarySize: (size: number) => void;
 }
 
