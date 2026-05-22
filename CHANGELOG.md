@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- 310df9d: Improve agent-facing package guidance with a root agent guide, llms entrypoint, stale install-string guard, corrected CSS token import documentation, and clearer exported hook type documentation.
+
 ## 0.2.0
 
 ### Minor Changes
