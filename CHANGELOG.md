@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- 67b34f5: Ship public docs with the package and audit packed Markdown links so README references keep working from `node_modules`.
+
 ## 0.2.1
 
 ### Patch Changes
