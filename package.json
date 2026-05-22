@@ -15,7 +15,7 @@
   "author": "Adam C. Alderson",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alderac/react-glasskit.git"
+    "url": "git+https://github.com/alderac/react-glasskit.git"
   },
   "homepage": "https://alderac.github.io/react-glasskit",
   "bugs": {
