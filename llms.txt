@@ -66,6 +66,15 @@ GlassKit uses vanilla CSS, CSS Modules, and CSS custom properties. Consumers can
 
 Do not assume GlassKit replaces a UI kit. It supplies the glass material layer.
 
+## Documentation Boundaries
+
+Package and docs-site-facing guidance lives in `README.md` and `docs/`, except
+for `docs/superpowers/`, which is internal planning state. Consumer docs should
+use public package imports and links that resolve from the packed package.
+
+Repo-only maintainer surfaces include `scripts/`, `.changeset/`, `demo/`,
+`AGENTS.md`, `.agents/`, `.tmp/`, and `docs/superpowers/`.
+
 ## Verification
 
 For repository work, run the focused check that matches the change. Before release-facing pull requests, run:
