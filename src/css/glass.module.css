@@ -180,7 +180,7 @@
     0 0 0 3px var(--glass-focus-ring);
 }
 
-/* Inactive: macOS Tahoe-style — drops opacity and desaturates */
+/* Inactive: drops opacity and desaturates */
 .panelInactive {
   opacity: var(--glass-panel-inactive-opacity);
   filter: saturate(var(--glass-panel-inactive-saturate));

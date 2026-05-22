@@ -18,9 +18,10 @@ These surfaces are public-facing and should work from the npm tarball,
 - documented component and hook props
 - copyable recipes and integration guides
 
-Public docs should use package imports and public CSS entrypoints. If a README
-or docs link points to another Markdown file, that target must ship with the
-package so links still resolve inside `node_modules/react-glasskit`.
+Public docs should use package imports and public CSS entrypoints. Source paths
+are not v1 package entrypoints. If a README or docs link points to another
+Markdown file, that target must ship with the package so links still resolve
+inside `node_modules/react-glasskit`.
 
 ## Repo Only
 

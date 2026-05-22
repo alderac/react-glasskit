@@ -1,6 +1,6 @@
 # PanelSeparator
 
-Spatial divider for split-panel layouts, mimicking the iPadOS multi-window aesthetic. Passive by default; opt into resize affordances when the divider is wired to resize behavior.
+Spatial divider for split-panel layouts. Passive by default; opt into resize affordances when the divider is wired to resize behavior.
 
 ## Design
 

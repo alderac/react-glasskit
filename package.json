@@ -1,7 +1,7 @@
 {
   "name": "react-glasskit",
   "version": "0.2.2",
-  "description": "Liquid Glass Architecture — translucent frosted glass UI components for React",
+  "description": "Glass material primitives for React workspace interfaces",
   "keywords": [
     "react",
     "design-system",
@@ -9,8 +9,7 @@
     "glassmorphism",
     "ui",
     "css-modules",
-    "typescript",
-    "liquid-glass"
+    "typescript"
   ],
   "license": "MIT",
   "author": "Adam C. Alderson",
@@ -31,10 +30,6 @@
   ],
   "files": [
     "dist",
-    "src",
-    "!src/**/*.test.ts",
-    "!src/**/*.test.tsx",
-    "!src/test",
     "docs",
     "!docs/superpowers",
     "!docs/superpowers/**",
@@ -51,8 +46,7 @@
     "./css/tokens.css": "./dist/css/tokens.css",
     "./css/tokens": "./dist/css/tokens.css",
     "./css/glass.module.css": "./dist/css/glass.module.css",
-    "./css/glass": "./dist/css/glass.module.css",
-    "./src/*": "./src/*"
+    "./css/glass": "./dist/css/glass.module.css"
   },
   "scripts": {
     "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",

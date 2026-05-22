@@ -28,7 +28,7 @@ export interface PanelSeparatorProps
 /**
  * PanelSeparator
  *
- * Divider for spatial panel layouts, mimicking the iPadOS split-view aesthetic.
+ * Divider for spatial panel layouts.
  * Passive by default. Set `resizable` when the separator should behave like a
  * resize handle; the hit target expands around the visible hairline via a CSS
  * pseudo-element without affecting layout.

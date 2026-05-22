@@ -12,15 +12,13 @@ This guide walks through integrating React GlassKit into an existing React proje
 
 ### Published package
 
-After the first public npm release:
-
 ```bash
 npm install react-glasskit
 ```
 
-### Packed tarball for pre-release dogfood
+### Packed tarball for release-candidate checks
 
-Before the first npm release, build and pack GlassKit:
+When testing a release candidate locally, build and pack GlassKit:
 
 ```bash
 npm run build
@@ -34,7 +32,7 @@ Then install the generated tarball in your consuming app:
 npm install /absolute/path/to/the-generated-react-glasskit-tarball.tgz
 ```
 
-Git dependencies are not the supported v1 path because the public package uses compiled `dist` output and `dist/` is not committed to git.
+Git dependencies are not the supported v1 path because the public package uses compiled `dist` output and `dist/` is not committed to git. Use a packed tarball for local release-candidate checks and the npm package for real consumer installs.
 
 ## 2. Import Design Tokens
 

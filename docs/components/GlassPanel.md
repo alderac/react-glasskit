@@ -1,8 +1,7 @@
 # GlassPanel
 
 Container for individual tool panels in split or workspace layouts. Supports
-macOS Tahoe-style focus/inactive state treatment and the "crystallize"
-materialization animation.
+focus/inactive state treatment and the "crystallize" materialization animation.
 
 ## Specification
 
@@ -45,13 +44,13 @@ When `animate={true}`, the panel materializes into existence:
 The animation is automatically suppressed when `prefers-reduced-motion: reduce`
 is active.
 
-## The Inactive State (macOS Tahoe)
+## The Inactive State
 
 When `inactive={true}`:
 
 - Opacity drops to `0.92`, so the panel visually recedes
 - `filter: saturate(0.85)`, so colors desaturate slightly
-- This mirrors the behavior of unfocused window panes on macOS Sequoia/Tahoe
+- This gives unfocused workspace panes a quieter treatment while preserving layout
 
 ## Examples
 

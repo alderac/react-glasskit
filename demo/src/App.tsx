@@ -22,10 +22,9 @@ function getPreferredDemoTheme(): DemoTheme {
 }
 
 const installCodeSample = [
-  '# after the first public npm release',
   'npm install react-glasskit',
   '',
-  '# pre-release dogfood from this repo',
+  '# release-candidate check from this repo',
   'npm run build && npm pack',
   '# npm pack prints the generated tarball filename',
   'npm install /absolute/path/to/the-generated-react-glasskit-tarball.tgz',
@@ -592,8 +591,8 @@ export default function App() {
           <h2 className="demo-section-title">GlassPanel</h2>
           <p className="demo-section-desc">
             Workspace panel container with focus, inactive, and crystallize
-            animation states. Click each panel to toggle focus — watch the macOS
-            Tahoe-style fade.
+            animation states. Click each panel to toggle focus and inactive
+            treatment.
           </p>
 
           <div className="showcase-stage showcase-panels">

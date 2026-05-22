@@ -22,13 +22,13 @@ License: MIT
 
 ## Install And Import
 
-Install after publication:
+Install the published package:
 
 ```bash
 npm install react-glasskit
 ```
 
-For pre-release dogfood, run `npm pack` in this repository and install the generated tarball path in the consuming app.
+For release-candidate checks, run `npm pack` in this repository and install the generated tarball path in the consuming app.
 
 Import tokens once at the application root:
 

@@ -106,4 +106,16 @@ for (const [exportPath, expectedValue] of Object.entries(expectedExports)) {
   }
 }
 
+if (
+  Object.keys(packageJson.exports ?? {}).some((key) => key.startsWith('./src'))
+) {
+  throw new Error(
+    'package.json must not export source paths for the v1 public contract.'
+  );
+}
+
+if (packageJson.files?.includes('src')) {
+  throw new Error('package.json files must not ship src in the v1 npm package.');
+}
+
 console.log('Dist package assertions passed.');

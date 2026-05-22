@@ -52,15 +52,13 @@ Use GlassKit when glass is part of the workspace system. Write local CSS when th
 
 ### Published package
 
-After the first public npm release:
-
 ```bash
 npm install react-glasskit
 ```
 
-### Packed tarball for pre-release dogfood
+### Packed tarball for release-candidate checks
 
-Before the first npm release, install from a packed tarball so the consuming app uses the same compiled `dist` output that npm will publish.
+When testing a release candidate locally, install from a packed tarball so the consuming app uses the same compiled `dist` output that npm publishes.
 
 From this repository:
 
@@ -78,7 +76,7 @@ npm install /absolute/path/to/the-generated-react-glasskit-tarball.tgz
 
 ### Git dependencies
 
-Git dependencies are not the supported v1 install path. The public package resolves to compiled `dist` files, and `dist/` is intentionally not tracked in git. Use a packed tarball before publication and the npm package after publication.
+Git dependencies are not the supported v1 install path. The public package resolves to compiled `dist` files, and `dist/` is intentionally not tracked in git. Use a packed tarball for local release-candidate checks and the npm package for real consumer installs.
 
 ## Documentation And Repo Boundaries
 
@@ -279,7 +277,7 @@ React GlassKit is moving toward a public, workspace-first material layer for gla
 
 ## Architecture
 
-React GlassKit is intentionally framework-minimal. The public package resolves to compiled `dist` output with generated type declarations and CSS assets, while source paths remain available for advanced local integration.
+React GlassKit is intentionally framework-minimal. The public package resolves to compiled `dist` output with generated type declarations and CSS assets. Consumers should use the package barrel and documented CSS entrypoints; source files remain repo-owned.
 
 ```
 glasskit/

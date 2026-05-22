@@ -18,7 +18,7 @@ type OwnProps = {
    */
   focused?: boolean;
   /**
-   * Applies macOS Tahoe-style inactive treatment:
+   * Applies inactive workspace treatment:
    * drops opacity to 0.92 and desaturates to 0.85.
    * Use for panels that are visible but not currently active.
    */
@@ -43,7 +43,7 @@ export type GlassPanelProps<C extends React.ElementType = 'div'> =
  *
  * Container for individual tool panels in split or workspace layouts.
  * Supports focus/inactive state treatment and the "crystallize"
- * materialization animation (macOS Tahoe-inspired).
+ * materialization animation.
  *
  * @example
  * <GlassPanel focused animate className="flex flex-col h-full">
