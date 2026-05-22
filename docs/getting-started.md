@@ -194,3 +194,4 @@ All OS accessibility fallbacks are built into the CSS module automatically. See 
 - Use [App Shell](./recipes/app-shell.md) or [Canvas HUD](./recipes/canvas-hud.md) when your layout matches those patterns.
 - Review [design-tokens.md](./design-tokens.md) to understand every tunable parameter.
 - Read [accessibility.md](./accessibility.md) to understand what GlassKit owns and what your app still owns.
+- Check [repository-boundaries.md](./repository-boundaries.md) when deciding whether a change belongs in public docs, package metadata, or repo-only maintainer notes.

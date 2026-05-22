@@ -80,6 +80,14 @@ npm install /absolute/path/to/the-generated-react-glasskit-tarball.tgz
 
 Git dependencies are not the supported v1 install path. The public package resolves to compiled `dist` files, and `dist/` is intentionally not tracked in git. Use a packed tarball before publication and the npm package after publication.
 
+## Documentation And Repo Boundaries
+
+Package and docs-site-facing content is written for consumers and should keep working from the npm tarball, `node_modules/react-glasskit`, and the public docs/demo site. That includes this README, `docs/` except for internal planning state, package metadata, public CSS entrypoints, and the documented component and hook imports.
+
+Repo-only content is for maintainers and automation. That includes build scripts, smoke fixtures, Changesets config, workflow files, the demo source/build pipeline, `AGENTS.md`, `.agents/`, `.tmp/`, and `docs/superpowers/`. Repo-only docs may mention local commands and fixtures, but consumer docs should point at package imports and shipped Markdown files.
+
+See [docs/repository-boundaries.md](./docs/repository-boundaries.md) for the full split.
+
 ## Setup
 
 Import the design tokens once at your application root, such as `main.tsx`, `_app.tsx`, or `layout.tsx`:
@@ -228,6 +236,8 @@ npm run build
 npm run audit:css
 npm run audit:themes
 npm run audit:geometry
+npm run audit:agents
+npm run audit:package-docs
 npm run smoke:package
 npm run smoke:next
 npm run smoke:tailwind

@@ -10,6 +10,7 @@ const checks = [
     files: [
       'README.md',
       'docs/getting-started.md',
+      'docs/repository-boundaries.md',
       'demo/src/App.tsx',
       'AGENTS.md',
       'llms.txt',
@@ -23,6 +24,7 @@ const checks = [
     files: [
       'README.md',
       'docs/getting-started.md',
+      'docs/repository-boundaries.md',
       'demo/src/App.tsx',
       'src/index.ts',
       'AGENTS.md',
