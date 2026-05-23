@@ -235,6 +235,7 @@ The v1 package path is verified with:
 
 ```bash
 npm run typecheck
+npm run lint
 npm test
 npm run build
 npm run audit:css
@@ -248,7 +249,7 @@ npm run smoke:tailwind
 npm --prefix demo run build
 ```
 
-The packed-package smoke tests install the tarball into generated Vite and Next.js apps and verify public imports, type declarations, and CSS token imports.
+The packed-package smoke tests install the tarball into generated Vite and Next.js apps and verify public imports, type declarations, and CSS token imports. CI runs the full `release:check` gate, including lint.
 
 Run the full release gate with:
 
@@ -268,14 +269,11 @@ npm run changeset
 
 Use `patch` for fixes, package docs, compatibility proof, and small behavior corrections; `minor` for new compatible exports or supported feature paths; and `major` for breaking changes to exports, CSS entrypoints, peer ranges, or documented behavior.
 
-After changesets merge to `main`, the Release workflow opens a version PR that updates `package.json`, `package-lock.json`, and `CHANGELOG.md`. Publishing is still manual after that PR merges:
+After changesets merge to `main`, the Release workflow opens a version PR that updates `package.json`, `package-lock.json`, and `CHANGELOG.md`.
 
-```bash
-npm run release:publish
-git push --follow-tags
-```
+Merging the `chore: version packages` PR is the release approval gate. After that merge lands on `main`, the Release workflow publishes the new package version to npm if `package.json` is ahead of the currently published npm version, then pushes the release tags.
 
-The workflow does not publish to npm automatically.
+The publish job expects npm Trusted Publishing to be configured for this repository and `.github/workflows/release.yml`. It uses GitHub Actions OIDC instead of a long-lived npm write token. If the automated publish path is unavailable, maintainers can still publish manually with `npm run release:publish` and then `git push --follow-tags`.
 
 ## Roadmap
 

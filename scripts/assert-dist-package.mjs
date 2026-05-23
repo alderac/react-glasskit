@@ -115,7 +115,9 @@ if (
 }
 
 if (packageJson.files?.includes('src')) {
-  throw new Error('package.json files must not ship src in the v1 npm package.');
+  throw new Error(
+    'package.json files must not ship src in the v1 npm package.'
+  );
 }
 
 console.log('Dist package assertions passed.');

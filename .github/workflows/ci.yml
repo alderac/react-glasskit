@@ -32,5 +32,5 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
-      - name: Run release verification
+      - name: Run release verification including lint
         run: npm run release:check
