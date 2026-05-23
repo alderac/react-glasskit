@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- 1df92d9: Document the automated npm publish path that runs after the Changesets version PR is merged, and add lint to the release verification gate.
+
 ## 1.0.1
 
 ### Patch Changes
