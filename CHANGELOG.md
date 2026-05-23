@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+### Patch Changes
+
+- 6e4ba4d: Ship consumer-facing agent guidance, support boundaries, known limitations, API stability docs, and the package-facing `llms.txt` entrypoint.
+
 ## 1.0.0
 
 ### Major Changes
