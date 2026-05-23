@@ -58,9 +58,20 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            demo/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm ci
+
+      - name: Install demo dependencies
+        working-directory: demo
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
 
       - name: Check npm publication status
         id: npm-status
