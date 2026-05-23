@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+### Patch Changes
+
+- 5be2d0e: Ensure the automated npm publish job prepares the demo smoke-test dependencies before publishing.
+
 ## 1.0.2
 
 ### Patch Changes
