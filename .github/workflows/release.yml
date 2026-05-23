@@ -97,6 +97,9 @@ jobs:
         if: steps.npm-status.outputs.should-publish == 'true'
         run: npm run release:publish
 
-      - name: Push release tags
+      - name: Push release tag
         if: steps.npm-status.outputs.should-publish == 'true'
-        run: git push --follow-tags
+        shell: bash
+        run: |
+          tag_name="v$(node --print "require('./package.json').version")"
+          git push origin "$tag_name"
