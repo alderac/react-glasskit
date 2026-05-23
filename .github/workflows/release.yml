@@ -38,3 +38,54 @@ jobs:
           commit: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    name: Publish npm package
+    runs-on: ubuntu-latest
+    needs: version
+    if: >-
+      github.repository == 'alderac/react-glasskit' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' &&
+      contains(github.event.head_commit.message, 'chore: version packages')
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check npm publication status
+        id: npm-status
+        shell: bash
+        run: |
+          package_name="$(node -p "require('./package.json').name")"
+          package_version="$(node -p "require('./package.json').version")"
+          published_version="$(npm view "$package_name" version 2>/dev/null || true)"
+
+          echo "package-name=$package_name" >> "$GITHUB_OUTPUT"
+          echo "package-version=$package_version" >> "$GITHUB_OUTPUT"
+          echo "published-version=$published_version" >> "$GITHUB_OUTPUT"
+
+          if [ "$package_version" = "$published_version" ]; then
+            echo "should-publish=false" >> "$GITHUB_OUTPUT"
+            echo "$package_name@$package_version is already published."
+          else
+            echo "should-publish=true" >> "$GITHUB_OUTPUT"
+            echo "$package_name@$package_version is not published yet. Current npm version: ${published_version:-none}."
+          fi
+
+      - name: Publish to npm
+        if: steps.npm-status.outputs.should-publish == 'true'
+        run: npm run release:publish
+
+      - name: Push release tags
+        if: steps.npm-status.outputs.should-publish == 'true'
+        run: git push --follow-tags

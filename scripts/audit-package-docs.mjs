@@ -2,6 +2,10 @@ import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+const externalLinkPattern = /^[a-z][a-z0-9+.-]*:/i;
+const whitespacePattern = /\s+/;
+const markdownLinkPattern = /!?\[[^\]]*\]\(([^)]+)\)/g;
+
 function runNpm(args) {
   if (process.env.npm_execpath) {
     return execFileSync(process.execPath, [process.env.npm_execpath, ...args], {
@@ -28,7 +32,7 @@ function parsePackOutput(output) {
 }
 
 function isExternalLink(href) {
-  return /^[a-z][a-z0-9+.-]*:/i.test(href);
+  return externalLinkPattern.test(href);
 }
 
 function extractHref(rawTarget) {
@@ -39,7 +43,7 @@ function extractHref(rawTarget) {
     return closingBracket === -1 ? target : target.slice(1, closingBracket);
   }
 
-  return target.split(/\s+/)[0];
+  return target.split(whitespacePattern)[0];
 }
 
 const packOutput = runNpm(['pack', '--dry-run', '--json', '--ignore-scripts']);
@@ -51,7 +55,6 @@ const requiredPackageFiles = ['llms.txt'];
 const markdownFiles = [...packedFiles].filter((filePath) =>
   filePath.endsWith('.md')
 );
-const markdownLinkPattern = /!?\[[^\]]*\]\(([^)]+)\)/g;
 const failures = [];
 
 for (const filePath of packedFiles) {
