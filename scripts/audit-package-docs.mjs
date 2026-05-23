@@ -47,6 +47,7 @@ const [packInfo] = parsePackOutput(packOutput);
 const packedFiles = new Set(
   packInfo.files.map((file) => file.path.replaceAll('\\', '/'))
 );
+const requiredPackageFiles = ['llms.txt'];
 const markdownFiles = [...packedFiles].filter((filePath) =>
   filePath.endsWith('.md')
 );
@@ -57,6 +58,14 @@ for (const filePath of packedFiles) {
   if (filePath.startsWith('docs/superpowers/')) {
     failures.push(
       `${filePath}: docs/superpowers is internal planning state and must not ship.`
+    );
+  }
+}
+
+for (const filePath of requiredPackageFiles) {
+  if (!packedFiles.has(filePath)) {
+    failures.push(
+      `${filePath}: consumer-facing agent guidance must ship in the package.`
     );
   }
 }

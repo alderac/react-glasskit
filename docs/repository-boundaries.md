@@ -10,6 +10,7 @@ These surfaces are public-facing and should work from the npm tarball,
 `node_modules/react-glasskit`, and the public docs/demo site:
 
 - `README.md`
+- `llms.txt`
 - `docs/`, except `docs/superpowers/`
 - public package metadata in `package.json`
 - `react-glasskit` barrel imports
@@ -33,7 +34,6 @@ These surfaces are for contributors, agents, and release automation:
 - `demo/` source and build configuration
 - smoke-test fixtures and generated temporary apps
 - `AGENTS.md`
-- `llms.txt`
 - `.agents/`
 - `.tmp/`
 - `docs/superpowers/`

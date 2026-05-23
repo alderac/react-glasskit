@@ -33,6 +33,7 @@
     "docs",
     "!docs/superpowers",
     "!docs/superpowers/**",
+    "llms.txt",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"

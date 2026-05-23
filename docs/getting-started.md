@@ -190,6 +190,9 @@ All OS accessibility fallbacks are built into the CSS module automatically. See 
 - Build the [Workspace In Five Minutes](./recipes/workspace-in-five-minutes.md) recipe first.
 - Browse the [Component Reference](../README.md#what-it-exports) for detailed prop tables and examples.
 - Use [App Shell](./recipes/app-shell.md) or [Canvas HUD](./recipes/canvas-hud.md) when your layout matches those patterns.
+- Read [agent-guide.md](./agent-guide.md) when an AI coding agent or automation is integrating GlassKit into an app.
+- Check [support-matrix.md](./support-matrix.md) for verified React, bundler, SSR, Tailwind, and browser expectations.
+- Review [known-limitations.md](./known-limitations.md) and [api-stability.md](./api-stability.md) before depending on package boundaries.
 - Review [design-tokens.md](./design-tokens.md) to understand every tunable parameter.
 - Read [accessibility.md](./accessibility.md) to understand what GlassKit owns and what your app still owns.
 - Check [repository-boundaries.md](./repository-boundaries.md) when deciding whether a change belongs in public docs, package metadata, or repo-only maintainer notes.

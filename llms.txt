@@ -28,8 +28,6 @@ Install the published package:
 npm install react-glasskit
 ```
 
-For release-candidate checks, run `npm pack` in this repository and install the generated tarball path in the consuming app.
-
 Import tokens once at the application root:
 
 ```ts
@@ -66,21 +64,43 @@ GlassKit uses vanilla CSS, CSS Modules, and CSS custom properties. Consumers can
 
 Do not assume GlassKit replaces a UI kit. It supplies the glass material layer.
 
-## Documentation Boundaries
+## Correct And Wrong Paths
 
-Package and docs-site-facing guidance lives in `README.md` and `docs/`, except
-for `docs/superpowers/`, which is internal planning state. Consumer docs should
-use public package imports and links that resolve from the packed package.
+Use:
 
-Repo-only maintainer surfaces include `scripts/`, `.changeset/`, `demo/`,
-`AGENTS.md`, `.agents/`, `.tmp/`, and `docs/superpowers/`.
+- `react-glasskit`
+- `react-glasskit/css/tokens.css`
+- documented `--glass-*` CSS custom properties
 
-## Verification
+Do not use:
 
-For repository work, run the focused check that matches the change. Before release-facing pull requests, run:
+- `react-glasskit/src/*`
+- `react-glasskit/dist/components/*`
+- generated CSS Module class names
+- non-existent UI kit exports such as `GlassButton`, `GlassDialog`, or `GlassTabs`
 
-```bash
-npm run release:check
-```
+## Support Boundaries
 
-This verifies typecheck, tests, build, CSS audits, agent-visible docs audit, packed Vite/Next/Tailwind smokes, demo browser smoke, and npm pack dry-run.
+GlassKit expects a React app with a bundler that supports CSS imports. React 18
+and React 19 are peer supported. Vite, Next.js, and Tailwind consumer paths are
+covered by packed-package smoke tests.
+
+GlassKit does not own app-level semantics, focus traps, keyboard flows, routing,
+modal behavior, layout persistence, final contrast review, or formal
+accessibility claims.
+
+## Consumer Docs
+
+- README.md: package overview and quick start
+- docs/agent-guide.md: compact agent-facing integration guide
+- docs/getting-started.md: first integration path
+- docs/support-matrix.md: peer, bundler, SSR, Tailwind, and browser expectations
+- docs/known-limitations.md: explicit non-goals and app responsibilities
+- docs/api-stability.md: public exports, CSS entrypoints, and token stability
+- docs/design-tokens.md: documented `--glass-*` custom properties
+- docs/accessibility.md: fallback behavior and responsibility matrix
+- docs/integrations/index.md: compatibility model for common UI stacks
+
+`AGENTS.md`, `.changeset/`, scripts, smoke fixtures, demo source, `.tmp/`,
+`.agents/`, and `docs/superpowers/` are maintainer-facing repo surfaces rather
+than consumer package guidance.
