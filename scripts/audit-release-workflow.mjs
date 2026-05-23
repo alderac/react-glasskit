@@ -53,6 +53,11 @@ const requiredPublishSetup = [
     message:
       'Publish job must install Chromium because release:publish runs the demo browser smoke.',
   },
+  {
+    expected: 'git push origin "$tag_name"',
+    message:
+      'Publish job must push the exact release tag because Changesets creates a lightweight tag.',
+  },
 ];
 
 for (const check of requiredPublishSetup) {
