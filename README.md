@@ -80,11 +80,17 @@ Git dependencies are not the supported v1 install path. The public package resol
 
 ## Documentation And Repo Boundaries
 
-Package and docs-site-facing content is written for consumers and should keep working from the npm tarball, `node_modules/react-glasskit`, and the public docs/demo site. That includes this README, `docs/` except for internal planning state, package metadata, public CSS entrypoints, and the documented component and hook imports.
+Package and docs-site-facing content is written for consumers and should keep working from the npm tarball, `node_modules/react-glasskit`, and the public docs/demo site. That includes this README, `llms.txt`, `docs/` except for internal planning state, package metadata, public CSS entrypoints, and the documented component and hook imports.
 
 Repo-only content is for maintainers and automation. That includes build scripts, smoke fixtures, Changesets config, workflow files, the demo source/build pipeline, `AGENTS.md`, `.agents/`, `.tmp/`, and `docs/superpowers/`. Repo-only docs may mention local commands and fixtures, but consumer docs should point at package imports and shipped Markdown files.
 
 See [docs/repository-boundaries.md](./docs/repository-boundaries.md) for the full split.
+
+## Agent And Consumer Orientation
+
+AI coding agents and automated consumers should start with [`llms.txt`](./llms.txt) and [docs/agent-guide.md](./docs/agent-guide.md). These files summarize the public package contract, correct imports, wrong imports, support boundaries, and known limitations without relying on repo-only maintainer notes.
+
+For explicit package boundaries, see [docs/support-matrix.md](./docs/support-matrix.md), [docs/known-limitations.md](./docs/known-limitations.md), and [docs/api-stability.md](./docs/api-stability.md).
 
 ## Setup
 
@@ -295,6 +301,10 @@ glasskit/
 │       └── PanelSeparator/   # Spatial dividers for split-panel layouts
 └── docs/
     ├── getting-started.md
+    ├── agent-guide.md
+    ├── support-matrix.md
+    ├── known-limitations.md
+    ├── api-stability.md
     ├── design-tokens.md
     ├── accessibility.md
     ├── roadmap.md

@@ -9,7 +9,11 @@ const checks = [
   {
     files: [
       'README.md',
+      'docs/agent-guide.md',
       'docs/getting-started.md',
+      'docs/support-matrix.md',
+      'docs/known-limitations.md',
+      'docs/api-stability.md',
       'docs/repository-boundaries.md',
       'demo/src/App.tsx',
       'AGENTS.md',
@@ -23,7 +27,11 @@ const checks = [
   {
     files: [
       'README.md',
+      'docs/agent-guide.md',
       'docs/getting-started.md',
+      'docs/support-matrix.md',
+      'docs/known-limitations.md',
+      'docs/api-stability.md',
       'docs/repository-boundaries.md',
       'demo/src/App.tsx',
       'src/index.ts',
